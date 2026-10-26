@@ -24,13 +24,13 @@ AI motivation ──────────────────────
 | Session | Preparation | In-session exercise | Evidence |
 |---|---|---|---|
 | 01 AI intuition | 3Blue1Brown introduction (~19 min) | Label examples as classical algorithm, ML, inference | Correct explanations |
-| 02 Python | CS50P Week 0–2 excerpts | Terminal rule-based chatbot | Demonstrable branching and function |
+| 02 Mac workbench + Python | Install editor/Python; selected CS50P excerpts | Save/run a file, then build a rule-based chatbot | Independent edit–save–run loop and branching |
 | 03 Tooling | Missing Semester shell / Git | Virtualenv + JSON prompt library | Fresh install succeeds |
 | 04 NN intuition | 3Blue1Brown gradient + backprop | TensorFlow Playground experiment | Explain what changed |
 | 05 Local model | Ollama quickstart | Python model call + JSON messages | Successful response + error path |
 | 06 Web UI | Streamlit chat tutorial | Chat UI with history | Runs in a local browser |
 | 07 Quality | Read example tests | Model choice, output validation, tests | Automated test passing |
-| 08 Docker | Docker Python guide | Containerize UI / connect to host Ollama | Rebuild documented |
+| 08 Docker (optional) | Docker Python guide | Containerize UI; inspect the host-model boundary | Build/run/stop documented; offline handling explained |
 
 ## Learner-specific recommendation
 

@@ -59,20 +59,21 @@ ollama list
 
 As of 2026-10-26, the Ollama catalog lists `gemma3:4b` at about 3.4 GB and `qwen3:8b` at about 5.2 GB of model download data; these are **not** peak live RAM requirements. See [Gemma 3](https://ollama.com/library/gemma3) and [Qwen 3](https://ollama.com/library/qwen3) for current tags.
 
-Ollama has Apple Silicon acceleration support, including a newer MLX-based path in recent releases. No separate PyTorch/MPS/Metal configuration is required just to use the standard Ollama application.
+Use the standard Ollama application for this course; separate PyTorch configuration is not part of setup. Choose a local model when following the upstream quickstart: its cloud-model/API-key examples are a different route.
 
 ## Day 14: Python calls Ollama
 
-From the course project directory, create a virtual environment and install the sample dependencies:
+From the extracted course root, reuse the Day 7 environment or create one if it is missing. Activate it in every new Terminal tab, then install the declared sample dependencies:
 
 ```sh
-cd ~/projects/python-ai-lab
+cd ~/Projects/py-ai-studyplan
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install "ollama>=0.4,<1" "streamlit>=1.40,<2"
+python -m pip install -r examples/requirements.txt
+python examples/cli_chat.py --model gemma3:4b
 ```
 
-Once the course files are extracted under `~/Projects/py-ai-studyplan`, use `python -m pip install -r examples/requirements.txt`, then start `python examples/cli_chat.py --model gemma3:4b` from that project root. Reuse the Day 7 `venv` practice to understand the installation; note that every fresh Terminal tab needs its own `source .venv/bin/activate`.
+Check that `pwd` ends in `py-ai-studyplan` and `ls examples/requirements.txt` finds the file before installing. If either check fails, find the extracted course folder first. Type `quit` to leave the CLI chat; use `deactivate` when finished with the virtual environment.
 
 ## Optional shell enhancement after Day 7
 

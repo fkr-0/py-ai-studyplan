@@ -2,14 +2,14 @@
 
 **Time:** 2–3 hours. **Output:** configurable, tested application.
 
-## Features to implement
+## Inspect the starter, then extend it
 
-1. Add a model selector using `ollama.list()` or an explicit known-model list.
-2. Add a temperature slider. Avoid representing temperature as truthfulness or intelligence.
-3. Add predefined system-prompt presets and a clear-history button.
-4. Add a JSON export of history (don't include secrets).
-5. Catch connection errors and timeout/failure conditions.
-6. Explain why structured model output needs validation rather than blind parsing.
+1. Explain the existing fixed model list; optionally populate it from installed models.
+2. Compare responses using the existing temperature slider. Temperature is not truthfulness or intelligence.
+3. Use the existing clear-history and JSON export controls; avoid exporting private conversations.
+4. Add a system-prompt preset or clear history automatically when the model changes.
+5. Inspect the existing error handling, then test offline, missing-model and timeout behavior separately.
+6. Explain why structured model output needs validation; implement a validator as an optional extension.
 
 ## Exercises
 
@@ -20,6 +20,8 @@ python -m unittest discover -s examples/tests -v
 ```
 
 Make a deliberate input validation failure and check that the unit test catches it. Turn off Ollama and confirm that the UI produces a helpful error instead of crashing.
+
+The tests cover `chat_logic.prepare_messages`, a standalone teaching helper. The starter UI does not call it yet. To test a new prompt preset through this helper, wire it into the request path and verify both the function and a real UI interaction; green helper tests alone do not verify the UI.
 
 ## Critical distinction
 

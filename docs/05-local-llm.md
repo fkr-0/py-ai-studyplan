@@ -2,6 +2,8 @@
 
 **Time:** ~2 hours. **Output:** a Python program that calls a local model.
 
+This is a supplementary API exercise. Follow [the main local-model lesson](05-local-llms.md) for setup and the daily schedule.
+
 ## Materials
 
 - [Official Ollama quickstart](https://docs.ollama.com/quickstart)
@@ -12,8 +14,8 @@
 ## Install and test
 
 ```sh
-ollama pull gemma3:1b
-ollama run gemma3:1b
+ollama pull gemma3:4b
+ollama run gemma3:4b
 ```
 
 In another shell, in the project venv:
@@ -26,7 +28,7 @@ python -m pip install ollama
 from ollama import chat
 
 response = chat(
-    model="gemma3:1b",
+    model="gemma3:4b",
     messages=[
         {"role": "system", "content": "Answer succinctly."},
         {"role": "user", "content": "What is gradient descent?"},

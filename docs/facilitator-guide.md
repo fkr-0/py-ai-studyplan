@@ -8,7 +8,7 @@ Before any coding, run the [macOS editor + Terminal workbench](01b-macos-workben
 
 ## Before session 1
 
-Ask only about the next relevant decisions: their OS, available RAM (and GPU/VRAM if known), whether they have written any code before, and weekly availability. **Do not delay the first theory/Python lesson while waiting for a GPU.**
+Confirm whether the recorded Mac and daily availability have changed; ask about prior coding experience and the learner's goal. For a different learner, establish OS, RAM and study time. **Do not delay the first theory/Python lesson while waiting for a GPU.**
 
 Prepare Python 3.11+, a code editor, a terminal, browser, and (later) Ollama. Use an ordinary user account. Never require root for teaching exercises.
 

@@ -32,7 +32,7 @@ The workflow follows the [official GitHub Pages custom-workflow pattern](https:/
 
 The source checkout is **not** uploaded wholesale. `scripts/stage_pages.py` stages only:
 
-- `index.html`: landing page redirecting to the Reveal.js presentation.
+- `index.html`: welcome page with course overview, slide entry and ZIP download.
 - `CNAME`: `study.fkr.dev`.
 - `.nojekyll`.
 - `docs/*.md`: readable course chapters.

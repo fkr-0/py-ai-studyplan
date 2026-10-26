@@ -37,9 +37,9 @@ Model tags, availability and size change: check the official [Ollama library](ht
 1. Install Python using the OS-approved installer/package manager.
 2. Make a virtual environment: `python3 -m venv .venv` (Windows: `py -m venv .venv`).
 3. Activate it: POSIX `. .venv/bin/activate`, Windows PowerShell `.venv\Scripts\Activate.ps1`.
-4. Use `python -m pip install -r requirements.txt` inside the venv.
+4. From the extracted course root, use `python -m pip install -r examples/requirements.txt` inside the venv.
 5. Use Git for source. Ignore `.venv`, secrets and generated files.
-6. Install [Ollama](https://ollama.com/download), then `ollama pull gemma3:1b`.
+6. Install [Ollama](https://ollama.com/download), then `ollama pull gemma3:4b` on the learner's 24 GB Mac; use `gemma3:1b` as a smaller fallback.
 
 ## Fallback routes
 

@@ -38,9 +38,18 @@ Write Python to load, list, and append prompts using `json.load` / `json.dump`. 
 
 ## Git basics
 
+From `~/Projects/prompt-library` (your exercise project, separate from the course download), create `.gitignore` in the editor **before staging**:
+
+    .venv/
+    __pycache__/
+    .env
+
+Then save `prompts.json` and your reader as `main.py`:
+
     git init
     git status
-    git add .
+    git add .gitignore main.py prompts.json
+    git diff --cached
     git commit -m "Add prompt library"
 
 Before commit: keep `.venv/`, caches, API keys and generated files out of Git (see [.gitignore](../.gitignore)). Explain the distinction between source code, data and dependencies.
@@ -51,6 +60,6 @@ Create a deliberate TypeError, read the *last* traceback line, inspect the offen
 
 ## Mastery checkpoint
 
-Delete and recreate the `.venv` directory without losing project source. Describe what Git tracks and what it should not track.
+In the exercise project, deactivate and rename `.venv` to `.venv-backup`, create a new `.venv`, and run `main.py` again. Do not run the renamed environment; virtual environments should be recreated at their intended path. Describe what Git tracks and what it should not track. Keep the backup until the fresh environment works.
 
 [Next: neural networks](04-neural-networks.md)

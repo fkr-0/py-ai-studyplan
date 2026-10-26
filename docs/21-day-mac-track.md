@@ -6,6 +6,14 @@
 
 This is a *recommended sequence*, not a hard deadline. A day is complete only when the student can explain and modify the exercise unaided. If a day runs long, finish it before proceeding.
 
+## How to use the timetable
+
+The eight sessions are topic groups, not eight additional meetings on top of these days. Video excerpts, guided work and independent exercises all count toward the daily time budget. Start each day at the previous checkpoint; stop after 1–2 hours and note the next small step.
+
+At one hour per day, 21 days provides only 21 hours, below the 25–35 hour core estimate. Plan for **25–35 study days** at that pace. At two hours per day, leave room for breaks and catch-up rather than filling every block with new material. Docker is optional; the final independent demo is the core finish line.
+
+Keep two folders distinct: `~/Projects/prompt-library` for the Days 7–9 exercise, and `~/Projects/py-ai-studyplan` for downloaded course examples. Check the working directory before running commands.
+
 ## Daily structure
 
 - **5–10 min:** recall yesterday’s ideas; predict what code should do.
@@ -37,8 +45,8 @@ This is a *recommended sequence*, not a hard deadline. A day is complete only wh
 | 17 | Chat history and model selection | Multi-turn chatbot with a model picker | [Session 06](06-streamlit.md) |
 | 18 | UI refinement | Prompt presets, temperature and clear-history | [Session 07](07-product-quality.md) |
 | 19 | Tests and validation | Run tests; reproduce Ollama-offline failure | [Session 07](07-product-quality.md) |
-| 20 | Docker fundamentals | Build the UI image and inspect ports and logs | [Session 08](08-docker.md) |
-| 21 | Graduation and reflection | Start app from instructions; explain every boundary | [Assessment](assessment.md) |
+| 20 | Catch-up or optional Docker | Close an unfinished core checkpoint; optionally build the UI image | [Session 08](08-docker.md) |
+| 21 | Graduation and reflection | Start app from instructions, make one independent change, explain boundaries | [Assessment](assessment.md) |
 
 ## Mac workbench gate before Python exercises
 
@@ -46,7 +54,7 @@ Before Day 4, the learner must independently open a folder from Terminal in VS C
 
 ## Scope adjustments
 
-- **One hour most days:** reserve four additional catch-up days (Python basics, JSON, UI, Docker) and extend to about 25 days.
+- **One hour most days:** allow 25–35 study days for core work; add optional Docker time separately if needed.
 - **Two hours most days:** use leftover time for debugging, better documentation, and a feature of the learner’s choosing. Do not rush through the fundamentals.
 - **Already comfortable with programming:** compress Days 03–09; spend longer on evaluating model responses.
 - **Docker becomes distracting:** stop at Day 19, demo the app, and leave Docker as a bonus workshop.

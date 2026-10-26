@@ -55,14 +55,34 @@
 
 </section>
 
+<section id="course-timetable" class="title-slide slide level1">
+<h1>Course timetable</h1>
+<table class="course-timetable">
+<caption>21 days · 1–2 hours/day · roughly 25–35 hours of core work</caption>
+<thead><tr><th scope="col">Days</th><th scope="col">Course focus</th><th scope="col">What you can demonstrate</th></tr></thead>
+<tbody>
+<tr><th scope="row">1</th><td>AI intuition</td><td>Explain training vs inference</td></tr>
+<tr><th scope="row">2–6</th><td>Mac workbench + Python</td><td>Use Terminal + VS Code; build a rule-based chatbot</td></tr>
+<tr><th scope="row">7–9</th><td>Developer workflow</td><td>Use a virtual environment, JSON files and Git</td></tr>
+<tr><th scope="row">10–12</th><td>Neural networks + Transformers</td><td>Explain weights, loss and next-token generation</td></tr>
+<tr><th scope="row">13–15</th><td>Local LLMs with Ollama</td><td>Call a local model from a Python chat client</td></tr>
+<tr><th scope="row">16–17</th><td>Web interface with Streamlit</td><td>Build browser chat with history and model selection</td></tr>
+<tr><th scope="row">18–19</th><td>Product quality</td><td>Add controls, run tests and handle offline errors</td></tr>
+<tr><th scope="row">20–21</th><td>Catch-up + graduation; Docker optional</td><td>Repeat the demo, change the app and explain it</td></tr>
+</tbody>
+</table>
+<p class="reference-line">At 1 hour/day, allow 25–35 study days. Move on when you can explain and modify the exercise. <a href="../docs/21-day-mac-track.md">Full day-by-day plan ↗</a></p>
+
+</section>
+
 <section>
 <section id="your-learning-track-21-days-on-a-macbook-pro-m4" class="title-slide slide level1">
 <h1>Your learning track: 21 days on a MacBook Pro M4</h1>
 <ul>
-<li><strong><strong>Machine:</strong></strong> 2024 MacBook Pro, M4-family, 24 GB unified memory.</li>
-<li><strong><strong>Time:</strong></strong> 1–2 hours each day, around three weeks plus catch-up.</li>
-<li><strong><strong>Language:</strong></strong> English for sessions, code and exercises.</li>
-<li><strong><strong>Model:</strong></strong> start with <code class="verbatim">gemma3:4b</code>; later compare to <code class="verbatim">qwen3:8b</code> if useful.</li>
+<li><strong>Machine:</strong> 2024 MacBook Pro, M4-family, 24 GB unified memory.</li>
+<li><strong>Time:</strong> 1–2 hours per study day; 21 days is a suggested sequence, not a deadline.</li>
+<li><strong>Language:</strong> English for sessions, code and exercises.</li>
+<li><strong>Model:</strong> start with <code class="verbatim">gemma3:4b</code>; later compare to <code class="verbatim">qwen3:8b</code> if useful.</li>
 </ul>
 </section>
 <section id="each-days-learning-loop" class="slide level2">
@@ -122,7 +142,7 @@
 </section>
 <section id="checkpoint-draw-the-boxes" class="slide level2">
 <h2>Checkpoint: draw the boxes</h2>
-<pre class="example"><code>USER ──▶ PYTHON APP ──▶ OLLAMA ──▶ MODEL
+<pre><code>USER ──▶ PYTHON APP ──▶ OLLAMA ──▶ MODEL
              ▲                        │
              └──────── response ◀─────┘
 </code></pre>
@@ -131,12 +151,12 @@
 <section>
 <section id="mac-workbench-python-foundations" class="title-slide slide level1">
 <h1>02 · Mac workbench → Python foundations</h1>
-<p>Before writing the first function, build a <strong><strong>real editor + terminal workflow</strong></strong>.</p>
+<p>Before writing the first function, build a <strong>real editor + terminal workflow</strong>.</p>
 <ul>
-<li><strong><strong>macOS Terminal.app</strong></strong>: window displaying commands and output</li>
-<li><strong><strong>zsh</strong></strong>: shell interpreting commands and remembering history</li>
-<li><strong><strong>VS Code</strong></strong>: editor used to change source code</li>
-<li><strong><strong>Python</strong></strong>: interpreter running <strong>saved</strong> source files</li>
+<li><strong>macOS Terminal.app</strong>: window displaying commands and output</li>
+<li><strong>zsh</strong>: shell interpreting commands and remembering history</li>
+<li><strong>VS Code</strong>: editor used to change source code</li>
+<li><strong>Python</strong>: interpreter running <strong>saved</strong> source files</li>
 </ul>
 <aside class="notes">Work from macOS, not a Linux shell demo. Day 2 is the workbench; Day 3 repeats shortcuts and adds Python. Students should be at the keyboard throughout.</aside>
 
@@ -156,9 +176,9 @@
 <h2>Day 2 — Install editor and prepare Terminal</h2>
 <ul>
 <li>Install <a href="https://www.python.org/downloads/macos/">Python for macOS</a> and <a href="https://code.visualstudio.com/docs/setup/mac">VS Code for Apple Silicon</a>.</li>
-<li>Open <strong><strong>Terminal.app</strong></strong> using Spotlight (⌘ Space).</li>
-<li>Open VS Code → <strong><strong>⌘⇧P</strong></strong> → “Shell Command: Install 'code' command in PATH”.</li>
-<li>Restart Terminal, then try these <strong><strong>read-only</strong></strong> commands:</li>
+<li>Open <strong>Terminal.app</strong> using Spotlight (⌘ Space).</li>
+<li>Open VS Code → <strong>⌘⇧P</strong> → “Shell Command: Install 'code' command in PATH”.</li>
+<li>Restart Terminal, then try these <strong>read-only</strong> commands:</li>
 </ul>
 <div class="sourceCode" id="cb2" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-m</span>            <span class="co"># native Apple Silicon: arm64</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$SHELL</span><span class="st">&quot;</span>       <span class="co"># usually /bin/zsh</span></span>
@@ -174,9 +194,9 @@
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/python-ai-playground</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div>
 <ul>
-<li>VS Code <strong><strong>File → New Text File</strong></strong>, name it <code class="verbatim">hello.py</code>.</li>
-<li>Type and <strong><strong>save</strong></strong> (⌘S); back in Terminal run <code class="verbatim">python3 hello.py</code>.</li>
-<li>If <code class="verbatim">code .</code> fails, choose <strong><strong>File → Open Folder</strong></strong> in VS Code.</li>
+<li>VS Code <strong>File → New Text File</strong>, name it <code class="verbatim">hello.py</code>.</li>
+<li>Type and <strong>save</strong> (⌘S); back in Terminal run <code class="verbatim">python3 hello.py</code>.</li>
+<li>If <code class="verbatim">code .</code> fails, choose <strong>File → Open Folder</strong> in VS Code.</li>
 </ul>
 <p class="reference-line"><a href="https://code.visualstudio.com/docs/setup/mac" target="_blank" rel="noopener noreferrer">Official VS Code setup for macOS ↗</a></p>
 
@@ -203,36 +223,36 @@
 <h2>Learn ⌃A · ⌃E · ⌃P · ⌃N · ⌃R</h2>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>In the zsh prompt</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td><strong>Control-A</strong></td>
-<td>move cursor to **A**/start</td>
+<td>move cursor to start (A)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Control-E</strong></td>
-<td>move cursor to **E**nd</td>
+<td>move cursor to end (E)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Control-P</strong></td>
-<td>**P**revious command</td>
+<td>previous command (P)</td>
 </tr>
-<tr class="even">
+<tr>
 <td><strong>Control-N</strong></td>
-<td>**N**ext command</td>
+<td>next command (N)</td>
 </tr>
-<tr class="odd">
+<tr>
 <td><strong>Control-R</strong></td>
-<td>**R**everse search in command history</td>
+<td>reverse search in command history (R)</td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p>These act in the <strong><strong>terminal shell prompt</strong></strong>, not when VS Code's editor has focus.</p>
+<p>These act in the <strong>terminal shell prompt</strong>, not when VS Code's editor has focus.</p>
 </blockquote>
 </section>
 <section id="two-minute-shortcut-drill-no-copying" class="slide level2">
@@ -241,7 +261,7 @@
 <li>Execute <code class="verbatim">echo APPLES</code>; then <code class="verbatim">echo BANANAS</code>.</li>
 <li>Hit <strong>⌃P</strong>, again <strong>⌃P</strong>, then <strong>⌃N</strong>. What changed?</li>
 <li>Hit <strong>⌃R</strong>, search <code class="verbatim">APPLES</code>, select it.</li>
-<li>Type <code class="verbatim">echo hello there</code> <strong><strong>without Enter</strong></strong>.</li>
+<li>Type <code class="verbatim">echo hello there</code> <strong>without Enter</strong>.</li>
 <li>Hit <strong>⌃A</strong> then <strong>⌃E</strong>; press Enter only at the end.</li>
 </ol>
 <div class="NOTES">
@@ -251,14 +271,14 @@
 <section id="copy-paste-is-not-control-c" class="slide level2">
 <h2>Copy + paste is NOT Control-C</h2>
 <ul>
-<li><strong><strong>⌘C</strong></strong> copies selected terminal output; <strong><strong>⌘V</strong></strong> pastes it.</li>
-<li><strong><strong>⌃C</strong></strong> interrupts a program. Test: <code class="verbatim">sleep 30</code> → ⌃C.</li>
-<li><strong><strong>⌃L</strong></strong> clears the terminal; <strong><strong>Tab</strong></strong> attempts completion.</li>
+<li><strong>⌘C</strong> copies selected terminal output; <strong>⌘V</strong> pastes it.</li>
+<li><strong>⌃C</strong> interrupts a program. Test: <code class="verbatim">sleep 30</code> → ⌃C.</li>
+<li><strong>⌃L</strong> clears the terminal; <strong>Tab</strong> attempts completion.</li>
 <li>Select text with trackpad; copy into VS Code with ⌘C/⌘V.</li>
 <li>Copy the command below into Terminal, <strong>inspect it</strong>, then press Enter.</li>
 </ul>
 <div class="sourceCode" id="cb4" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Pasted safely into the terminal\n&#39;</span></span></code></pre></div>
-<p><strong><strong>Never blindly paste multiline commands or run unknown <code class="verbatim">curl | sh</code> installers.</strong></strong></p>
+<p><strong>Never blindly paste multiline commands or run unknown <code class="verbatim">curl | sh</code> installers.</strong></p>
 <p class="reference-line"><a href="https://support.apple.com/guide/terminal/keyboard-shortcuts-trmlshtcts/mac" target="_blank" rel="noopener noreferrer">Apple's Terminal shortcut reference ↗</a></p>
 
 </section>
@@ -268,12 +288,12 @@
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">&quot;friend&quot;</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Hello, </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">!&quot;</span>)</span></code></pre></div>
 <ul>
-<li><strong><strong>⌘S</strong></strong> save. Terminal: <code class="verbatim">python3 hello.py</code>.</li>
-<li>Change <code class="verbatim">friend</code> to your name → <strong><strong>⌘S</strong></strong> → <strong><strong>⌃P</strong></strong> → Enter.</li>
+<li><strong>⌘S</strong> save. Terminal: <code class="verbatim">python3 hello.py</code>.</li>
+<li>Change <code class="verbatim">friend</code> to your name → <strong>⌘S</strong> → <strong>⌃P</strong> → Enter.</li>
 <li>Break a quote deliberately. Read the error. Fix it.</li>
 <li>Copy output (⌘C), paste into a scratch note (⌘V).</li>
 </ul>
-<p><strong><strong>Check:</strong></strong> <strong>Can you explain which app each key affected?</strong></p>
+<p><strong>Check:</strong> <strong>Can you explain which app each key affected?</strong></p>
 </section>
 <section id="python-first-steps" class="slide level2">
 <h2>Python first steps</h2>
@@ -333,11 +353,11 @@
 <section id="native-zsh-first-z4h-is-an-optional-extra" class="slide level2">
 <h2>Native zsh first; z4h is an optional extra</h2>
 <ul>
-<li>macOS already includes <strong><strong>zsh</strong></strong> — no framework required.</li>
+<li>macOS already includes <strong>zsh</strong> — no framework required.</li>
 <li><a href="https://github.com/romkatv/zsh4humans">Zsh for Humans (z4h) ↗</a> <strong>works on macOS</strong> and adds autosuggestions, completions and fuzzy history.</li>
-<li>Its maintainer states support is <strong><strong>very limited</strong></strong>; most bugs will go unfixed.</li>
+<li>Its maintainer states support is <strong>very limited</strong>; most bugs will go unfixed.</li>
 <li>Its installer changes shell startup files (with backup prompts).</li>
-<li><strong><strong>Do not install automatically</strong></strong> or teach shell shortcuts through z4h first.</li>
+<li><strong>Do not install automatically</strong> or teach shell shortcuts through z4h first.</li>
 </ul>
 <div class="NOTES">
 <p>Introduce only after the Control-A/E/P/N/R drill and getting comfortable in stock zsh. Discuss tradeoffs, original README, backups, rollback. Do not pipe a remote script into a shell for a beginner.</p>
@@ -353,8 +373,8 @@
 <h2>Days 8–9 — one reproducible project</h2>
 <ol>
 <li>In VS Code, save JSON prompt presets and a reader function.</li>
-<li>Run it in Terminal; recall the command with <strong><strong>⌃P</strong></strong>, search with <strong><strong>⌃R</strong></strong>.</li>
-<li>Create a deliberate error and <strong><strong>read its traceback</strong></strong>.</li>
+<li>Run it in Terminal; recall the command with <strong>⌃P</strong>, search with <strong>⌃R</strong>.</li>
+<li>Create a deliberate error and <strong>read its traceback</strong>.</li>
 <li>In <code class="verbatim">~/Projects/prompt-library</code>, <code class="verbatim">git init</code>, <code class="verbatim">git status</code>, then commit source.</li>
 <li>Explain why <code class="verbatim">.venv/</code> and secrets should not be committed.</li>
 </ol>
@@ -412,7 +432,7 @@
 <section id="local-inference-with-ollama" class="title-slide slide level1">
 <h1>05 · Local inference with Ollama</h1>
 <p>You need a <strong>model</strong>, a <strong>runtime/server</strong>, and a <strong>Python client</strong>.</p>
-<pre class="example"><code>Python (ollama client)
+<pre><code>Python (ollama client)
    │ HTTP /api/chat
    ▼
 Ollama (inference runtime)
@@ -427,14 +447,16 @@ Local model (CPU or GPU)
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate  <span class="co"># create .venv first if absent</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:4b</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run gemma3:4b</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># In another Terminal tab (⌘T), same project + venv:</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:4b</span></code></pre></div>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># In another Terminal tab (⌘T):</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:4b</span></code></pre></div>
 </section>
 <section id="your-mac-m4-24-gb-unified-memory" class="slide level2">
 <h2>Your Mac M4 · 24 GB unified memory</h2>
 <ul>
-<li>Start with <strong><strong><code class="verbatim">gemma3:4b</code></strong></strong>, adequate for a practical first local chatbot.</li>
+<li>Start with <strong><code class="verbatim">gemma3:4b</code></strong>, adequate for a practical first local chatbot.</li>
 <li>Compare with <code class="verbatim">qwen3:8b</code> later (optional).</li>
 <li>Use <code class="verbatim">gemma3:1b</code> only if the larger model is too slow or unavailable.</li>
 <li>Unified RAM is shared with macOS: file size ≠ runtime memory use.</li>
@@ -464,7 +486,7 @@ Local model (CPU or GPU)
 </section>
 <section id="architecture" class="slide level2">
 <h2>Architecture</h2>
-<pre class="example"><code>Browser → Streamlit server → Ollama HTTP API
+<pre><code>Browser → Streamlit server → Ollama HTTP API
                │                  │
          chat history          model weights
                │                  │
@@ -491,9 +513,9 @@ Local model (CPU or GPU)
 <h2>Stretch tasks</h2>
 <ul>
 <li>Baseline app: model picker, clear history, temperature, JSON export.</li>
-<li><strong><strong>Your changes:</strong></strong> add a system prompt preset and report the difference.</li>
+<li><strong>Your changes:</strong> add a system prompt preset and report the difference.</li>
 <li>With Ollama stopped, show a <strong>friendly error</strong>, not a crash.</li>
-<li>Explain why edited code must be <strong><strong>saved</strong></strong> before rerunning.</li>
+<li>Explain why edited code must be <strong>saved</strong> before rerunning.</li>
 </ul>
 </section></section>
 <section>
@@ -511,29 +533,29 @@ Local model (CPU or GPU)
 <h2>Evaluation exercise</h2>
 <table>
 <thead>
-<tr class="header">
+<tr>
 <th>Input type</th>
 <th>Test</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
+<tr>
 <td>Exact format</td>
 <td>Is JSON parseable and schema-valid?</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Arithmetic</td>
 <td>Verify with ordinary Python</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Summarization</td>
 <td>Check facts against original</td>
 </tr>
-<tr class="even">
+<tr>
 <td>Failures</td>
 <td>Stop Ollama and observe feedback</td>
 </tr>
-<tr class="odd">
+<tr>
 <td>Compare models</td>
 <td>Record model, settings, latency</td>
 </tr>

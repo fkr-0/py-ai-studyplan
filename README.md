@@ -2,9 +2,13 @@
 
 An eight-session, project-first introduction to Python, neural networks, LLM inference, web UI development, and a little Docker.
 
+**Version:** 0.0.2 · [Changelog](CHANGELOG.md)
+
 **Target:** An independent beginner can explain training vs inference, write and debug basic Python, launch a local model, and build a small browser-based chatbot. A classical Tetris solver is an optional alternative exercise.
 
 **Budget:** About 16–23 contact hours plus 8–12 hours of exercises; budget 25–35 hours total, and more if programming is completely new. Milestones, not deadlines, determine pace.
+
+The eight sessions are topic groups that can span several daily blocks. The 21-day track includes practice; it is not extra work on top of eight workshops. At one hour per day, allow 25–35 study days. Docker is optional and can follow the core final demo.
 
 ## This learner's track — Apple Silicon / English / 1–2 hours per day
 

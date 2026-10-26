@@ -29,4 +29,4 @@ Open [rule_bot.py](../examples/rule_bot.py) after learning the minimal Python sy
 
 **Exit ticket:** draw boxes labelled user, application, model runtime, trained model. Explain each in one sentence.
 
-[Next: Python foundations](02-python-foundations.md)
+[Next: Mac editor + terminal workbench](01b-macos-workbench.md), then [Python foundations](02-python-foundations.md).

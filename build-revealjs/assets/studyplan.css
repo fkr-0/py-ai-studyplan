@@ -16,6 +16,11 @@
 .reveal .study-flow div { border-left:5px solid #b294bb; background:#292c31; padding:.8rem 1rem; font-size:.7em; }
 .reveal .study-flow small { display:block; font-size:.68em; color:#c5c8c6; margin-top:.5rem; }
 .reveal table { width:100%; }
+.reveal .course-timetable { font-size:.51em; line-height:1.35; margin:.8em auto; }
+.reveal .course-timetable caption { color:#8abeb7; text-align:left; margin-bottom:.65em; }
+.reveal .course-timetable th, .reveal .course-timetable td { padding:.45em .55em; vertical-align:top; }
+.reveal .course-timetable thead th { color:#8abeb7; }
+.reveal .course-timetable tbody th { white-space:nowrap; color:#f0c674; }
 .reveal .slides section[data-background] { text-align:left; }
 .reveal a { text-underline-offset:.14em; }
 .reveal pre { border-radius:2px; }

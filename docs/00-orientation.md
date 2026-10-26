@@ -14,7 +14,7 @@ Ask only what changes the plan:
 
 - **Goal**: general understanding, build an app, automate daily tasks, or career exploration?
 - **Background**: no code, spreadsheets, scripting, or another programming language?
-- **Weekly hours**: 2 / 4 / 6 / 8; can they practice independently?
+- **Daily practice**: is the planned 1–2 hours still realistic, and which days need a shorter block or a break? For other learners, ask about weekly availability.
 - **Computer**: OS, RAM, free disk, CPU/GPU (VRAM if known); may software be installed?
 - **Constraints**: internet availability, accessibility needs, willingness to use cloud resources.
 
@@ -34,7 +34,7 @@ The eight sessions are *milestones*; split or merge as needed. A conceptual vide
 
 Before: Can they find a terminal? Make a directory? Write `print("hello")`? Explain the difference between a website and a program running on their PC?
 
-After: Can they (1) explain inference vs training, (2) implement and debug simple Python functions, (3) isolate dependencies with `venv`, (4) run a local model if hardware permits, (5) connect Python → Ollama → browser UI, (6) validate output and handle an offline model, (7) package the UI in Docker?
+After: Can they (1) explain inference vs training, (2) implement and debug simple Python functions, (3) isolate dependencies with `venv`, (4) run a local model if hardware permits, (5) connect Python → Ollama → browser UI, (6) check output and handle an offline model? Docker packaging is an optional extension.
 
 ## Minimum setup
 

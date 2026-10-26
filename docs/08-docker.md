@@ -1,4 +1,4 @@
-# Session 08 — Enough Docker to be dangerous
+# 08 — Package the web UI with Docker (optional)
 
 **Time:** 2–3 hours, optional. **Output:** a reproducible containerized frontend.
 
@@ -29,3 +29,8 @@ The Compose file uses `host.docker.internal` as an explicit route to host-runnin
 ## Checkpoint
 
 Build, run, inspect logs, stop, and explain a connection-refused result without exposing the local model API publicly.
+
+    docker compose -f examples/compose.yaml logs --tail 30
+    docker compose -f examples/compose.yaml down
+
+Visit `http://127.0.0.1:8501` while Compose is running. If Docker setup takes the remaining study block, return to the native app and complete the [independent final demo](assessment.md) first.

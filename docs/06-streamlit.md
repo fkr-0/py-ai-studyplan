@@ -40,11 +40,11 @@ The Ollama service must be running separately on `http://127.0.0.1:11434`. Visit
 4. Send the conversation to Ollama; show a friendly error if its server is unavailable.
 5. Add model selection; remove or clear history on model changes to avoid confusion.
 
-The example implements the above with minimal code; read it before modifying.
+The starter includes chat history, a fixed model list, temperature, clear-history, a spinner and JSON export. It does not yet clear history automatically on model changes: use **Clear conversation** before comparing models, then implement automatic clearing as an exercise. Read the request code before modifying it. For a no-model warm-up, use the upstream tutorial's echo-bot exercise; the supplied `chat_app.py` itself requires Ollama for replies.
 
 ## Independence challenge
 
-Add a system prompt preset, a clear-history button and a spinner/streaming indicator. Demonstrate how the app behaves when Ollama is stopped.
+Add a system-prompt preset or automatic history clearing on model changes. The spinner is already present; token streaming is a separate extension. Demonstrate how the app behaves when Ollama is stopped.
 
 ## Security note
 

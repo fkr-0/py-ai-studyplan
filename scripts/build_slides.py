@@ -24,7 +24,7 @@ ARCHIVE_ROOT = "py-ai-studyplan"
 BUNDLED_DIRS = frozenset({
     "build-revealjs", "docs", "examples", "scripts", "template-reference", "tests",
 })
-BUNDLED_FILES = frozenset({"README.md", "Makefile", ".gitignore", "index.html", "CNAME", ".nojekyll", "DEPLOYMENT.md"})
+BUNDLED_FILES = frozenset({"README.md", "CHANGELOG.md", "Makefile", ".gitignore", "index.html", "CNAME", ".nojekyll", "DEPLOYMENT.md"})
 EXCLUDED_DIRS = frozenset({
     ".git", ".venv", "venv", "node_modules", "__pycache__", ".pytest_cache",
     ".mypy_cache", ".ruff_cache", ".idea", ".vscode", "dist", "build",
