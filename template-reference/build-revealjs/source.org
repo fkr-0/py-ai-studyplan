@@ -1,0 +1,1387 @@
+#+TITLE: Terminal Power
+#+SUBTITLE: A hands-on Reveal.js tutorial in Emacs Org mode
+#+AUTHOR: Flo Kri
+#+DATE: 2026-05-23
+#+LANGUAGE: en
+#+OPTIONS: toc:nil num:nil reveal_width:1400 reveal_height:900
+#+REVEAL_HLEVEL: 1
+#+REVEAL_THEME: tokyo-night
+#+REVEAL_TRANS: slide
+#+REVEAL_PLUGINS: (highlight notes search zoom)
+#+REVEAL_INIT_OPTIONS: slideNumber:true, hash:true, controls:true, progress:true, center:true, navigationMode:'default'
+#+REVEAL_VERSION: 4
+#+REVEAL_ROOT: ./reveal.js
+#+PROPERTY: header-args:sh :results output :exports both :eval never
+#+HTML_HEAD_EXTRA: <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+#+HTML_HEAD_EXTRA: <script>document.addEventListener('DOMContentLoaded', function () { if (window.mermaid) { mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'dark' }); } });</script>
+#+HTML_HEAD_EXTRA: <style>.mermaid { background: transparent; font-size: 0.9em; } .reveal pre.mermaid { box-shadow:none; border:none; background:transparent; }</style>
+#+HTML_HEAD_EXTRA: <style>.reveal { font-size: 34px; } .reveal h1, .reveal h2, .reveal h3 { text-transform: none; } .reveal pre code { max-height: 520px; font-size: 0.66em; } .reveal a { text-decoration: underline; }</style>
+
+* Terminal Power
+:PROPERTIES:
+:reveal_background: #111111
+:END:
+
+From one command to a WordPress article remix, and from there to a broader terminal skillset.
+
+#+begin_quote
+The terminal is easiest to learn when it solves a real task first.
+#+end_quote
+
+#+BEGIN_NOTES
+This deck is now intentionally ordered around practice first, then explanation, then fluency, then automation, then system operation, then terminal comfort.
+#+END_NOTES
+
+* Navigation map
+:PROPERTIES:
+:reveal_background: #101010
+:END:
+
+#+begin_export html
+<div class="mermaid">
+flowchart TD
+    A([Start]) --> B[1. First tutorial\nWordPress text remix]
+    B --> C[2. Concepts\nCLI, terminal, shell, paths]
+    C --> D[3. Basic shell commands\nls, cd, mkdir, touch, cat, mv, rm]
+    D --> E[4. Fluency\nhistory and key bindings]
+    E --> F[5. Streams and text tools\nstdin/out/err, &&, grep, find, sed, awk]
+    F --> G[6. Shell scripting\ncommands in files, $1, $2]
+    G --> H[7. Git by doing]
+    H --> I[8. Linux system toolkit\ndu, df, systemd, journalctl, ps, htop, kill]
+    I --> J[9. Enhancing the terminal\nzsh, zsh4humans, tmux, Unicode]
+    J --> K([Appendix / export / fallback])
+
+    B -. optional revisit .-> F
+    C -. if beginners need it earlier .-> D
+    F -. leads naturally to .-> G
+    D -. supports live practice in .-> H
+</div>
+#+end_export
+
+How to use this deck:
+
+- Horizontal navigation moves through the main storyline
+- Vertical navigation enters sub-chapters for each topic
+- Beginners can stay mostly on the upper path
+- Advanced audiences can dive downward into detail where useful
+
+* 1. First tutorial: remix a WordPress article from the shell
+:PROPERTIES:
+:reveal_background: #111111
+:END:
+
+We start with a real task.
+
+Goal:
+
+- fetch one WordPress article
+- extract its text
+- count common words
+- replace one word with a funny one
+- save the result locally
+
+Tool chain:
+
+#+begin_example
+curl  -> fetch data from the web
+jq    -> extract fields from JSON
+sed   -> transform text
+sort  -> sort lines
+uniq  -> count repeated neighboring lines
+grep  -> filter
+#+end_example
+
+** Why start here?
+
+Because the shell becomes convincing when it feels useful.
+
+This first topic demonstrates three big ideas immediately:
+
+- commands are composable
+- data often flows as text
+- a long task can be built from tiny observable steps
+
+** Safety and setup
+
+- Use a site you own, a staging site, or a public site that exposes its REST API
+- We stay read-only in this tutorial
+- We keep output intentionally small and inspectable
+- Replace the placeholder URL with a real WordPress site for the live demo
+
+#+begin_src sh
+export WP_URL="https://YOUR-SITE.example"
+#+end_src
+
+** Step 1: inspect the post list
+
+#+begin_src sh
+curl -s "$WP_URL/wp-json/wp/v2/posts?per_page=1&_fields=id,link,title" \
+  | jq .
+#+end_src
+
+Expected shape:
+
+#+begin_src json
+[
+  {
+    "id": 123,
+    "link": "https://YOUR-SITE.example/my-post/",
+    "title": { "rendered": "My Post Title" }
+  }
+]
+#+end_src
+
+** Step 2: extract exactly what we need
+
+#+begin_src sh
+curl -s "$WP_URL/wp-json/wp/v2/posts?per_page=1&_fields=id,link,title" \
+  | jq -r '.[0] | "id=\(.id)\ntitle=\(.title.rendered)\nlink=\(.link)"'
+#+end_src
+
+Key =jq= ideas:
+
+#+begin_example
+.          current JSON value
+.[0]       first item in an array
+.id        object field
+-r         output raw text rather than JSON strings
+#+end_example
+
+** Step 3: capture the post id
+
+#+begin_src sh
+export POST_ID="$({
+  curl -s "$WP_URL/wp-json/wp/v2/posts?per_page=1&_fields=id" \
+    | jq -r '.[0].id'
+})"
+
+printf 'POST_ID=%s\n' "$POST_ID"
+#+end_src
+
+** Step 4: download the article body as HTML
+
+#+begin_src sh
+curl -s "$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=title,content" \
+  | jq -r '.content.rendered' \
+  > article.html
+
+wc -c article.html
+head -n 5 article.html
+#+end_src
+
+** Step 5: make it plain-ish text
+
+#+begin_src sh
+sed -E \
+  -e 's/<[^>]+>/ /g' \
+  -e 's/&nbsp;/ /g' \
+  -e 's/&amp;/\&/g' \
+  -e 's/&quot;/"/g' \
+  article.html \
+  > article.txt
+
+head -n 10 article.txt
+#+end_src
+
+Note:
+
+- this is not a perfect HTML parser
+- it is good enough for a transparent beginner demo
+
+** Step 6: normalize into one word per line
+
+#+begin_src sh
+cat article.txt \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed -E 's/[^[:alpha:]]+/\n/g' \
+  | sed '/^$/d' \
+  > words.txt
+
+head words.txt
+wc -l words.txt
+#+end_src
+
+** Step 7: count common words
+
+#+begin_src sh
+cat words.txt \
+  | sort \
+  | uniq -c \
+  | sort -nr \
+  | head -n 20
+#+end_src
+
+Why it works:
+
+#+begin_example
+sort      puts equal words next to each other
+uniq -c   counts repeated neighboring lines
+sort -nr  sorts counts numerically, largest first
+head      limits visible output
+#+end_example
+
+** Step 8: ignore boring words
+
+#+begin_src sh
+cat > stopwords.txt <<'STOPWORDS'
+the
+and
+or
+a
+an
+to
+of
+in
+on
+for
+with
+is
+are
+was
+were
+this
+that
+STOPWORDS
+
+grep -vxF -f stopwords.txt words.txt \
+  | sort \
+  | uniq -c \
+  | sort -nr \
+  | head -n 20
+#+end_src
+
+** Step 9: replace one common word with a funny one
+
+#+begin_src sh
+export WORD="example"
+export FUNNY="bananaphone"
+
+sed -E \
+  "s/(^|[^[:alnum:]_])${WORD}([^[:alnum:]_]|$)/\1${FUNNY}\2/g" \
+  article.txt \
+  > remixed.txt
+
+head -n 20 remixed.txt
+#+end_src
+
+Good live-demo move:
+
+- let the audience choose =WORD=
+- let the audience choose =FUNNY=
+
+** Step 10: compare before and after
+
+#+begin_src sh
+printf '\n--- original ---\n'
+grep -n "$WORD" article.txt | head
+
+printf '\n--- remixed ---\n'
+grep -n "$FUNNY" remixed.txt | head
+#+end_src
+
+** Step 11: view the result comfortably
+
+#+begin_src sh
+fold -s -w 80 remixed.txt | less
+#+end_src
+
+Useful keys inside =less=:
+
+#+begin_example
+Space   next page
+b       previous page
+/word   search
+n       next search result
+q       quit
+#+end_example
+
+** Full one-shot pipeline
+
+#+begin_src sh
+curl -s "$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content" \
+  | jq -r '.content.rendered' \
+  | sed -E 's/<[^>]+>/ /g; s/&nbsp;/ /g; s/&amp;/\&/g; s/&quot;/"/g' \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed -E 's/[^[:alpha:]]+/\n/g' \
+  | sed '/^$/d' \
+  | grep -vxF -f stopwords.txt \
+  | sort \
+  | uniq -c \
+  | sort -nr \
+  | head -n 20
+#+end_src
+
+** Script version
+
+#+begin_src sh
+cat > wp-word-remix.sh <<'SCRIPT'
+#!/usr/bin/env sh
+set -eu
+
+: "${WP_URL:?set WP_URL, e.g. https://example.org}"
+: "${POST_ID:?set POST_ID, e.g. 123}"
+: "${WORD:?set WORD, e.g. terminal}"
+: "${FUNNY:=bananaphone}"
+
+curl -s "$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content" \
+  | jq -r '.content.rendered' \
+  | sed -E 's/<[^>]+>/ /g; s/&nbsp;/ /g; s/&amp;/\&/g; s/&quot;/"/g' \
+  | sed -E "s/(^|[^[:alnum:]_])${WORD}([^[:alnum:]_]|$)/\1${FUNNY}\2/g"
+SCRIPT
+
+chmod +x wp-word-remix.sh
+./wp-word-remix.sh > remixed-script-output.txt
+#+end_src
+
+** Debugging pattern: inspect from left to right
+
+#+begin_src sh
+curl -s "$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content" | head
+
+curl -s "$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content" \
+  | jq . \
+  | head
+
+curl -s "$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content" \
+  | jq -r '.content.rendered' \
+  | head
+#+end_src
+
+#+begin_quote
+When a pipeline fails, do not stare at the whole thing. Break it at every pipe and inspect each stage.
+#+end_quote
+
+** Mini exercises
+
+1. Show the 30 most common words instead of 20
+2. Change the funny replacement word
+3. Pick a different =POST_ID=
+4. Save a small report file with the top words
+
+* 2. Concepts after practice
+:PROPERTIES:
+:reveal_background: #141414
+:END:
+
+We now step back and name the concepts we have already used.
+
+** CLI, terminal, shell
+
+- =CLI= / command line interface
+  - a text-based interface to software
+- =terminal=
+  - the app or device that shows text input and output
+  - examples: GNOME Terminal, Alacritty, kitty, iTerm2
+- =shell=
+  - the program and language reading your commands
+  - examples: =sh=, =bash=, =zsh=
+
+#+BEGIN_NOTES
+People casually say “terminal” for the whole stack. That is common, but the distinctions help with understanding and debugging.
+#+END_NOTES
+
+** =sh= and =bash=
+
+- =sh=
+  - the classic shell interface
+  - portable scripts often target =/bin/sh=
+- =bash=
+  - Bourne Again SHell
+  - common and featureful
+- today
+  - most examples also feel natural in =zsh=
+  - some details vary across systems
+
+** The core shell pattern
+
+#+begin_src sh
+program argument1 argument2 argument3
+#+end_src
+
+Read a command line as:
+
+#+begin_example
+first position   -> the program to run
+later positions  -> arguments passed to that program
+#+end_example
+
+Example:
+
+#+begin_src sh
+curl -s https://example.org
+#+end_src
+
+#+begin_example
+curl   -> program
+-s     -> option / argument
+URL    -> argument
+#+end_example
+
+** Options, arguments, quoting
+
+#+begin_src sh
+curl -s "https://example.org/search?q=hello world"
+#+end_src
+
+- options change behavior: =-s=, =--help=
+- arguments provide values
+- quotes keep spaces together
+- the shell processes the line before the program sees it
+
+** Current working directory
+
+Every shell process has a current working directory.
+
+#+begin_src sh
+pwd
+#+end_src
+
+This matters because relative paths are interpreted from there.
+
+** Relative and absolute paths
+
+#+begin_example
+.                  current directory
+..                 parent directory
+article.txt        relative path
+./article.txt      relative path, explicit current dir
+/tmp/article.txt   absolute path
+~/article.txt      path inside your home directory
+#+end_example
+
+Short demo:
+
+#+begin_src sh
+mkdir -p terminal-demo
+cd terminal-demo
+printf 'hello terminal\n' > note.txt
+cat note.txt
+cat ./note.txt
+cat "$HOME/terminal-demo/note.txt"
+#+end_src
+
+** Pipes: why the shell feels powerful
+
+A pipe sends the output of one command into the input of another.
+
+#+begin_src sh
+cat fish.txt | sort
+#+end_src
+
+#+begin_example
+program A stdout  --->  stdin program B
+#+end_example
+
+You can read =|= as “then feed that into”.
+
+** One more tiny pipeline
+
+#+begin_src sh
+printf 'one fish\ntwo fish\nred fish\nblue fish\n' > fish.txt
+cat fish.txt | sort | uniq -c | sort -nr
+#+end_src
+
+#+begin_quote
+The shell is not one giant tool. It is a place where small tools cooperate.
+#+end_quote
+
+* 3. Basic shell commands
+:PROPERTIES:
+:reveal_background: #151515
+:END:
+
+The next layer is filesystem confidence.
+
+** Listing and location: =pwd= and =ls=
+
+#+begin_src sh
+pwd
+ls
+ls -l
+ls -la
+ls -lh
+#+end_src
+
+- =pwd= prints the current working directory
+- =ls= lists files
+- =-l= detailed listing
+- =-a= include hidden files
+- =-h= human-readable sizes
+
+** Change directory: =cd=
+
+#+begin_src sh
+cd /tmp
+pwd
+
+cd ~
+pwd
+
+cd ..
+pwd
+
+cd -
+pwd
+#+end_src
+
+- =/= root of the filesystem
+- =~= your home directory
+- =..= parent directory
+- =-= previous directory
+
+** Make directories: =mkdir=
+
+#+begin_src sh
+mkdir terminal-demo
+cd terminal-demo
+
+mkdir notes
+mkdir -p project/src project/out project/tmp
+find . -maxdepth 2 -type d | sort
+#+end_src
+
+** Create files: =touch=
+
+#+begin_src sh
+touch notes/first.txt
+touch project/src/main.txt
+ls -l notes project/src
+#+end_src
+
+- creates an empty file if missing
+- updates timestamps if present
+
+** Read files: =cat=, =head=, =tail=, =less=
+
+#+begin_src sh
+printf 'alpha\nbeta\ngamma\ndelta\n' > notes/first.txt
+
+cat notes/first.txt
+head -n 2 notes/first.txt
+tail -n 2 notes/first.txt
+less notes/first.txt
+#+end_src
+
+** Move and rename: =mv=
+
+#+begin_src sh
+mv notes/first.txt notes/renamed.txt
+ls notes
+
+mv notes/renamed.txt project/src/article.txt
+find . -type f | sort
+#+end_src
+
+- =mv OLD NEW= renames
+- =mv FILE DIR/= moves into a directory
+
+** Remove: =rm= and =rmdir=
+
+#+begin_src sh
+rm project/src/article.txt
+rmdir notes
+rm -r project/tmp
+find . -maxdepth 3 | sort
+#+end_src
+
+- =rm FILE= removes a file
+- =rmdir DIR= removes an empty directory
+- =rm -r DIR= removes a directory tree recursively
+
+#+BEGIN_NOTES
+Be explicit: shell deletion usually skips the trash can. Teach care, not bravado.
+#+END_NOTES
+
+** Mini drill: build a workspace
+
+#+begin_src sh
+mkdir -p workshop/{raw,clean,out}
+printf 'The shell is small tools.\n' > workshop/raw/text.txt
+cat workshop/raw/text.txt
+mv workshop/raw/text.txt workshop/clean/text.txt
+cp workshop/clean/text.txt workshop/out/copy.txt
+find workshop -type f | sort
+#+end_src
+
+* 4. Fluency: history and key bindings
+:PROPERTIES:
+:reveal_background: #151515
+:END:
+
+Editing the command line efficiently is part of terminal literacy.
+
+** The idea
+
+#+begin_example
+history       old commands remembered by the shell
+line editing  moving and changing the current command
+signals       keys that talk to the running process
+#+end_example
+
+Many default shell bindings are Emacs-style.
+
+** =Ctrl-R=: reverse history search
+
+=Ctrl-R= opens reverse incremental search through command history.
+
+#+begin_example
+(reverse-i-search)`curl': curl -s "$WP_URL/wp-json/wp/v2/posts?per_page=1"
+#+end_example
+
+Useful rhythm:
+
+#+begin_example
+Ctrl-R   start search
+curl     search for old curl commands
+Ctrl-R   jump to older matches
+Enter    run the selected command
+#+end_example
+
+Hands-on:
+
+#+begin_src sh
+history | tail -n 20
+# then press Ctrl-R interactively
+#+end_src
+
+** =Ctrl-C= and =Ctrl-D=
+
+#+begin_example
+Ctrl-C   interrupt the currently running command
+Ctrl-D   end input / exit shell when the line is empty
+#+end_example
+
+Try:
+
+#+begin_src sh
+sleep 999
+# press Ctrl-C
+
+sh
+# press Ctrl-D on an empty line to leave the subshell
+#+end_src
+
+** Movement keys
+
+#+begin_example
+Ctrl-A   beginning of line
+Ctrl-E   end of line
+Ctrl-B   backward one character
+Ctrl-F   forward one character
+Ctrl-P   previous history entry
+Ctrl-N   next history entry
+#+end_example
+
+Exercise:
+
+#+begin_src sh
+printf 'hello terminal tutorial\n'
+# Before pressing Enter, move through the line with Ctrl-A/E/B/F
+# Then browse history with Ctrl-P and Ctrl-N
+#+end_src
+
+** Emacs bindings vs vi bindings
+
+Many shells support either style.
+
+#+begin_example
+Emacs-style:
+  Ctrl-A, Ctrl-E, Ctrl-R, Ctrl-P, Ctrl-N
+
+vi-style:
+  modal editing, often preferred by vim/neovim users
+#+end_example
+
+In =bash=:
+
+#+begin_src sh
+set -o emacs
+set -o vi
+#+end_src
+
+#+begin_quote
+This is not an editor war. The important point is that command lines are editable text, not a one-shot prompt.
+#+end_quote
+
+* 5. Streams, exit codes, and core text tools
+:PROPERTIES:
+:reveal_background: #1b1611
+:END:
+
+The shell becomes deep once you understand streams and status.
+
+** Standard input, output, error
+
+#+begin_example
+stdin    standard input   stream 0
+stdout   standard output  stream 1
+stderr   standard error   stream 2
+#+end_example
+
+These streams explain piping and redirection.
+
+** stdin and stdout in practice
+
+#+begin_src sh
+printf 'banana\napple\nbanana\n' > fruit.txt
+
+cat fruit.txt
+cat < fruit.txt
+cat fruit.txt | sort
+#+end_src
+
+Three views of the same idea:
+
+#+begin_example
+file argument   cat fruit.txt
+stdin redirect  cat < fruit.txt
+pipe            cat fruit.txt | sort
+#+end_example
+
+** stderr is separate
+
+#+begin_src sh
+ls fruit.txt missing-file.txt > out.log 2> err.log
+
+printf 'stdout:\n'
+cat out.log
+
+printf 'stderr:\n'
+cat err.log
+#+end_src
+
+Important idea:
+
+- =stdout= can be clean data
+- =stderr= can remain diagnostics
+
+** Combining or discarding streams
+
+#+begin_src sh
+ls fruit.txt missing-file.txt > combined.log 2>&1
+cat combined.log
+
+ls fruit.txt missing-file.txt 2>/dev/null
+#+end_src
+
+Read =2>&1= as:
+
+#+begin_example
+send stderr to the same destination stdout currently uses
+#+end_example
+
+** Exit codes
+
+Every command exits with a status code.
+
+#+begin_example
+0      success
+non-0  failure or a special condition
+#+end_example
+
+Hands-on:
+
+#+begin_src sh
+true
+echo "$?"
+
+false
+echo "$?"
+
+grep banana fruit.txt
+echo "$?"
+
+grep dragon fruit.txt
+echo "$?"
+#+end_src
+
+** =&&=, =;=, and =||=
+
+#+begin_example
+cmd1 ;  cmd2   run cmd2 regardless of success
+cmd1 && cmd2   run cmd2 only if cmd1 succeeded
+cmd1 || cmd2   run cmd2 only if cmd1 failed
+#+end_example
+
+Hands-on:
+
+#+begin_src sh
+mkdir -p safe-demo && cd safe-demo && pwd
+false ;  echo 'semicolon still continues'
+false && echo 'this will not run'
+false || echo 'this handles failure'
+#+end_src
+
+** =grep=: search text
+
+#+begin_src sh
+grep root /etc/passwd
+grep -n root /etc/passwd
+grep -R 'TODO' .
+grep -i 'error' logfile.txt
+#+end_src
+
+- =-n= line numbers
+- =-R= recursive search
+- =-i= case-insensitive
+
+** =find=: search the filesystem
+
+#+begin_src sh
+find . -type f
+find . -type f -name '*.org'
+find . -type f -mtime -1
+find . -type f -size +10M
+#+end_src
+
+- ask =find= precise questions
+- then pipe the result onward if needed
+
+** =sed=: basic stream editing
+
+#+begin_src sh
+printf 'cats like cats\n' > demo.txt
+sed 's/cats/badgers/' demo.txt
+sed 's/cats/badgers/g' demo.txt
+sed -n '1,3p' demo.txt
+#+end_src
+
+- =s/old/new/= replace first match on each line
+- =s/old/new/g= replace all matches on each line
+- =-n ... p= print only selected lines
+
+** =awk=: fields and rows
+
+#+begin_src sh
+printf 'alice 10\nbob 25\ncarol 15\n' > scores.txt
+awk '{ print $1 }' scores.txt
+awk '{ print $1, $2 * 2 }' scores.txt
+awk '$2 >= 15 { print $1 }' scores.txt
+#+end_src
+
+- =awk= works well on column-like text
+- =$1= first field, =$2= second field
+
+* 6. Shell scripting
+:PROPERTIES:
+:reveal_background: #111821
+:END:
+
+A shell script is often just the commands you would otherwise type, saved into a file.
+
+** The basic mental model
+
+#+begin_example
+terminal session        script file
+---------------         ----------------
+command 1               command 1
+command 2       --->    command 2
+command 3               command 3
+#+end_example
+
+It is a dynamic interpreted language: the shell reads and executes the file at runtime.
+
+** From command list to script
+
+#+begin_src sh
+cat > word-count-demo.sh <<'SCRIPT'
+#!/usr/bin/env sh
+set -eu
+
+mkdir -p reports
+printf 'hello\nterminal\nhello\n' > reports/input.txt
+cat reports/input.txt | sort | uniq -c
+SCRIPT
+
+chmod +x word-count-demo.sh
+./word-count-demo.sh
+#+end_src
+
+** Shebang and basic safety flags
+
+#+begin_src sh
+#!/usr/bin/env sh
+set -eu
+#+end_src
+
+Meaning:
+
+#+begin_example
+#!/usr/bin/env sh   run the file with sh
+set -e              stop on command failure
+set -u              stop on unset variables
+#+end_example
+
+** Command-line arguments: =$1= and =$2=
+
+#+begin_example
+$0   script name
+$1   first argument
+$2   second argument
+$@   all arguments
+$#   number of arguments
+#+end_example
+
+Example:
+
+#+begin_src sh
+cat > greet.sh <<'SCRIPT'
+#!/usr/bin/env sh
+set -eu
+
+name="$1"
+word="$2"
+
+printf 'Hello %s, welcome to %s!\n' "$name" "$word"
+SCRIPT
+
+chmod +x greet.sh
+./greet.sh Flo terminal
+#+end_src
+
+** Validate arguments
+
+#+begin_src sh
+cat > replace-word.sh <<'SCRIPT'
+#!/usr/bin/env sh
+set -eu
+
+if [ "$#" -lt 3 ]; then
+  printf 'usage: %s FILE WORD REPLACEMENT\n' "$0" >&2
+  exit 2
+fi
+
+file="$1"
+word="$2"
+replacement="$3"
+
+sed -E "s/(^|[^[:alnum:]_])${word}([^[:alnum:]_]|$)/\1${replacement}\2/g" "$file"
+SCRIPT
+
+chmod +x replace-word.sh
+./replace-word.sh article.txt terminal cyberbadger > replaced-by-script.txt
+#+end_src
+
+** Script version of the WordPress remix with arguments
+
+#+begin_src sh
+cat > wp-remix-args.sh <<'SCRIPT'
+#!/usr/bin/env sh
+set -eu
+
+if [ "$#" -lt 4 ]; then
+  printf 'usage: %s WP_URL POST_ID WORD REPLACEMENT\n' "$0" >&2
+  exit 2
+fi
+
+wp_url="$1"
+post_id="$2"
+word="$3"
+replacement="$4"
+
+curl -s "$wp_url/wp-json/wp/v2/posts/$post_id?_fields=content" \
+  | jq -r '.content.rendered' \
+  | sed -E 's/<[^>]+>/ /g; s/&nbsp;/ /g; s/&amp;/\&/g; s/&quot;/"/g' \
+  | sed -E "s/(^|[^[:alnum:]_])${word}([^[:alnum:]_]|$)/\1${replacement}\2/g"
+SCRIPT
+
+chmod +x wp-remix-args.sh
+./wp-remix-args.sh "$WP_URL" "$POST_ID" terminal cyberbadger > remixed-args.txt
+#+end_src
+
+** Exercise ideas
+
+Add one feature:
+
+- print the post title first
+- accept an optional output filename
+- add a =--help= mode
+- save the top 20 words next to the remixed article
+
+* 7. Git by doing
+:PROPERTIES:
+:reveal_background: #101820
+:END:
+
+Git records snapshots of a directory over time.
+
+** The Git mental model
+
+#+begin_example
+working tree  files as they exist now
+staging area  selected changes for the next commit
+commit        a saved snapshot
+branch        a movable name pointing at a commit
+#+end_example
+
+** Create a repository
+
+#+begin_src sh
+mkdir -p git-demo
+cd git-demo
+
+git init
+git status
+#+end_src
+
+** Create a file and inspect status
+
+#+begin_src sh
+printf '# Terminal Demo\n\nFirst note.\n' > README.md
+
+git status
+git diff
+#+end_src
+
+Interpretation:
+
+- the file exists in the working tree
+- Git sees it as untracked
+- it is not yet part of history
+
+** Stage and commit
+
+#+begin_src sh
+git add README.md
+git status
+
+git commit -m 'Add README'
+git log --oneline --decorate --graph
+#+end_src
+
+** Modify and inspect
+
+#+begin_src sh
+printf '\nSecond note: pipelines compose tools.\n' >> README.md
+
+git status
+git diff
+#+end_src
+
+Read =git diff= like a patch:
+
+#+begin_example
+--- old version
++++ new version
++ added line
+- removed line
+#+end_example
+
+** Commit again
+
+#+begin_src sh
+git add README.md
+git commit -m 'Add pipeline note'
+git log --oneline --decorate --graph --all
+#+end_src
+
+** Branch and try another version
+
+#+begin_src sh
+git switch -c funny-version
+sed 's/pipelines/bananaphones/g' README.md > README.next
+mv README.next README.md
+
+git diff
+git add README.md
+git commit -m 'Make README funny'
+
+git log --oneline --decorate --graph --all
+#+end_src
+
+** Switch between versions
+
+#+begin_src sh
+git switch main 2>/dev/null || git switch master
+cat README.md
+
+git switch funny-version
+cat README.md
+#+end_src
+
+#+BEGIN_NOTES
+Some Git setups still default to master, others to main. This command handles both.
+#+END_NOTES
+
+* 8. The Linux system toolkit
+:PROPERTIES:
+:reveal_background: #101820
+:END:
+
+The terminal is also how we inspect the machine itself.
+
+** =du=: disk usage
+
+#+begin_src sh
+du -sh .
+du -h --max-depth=1 . | sort -h
+#+end_src
+
+- =du= answers: where did the space go?
+
+** =df=: filesystem usage
+
+#+begin_src sh
+df -h
+df -h /
+df -h /home
+#+end_src
+
+- =df= answers: how much space remains on this filesystem?
+
+** =systemctl=: services
+
+#+begin_src sh
+systemctl status ssh
+systemctl is-active ssh
+systemctl list-units --type=service --state=running
+
+sudo systemctl restart ssh
+sudo systemctl enable --now ssh
+#+end_src
+
+** =journalctl=: logs
+
+#+begin_src sh
+journalctl -b
+journalctl -u ssh
+journalctl -u ssh -n 50
+journalctl -u ssh -f
+journalctl --since '1 hour ago'
+#+end_src
+
+** =ps ax= and =htop=: processes
+
+#+begin_src sh
+ps ax
+ps ax | grep ssh
+htop
+#+end_src
+
+- =ps ax= gives a quick process listing
+- =htop= gives an interactive process viewer
+
+** =kill=, =pkill=, =pgrep=
+
+#+begin_src sh
+sleep 999 &
+pgrep sleep
+kill $(pgrep sleep)
+
+sleep 999 &
+pkill sleep
+pgrep -a ssh
+#+end_src
+
+- =kill PID= signal a process by id
+- =pkill NAME= signal by name
+- =pgrep= search processes more safely than =ps ax | grep ...=
+
+** Mini incident: “the server is full”
+
+#+begin_src sh
+df -h
+du -h --max-depth=1 /var | sort -h
+journalctl --disk-usage
+journalctl --vacuum-time=7d
+#+end_src
+
+#+begin_quote
+Good terminal work means knowing which question each tool answers.
+#+end_quote
+
+* 9. Enhancing the terminal
+:PROPERTIES:
+:reveal_background: #181818
+:END:
+
+A default shell works. A tuned interactive shell can feel dramatically more humane.
+
+** Why Zsh is often the nicer interactive shell
+
+- strong completion system
+- rich prompt customization
+- large plugin ecosystem
+- good integration with fuzzy search, autosuggestions, and syntax highlighting
+
+#+begin_quote
+For interactive use, Zsh is often the nicer shell. For scripts, =sh= or =bash= still remain the practical default.
+#+end_quote
+
+** A pragmatic rule: =zsh= for humans, =sh= for scripts
+
+#+begin_example
+interactive daily shell:
+  zsh is often the most comfortable
+
+team / deployment scripts:
+  bash is common and predictable
+
+maximum portability:
+  POSIX sh
+#+end_example
+
+** Zsh for Humans: the idea
+
+=Zsh for Humans= is a curated Zsh setup that bundles many quality-of-life features people otherwise assemble manually.
+
+Typical value:
+
+- better history search
+- syntax highlighting
+- autosuggestions
+- better completion
+- good prompt defaults
+- tmux-oriented workflow
+
+** Better =Ctrl-R= history
+
+With a fuzzy-history setup, =Ctrl-R= becomes more like a searchable command picker.
+
+#+begin_example
+search: wp curl jq
+
+curl -s https://example.org/wp-json/wp/v2/posts?per_page=1 | jq .
+./wp-remix.sh https://example.org absurd badger
+jq -r '.content.rendered' post.json | sed 's/<[^>]*>//g'
+#+end_example
+
+- type fragments in any order
+- preview old commands
+- reuse complex commands without retyping them
+
+** Syntax highlighting and autosuggestions
+
+#+begin_example
+valid command      -> visually reassuring
+unknown command    -> warning color
+quoted strings     -> visually distinct
+history suggestion -> ghost text after the cursor
+#+end_example
+
+This reduces mistakes before you press =Enter=.
+
+** Tmux by default
+
+=tmux= is a terminal multiplexer.
+
+#+begin_example
+one terminal window
+  -> multiple sessions
+  -> multiple windows
+  -> multiple panes
+  -> survives disconnects
+#+end_example
+
+Why it matters:
+
+- long-running commands
+- SSH sessions
+- side-by-side logs and shell work
+- resume after network interruption
+
+** Unicode characters and fonts
+
+Modern terminal setups often use Unicode for:
+
+- prompt separators
+- Git branch icons
+- status indicators
+- box drawing
+- powerline-like segments
+
+Practical warning:
+
+- use a font with the required glyphs
+- keep a simple fallback prompt for remote machines
+- broken glyphs are usually configuration issues, not mystery breakage
+
+** Installation philosophy
+
+#+begin_example
+1. read the README
+2. inspect what the installer changes
+3. back up ~/.zshrc and related config
+4. test on a VM or non-critical user first
+5. keep a rescue shell open
+#+end_example
+
+#+begin_quote
+A better shell should reduce friction without hiding how the system works.
+#+end_quote
+
+* Recap
+:PROPERTIES:
+:reveal_background: #121212
+:END:
+
+#+begin_example
+practice first    -> WordPress text remix
+mental model      -> CLI / terminal / shell / paths / pipes
+everyday basics   -> ls cd mkdir touch cat mv rm
+fluency           -> history and key bindings
+composition       -> streams, exit codes, grep, find, sed, awk
+automation        -> shell scripts with arguments
+history of work   -> Git
+system operation  -> du df systemctl journalctl ps htop kill
+comfort           -> zsh, zsh4humans, tmux, Unicode
+#+end_example
+
+#+begin_quote
+The terminal is not one skill. It is a small number of patterns repeated across many domains.
+#+end_quote
+
+* Appendix: export from Emacs to Reveal.js
+
+This file is intended for Org export to Reveal.js.
+
+Typical preparation:
+
+#+begin_src sh
+git clone https://github.com/hakimel/reveal.js.git
+#+end_src
+
+Relevant header settings in this deck:
+
+#+begin_example
+#+REVEAL_ROOT: ./reveal.js
+#+REVEAL_VERSION: 4
+#+REVEAL_HLEVEL: 1
+#+end_example
+
+Reading the =REVEAL_HLEVEL= choice:
+
+- =*= headings become horizontal slides
+- =**= headings become vertical sub-slides
+
+** Presenter checklist
+
+Before the talk:
+
+- install =curl=, =jq=, =sed=, =sort=, =uniq=, =grep=
+- test the WordPress URL and post id once
+- keep fallback =article.html= and =article.txt= locally
+- increase terminal font size
+- use a clean demo directory
+- avoid live production credentials
+
+** Fallback without WordPress
+
+If the network fails, create local demo text instead.
+
+#+begin_src sh
+cat > article.txt <<'TEXT'
+The terminal is a small room with a very large door.
+The shell waits for a command.
+The command calls a program.
+The program reads text, writes text, and changes the world a little.
+TEXT
+
+cat article.txt \
+  | tr '[:upper:]' '[:lower:]' \
+  | sed -E 's/[^[:alpha:]]+/\n/g' \
+  | sed '/^$/d' \
+  | sort \
+  | uniq -c \
+  | sort -nr
+#+end_src

@@ -1,0 +1,1325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Terminal Power</title>
+  <meta name="author" content="Flo Kri">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/tokyo-night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/tokyo-night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
+  <link rel="stylesheet" href="assets/tomorrow-night-terminal.css">
+  <style>
+    .reveal { font-size: 34px; }
+    .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
+    .reveal pre code { max-height: 520px; font-size: 0.66em; }
+    .reveal a { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+<section>
+<h2>Terminal Power</h2>
+<p>From one command to a WordPress article remix, and from there to a
+broader terminal skillset.</p>
+<blockquote>
+<p>The terminal is easiest to learn when it solves a real task
+first.</p>
+</blockquote>
+<aside class="notes">
+<p>This deck is now intentionally ordered around practice first, then
+explanation, then fluency, then automation, then system operation, then
+terminal comfort.</p>
+</aside>
+</section>
+<section>
+<h2>Navigation map</h2>
+<div class="mermaid">
+flowchart TD
+    A([Start]) --> B[1. First tutorial\nWordPress text remix]
+    B --> C[2. Concepts\nCLI, terminal, shell, paths]
+    C --> D[3. Basic shell commands\nls, cd, mkdir, touch, cat, mv, rm]
+    D --> E[4. Fluency\nhistory and key bindings]
+    E --> F[5. Streams and text tools\nstdin/out/err, &&, grep, find, sed, awk]
+    F --> G[6. Shell scripting\ncommands in files, $1, $2]
+    G --> H[7. Git by doing]
+    H --> I[8. Linux system toolkit\ndu, df, systemd, journalctl, ps, htop, kill]
+    I --> J[9. Enhancing the terminal\nzsh, zsh4humans, tmux, Unicode]
+    J --> K([Appendix / export / fallback])
+
+    B -. optional revisit .-> F
+    C -. if beginners need it earlier .-> D
+    F -. leads naturally to .-> G
+    D -. supports live practice in .-> H
+</div>
+
+<p>How to use this deck:</p>
+<ul>
+<li>Horizontal navigation moves through the main storyline</li>
+<li>Vertical navigation enters sub-chapters for each topic</li>
+<li>Beginners can stay mostly on the upper path</li>
+<li>Advanced audiences can dive downward into detail where useful</li>
+</ul>
+</section>
+<section>
+<section>
+<h2>1. First tutorial: remix a WordPress article from the shell</h2>
+<p>We start with a real task.</p>
+<p>Goal:</p>
+<ul>
+<li>fetch one WordPress article</li>
+<li>extract its text</li>
+<li>count common words</li>
+<li>replace one word with a funny one</li>
+<li>save the result locally</li>
+</ul>
+<p>Tool chain:</p>
+<pre><code data-trim>curl  -&gt; fetch data from the web
+jq    -&gt; extract fields from JSON
+sed   -&gt; transform text
+sort  -&gt; sort lines
+uniq  -&gt; count repeated neighboring lines
+grep  -&gt; filter
+</code></pre>
+</section>
+<section>
+<h3>Why start here?</h3>
+<p>Because the shell becomes convincing when it feels useful.</p>
+<p>This first topic demonstrates three big ideas immediately:</p>
+<ul>
+<li>commands are composable</li>
+<li>data often flows as text</li>
+<li>a long task can be built from tiny observable steps</li>
+</ul>
+</section>
+<section>
+<h3>Safety and setup</h3>
+<ul>
+<li>Use a site you own, a staging site, or a public site that exposes
+its REST API</li>
+<li>We stay read-only in this tutorial</li>
+<li>We keep output intentionally small and inspectable</li>
+<li>Replace the placeholder URL with a real WordPress site for the live
+demo</li>
+</ul>
+<pre><code class="language-bash" data-trim>export WP_URL=&quot;https://YOUR-SITE.example&quot;
+</code></pre>
+</section>
+<section>
+<h3>Step 1: inspect the post list</h3>
+<pre><code class="language-bash" data-trim>curl -s &quot;$WP_URL/wp-json/wp/v2/posts?per_page=1&amp;_fields=id,link,title&quot; \
+  | jq .
+</code></pre>
+<p>Expected shape:</p>
+<pre><code class="language-json" data-trim>[
+  {
+    &quot;id&quot;: 123,
+    &quot;link&quot;: &quot;https://YOUR-SITE.example/my-post/&quot;,
+    &quot;title&quot;: { &quot;rendered&quot;: &quot;My Post Title&quot; }
+  }
+]
+</code></pre>
+</section>
+<section>
+<h3>Step 2: extract exactly what we need</h3>
+<pre><code class="language-bash" data-trim>curl -s &quot;$WP_URL/wp-json/wp/v2/posts?per_page=1&amp;_fields=id,link,title&quot; \
+  | jq -r &#39;.[0] | &quot;id=\(.id)\ntitle=\(.title.rendered)\nlink=\(.link)&quot;&#39;
+</code></pre>
+<p>Key <code class="verbatim">jq</code> ideas:</p>
+<pre><code data-trim>.          current JSON value
+.[0]       first item in an array
+.id        object field
+-r         output raw text rather than JSON strings
+</code></pre>
+</section>
+<section>
+<h3>Step 3: capture the post id</h3>
+<pre><code class="language-bash" data-trim>export POST_ID=&quot;$({
+  curl -s &quot;$WP_URL/wp-json/wp/v2/posts?per_page=1&amp;_fields=id&quot; \
+    | jq -r &#39;.[0].id&#39;
+})&quot;
+
+printf &#39;POST_ID=%s\n&#39; &quot;$POST_ID&quot;
+</code></pre>
+</section>
+<section>
+<h3>Step 4: download the article body as HTML</h3>
+<pre><code class="language-bash" data-trim>curl -s &quot;$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=title,content&quot; \
+  | jq -r &#39;.content.rendered&#39; \
+  &gt; article.html
+
+wc -c article.html
+head -n 5 article.html
+</code></pre>
+</section>
+<section>
+<h3>Step 5: make it plain-ish text</h3>
+<pre><code class="language-bash" data-trim>sed -E \
+  -e &#39;s/&lt;[^&gt;]+&gt;/ /g&#39; \
+  -e &#39;s/&amp;nbsp;/ /g&#39; \
+  -e &#39;s/&amp;amp;/\&amp;/g&#39; \
+  -e &#39;s/&amp;quot;/&quot;/g&#39; \
+  article.html \
+  &gt; article.txt
+
+head -n 10 article.txt
+</code></pre>
+<p>Note:</p>
+<ul>
+<li>this is not a perfect HTML parser</li>
+<li>it is good enough for a transparent beginner demo</li>
+</ul>
+</section>
+<section>
+<h3>Step 6: normalize into one word per line</h3>
+<pre><code class="language-bash" data-trim>cat article.txt \
+  | tr &#39;[:upper:]&#39; &#39;[:lower:]&#39; \
+  | sed -E &#39;s/[^[:alpha:]]+/\n/g&#39; \
+  | sed &#39;/^$/d&#39; \
+  &gt; words.txt
+
+head words.txt
+wc -l words.txt
+</code></pre>
+</section>
+<section>
+<h3>Step 7: count common words</h3>
+<pre><code class="language-bash" data-trim>cat words.txt \
+  | sort \
+  | uniq -c \
+  | sort -nr \
+  | head -n 20
+</code></pre>
+<p>Why it works:</p>
+<pre><code data-trim>sort      puts equal words next to each other
+uniq -c   counts repeated neighboring lines
+sort -nr  sorts counts numerically, largest first
+head      limits visible output
+</code></pre>
+</section>
+<section>
+<h3>Step 8: ignore boring words</h3>
+<pre><code class="language-bash" data-trim>cat &gt; stopwords.txt &lt;&lt;&#39;STOPWORDS&#39;
+the
+and
+or
+a
+an
+to
+of
+in
+on
+for
+with
+is
+are
+was
+were
+this
+that
+STOPWORDS
+
+grep -vxF -f stopwords.txt words.txt \
+  | sort \
+  | uniq -c \
+  | sort -nr \
+  | head -n 20
+</code></pre>
+</section>
+<section>
+<h3>Step 9: replace one common word with a funny one</h3>
+<pre><code class="language-bash" data-trim>export WORD=&quot;example&quot;
+export FUNNY=&quot;bananaphone&quot;
+
+sed -E \
+  &quot;s/(^|[^[:alnum:]_])${WORD}([^[:alnum:]_]|$)/\1${FUNNY}\2/g&quot; \
+  article.txt \
+  &gt; remixed.txt
+
+head -n 20 remixed.txt
+</code></pre>
+<p>Good live-demo move:</p>
+<ul>
+<li>let the audience choose <code class="verbatim">WORD</code></li>
+<li>let the audience choose <code class="verbatim">FUNNY</code></li>
+</ul>
+</section>
+<section>
+<h3>Step 10: compare before and after</h3>
+<pre><code class="language-bash" data-trim>printf &#39;\n--- original ---\n&#39;
+grep -n &quot;$WORD&quot; article.txt | head
+
+printf &#39;\n--- remixed ---\n&#39;
+grep -n &quot;$FUNNY&quot; remixed.txt | head
+</code></pre>
+</section>
+<section>
+<h3>Step 11: view the result comfortably</h3>
+<pre><code class="language-bash" data-trim>fold -s -w 80 remixed.txt | less
+</code></pre>
+<p>Useful keys inside <code class="verbatim">less</code>:</p>
+<pre><code data-trim>Space   next page
+b       previous page
+/word   search
+n       next search result
+q       quit
+</code></pre>
+</section>
+<section>
+<h3>Full one-shot pipeline</h3>
+<pre><code class="language-bash" data-trim>curl -s &quot;$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content&quot; \
+  | jq -r &#39;.content.rendered&#39; \
+  | sed -E &#39;s/&lt;[^&gt;]+&gt;/ /g; s/&amp;nbsp;/ /g; s/&amp;amp;/\&amp;/g; s/&amp;quot;/&quot;/g&#39; \
+  | tr &#39;[:upper:]&#39; &#39;[:lower:]&#39; \
+  | sed -E &#39;s/[^[:alpha:]]+/\n/g&#39; \
+  | sed &#39;/^$/d&#39; \
+  | grep -vxF -f stopwords.txt \
+  | sort \
+  | uniq -c \
+  | sort -nr \
+  | head -n 20
+</code></pre>
+</section>
+<section>
+<h3>Script version</h3>
+<pre><code class="language-bash" data-trim>cat &gt; wp-word-remix.sh &lt;&lt;&#39;SCRIPT&#39;
+#!/usr/bin/env sh
+set -eu
+
+: &quot;${WP_URL:?set WP_URL, e.g. https://example.org}&quot;
+: &quot;${POST_ID:?set POST_ID, e.g. 123}&quot;
+: &quot;${WORD:?set WORD, e.g. terminal}&quot;
+: &quot;${FUNNY:=bananaphone}&quot;
+
+curl -s &quot;$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content&quot; \
+  | jq -r &#39;.content.rendered&#39; \
+  | sed -E &#39;s/&lt;[^&gt;]+&gt;/ /g; s/&amp;nbsp;/ /g; s/&amp;amp;/\&amp;/g; s/&amp;quot;/&quot;/g&#39; \
+  | sed -E &quot;s/(^|[^[:alnum:]_])${WORD}([^[:alnum:]_]|$)/\1${FUNNY}\2/g&quot;
+SCRIPT
+
+chmod +x wp-word-remix.sh
+./wp-word-remix.sh &gt; remixed-script-output.txt
+</code></pre>
+</section>
+<section>
+<h3>Debugging pattern: inspect from left to right</h3>
+<pre><code class="language-bash" data-trim>curl -s &quot;$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content&quot; | head
+
+curl -s &quot;$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content&quot; \
+  | jq . \
+  | head
+
+curl -s &quot;$WP_URL/wp-json/wp/v2/posts/$POST_ID?_fields=content&quot; \
+  | jq -r &#39;.content.rendered&#39; \
+  | head
+</code></pre>
+<blockquote>
+<p>When a pipeline fails, do not stare at the whole thing. Break it at
+every pipe and inspect each stage.</p>
+</blockquote>
+</section>
+<section>
+<h3>Mini exercises</h3>
+<ol>
+<li>Show the 30 most common words instead of 20</li>
+<li>Change the funny replacement word</li>
+<li>Pick a different <code class="verbatim">POST_ID</code></li>
+<li>Save a small report file with the top words</li>
+</ol>
+</section>
+</section>
+<section>
+<section>
+<h2>2. Concepts after practice</h2>
+<p>We now step back and name the concepts we have already used.</p>
+</section>
+<section>
+<h3>CLI, terminal, shell</h3>
+<ul>
+<li><code class="verbatim">CLI</code> / command line interface
+<ul>
+<li>a text-based interface to software</li>
+</ul></li>
+<li><code class="verbatim">terminal</code>
+<ul>
+<li>the app or device that shows text input and output</li>
+<li>examples: GNOME Terminal, Alacritty, kitty, iTerm2</li>
+</ul></li>
+<li><code class="verbatim">shell</code>
+<ul>
+<li>the program and language reading your commands</li>
+<li>examples: <code class="verbatim">sh</code>, <code
+class="verbatim">bash</code>, <code class="verbatim">zsh</code></li>
+</ul></li>
+</ul>
+<aside class="notes">
+<p>People casually say “terminal” for the whole stack. That is common,
+but the distinctions help with understanding and debugging.</p>
+</aside>
+</section>
+<section>
+<h3>=sh= and =bash=</h3>
+<ul>
+<li><code class="verbatim">sh</code>
+<ul>
+<li>the classic shell interface</li>
+<li>portable scripts often target <code
+class="verbatim">/bin/sh</code></li>
+</ul></li>
+<li><code class="verbatim">bash</code>
+<ul>
+<li>Bourne Again SHell</li>
+<li>common and featureful</li>
+</ul></li>
+<li>today
+<ul>
+<li>most examples also feel natural in <code
+class="verbatim">zsh</code></li>
+<li>some details vary across systems</li>
+</ul></li>
+</ul>
+</section>
+<section>
+<h3>The core shell pattern</h3>
+<pre><code class="language-bash" data-trim>program argument1 argument2 argument3
+</code></pre>
+<p>Read a command line as:</p>
+<pre><code data-trim>first position   -&gt; the program to run
+later positions  -&gt; arguments passed to that program
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-bash" data-trim>curl -s https://example.org
+</code></pre>
+<pre><code data-trim>curl   -&gt; program
+-s     -&gt; option / argument
+URL    -&gt; argument
+</code></pre>
+</section>
+<section>
+<h3>Options, arguments, quoting</h3>
+<pre><code class="language-bash" data-trim>curl -s &quot;https://example.org/search?q=hello world&quot;
+</code></pre>
+<ul>
+<li>options change behavior: <code class="verbatim">-s</code>, <code
+class="verbatim">--help</code></li>
+<li>arguments provide values</li>
+<li>quotes keep spaces together</li>
+<li>the shell processes the line before the program sees it</li>
+</ul>
+</section>
+<section>
+<h3>Current working directory</h3>
+<p>Every shell process has a current working directory.</p>
+<pre><code class="language-bash" data-trim>pwd
+</code></pre>
+<p>This matters because relative paths are interpreted from there.</p>
+</section>
+<section>
+<h3>Relative and absolute paths</h3>
+<pre><code data-trim>.                  current directory
+..                 parent directory
+article.txt        relative path
+./article.txt      relative path, explicit current dir
+/tmp/article.txt   absolute path
+~/article.txt      path inside your home directory
+</code></pre>
+<p>Short demo:</p>
+<pre><code class="language-bash" data-trim>mkdir -p terminal-demo
+cd terminal-demo
+printf &#39;hello terminal\n&#39; &gt; note.txt
+cat note.txt
+cat ./note.txt
+cat &quot;$HOME/terminal-demo/note.txt&quot;
+</code></pre>
+</section>
+<section>
+<h3>Pipes: why the shell feels powerful</h3>
+<p>A pipe sends the output of one command into the input of another.</p>
+<pre><code class="language-bash" data-trim>cat fish.txt | sort
+</code></pre>
+<pre><code data-trim>program A stdout  ---&gt;  stdin program B
+</code></pre>
+<p>You can read <code class="verbatim">|</code> as “then feed that
+into”.</p>
+</section>
+<section>
+<h3>One more tiny pipeline</h3>
+<pre><code class="language-bash" data-trim>printf &#39;one fish\ntwo fish\nred fish\nblue fish\n&#39; &gt; fish.txt
+cat fish.txt | sort | uniq -c | sort -nr
+</code></pre>
+<blockquote>
+<p>The shell is not one giant tool. It is a place where small tools
+cooperate.</p>
+</blockquote>
+</section>
+</section>
+<section>
+<section>
+<h2>3. Basic shell commands</h2>
+<p>The next layer is filesystem confidence.</p>
+</section>
+<section>
+<h3>Listing and location: =pwd= and =ls=</h3>
+<pre><code class="language-bash" data-trim>pwd
+ls
+ls -l
+ls -la
+ls -lh
+</code></pre>
+<ul>
+<li><code class="verbatim">pwd</code> prints the current working
+directory</li>
+<li><code class="verbatim">ls</code> lists files</li>
+<li><code class="verbatim">-l</code> detailed listing</li>
+<li><code class="verbatim">-a</code> include hidden files</li>
+<li><code class="verbatim">-h</code> human-readable sizes</li>
+</ul>
+</section>
+<section>
+<h3>Change directory: =cd=</h3>
+<pre><code class="language-bash" data-trim>cd /tmp
+pwd
+
+cd ~
+pwd
+
+cd ..
+pwd
+
+cd -
+pwd
+</code></pre>
+<ul>
+<li><code class="verbatim">/</code> root of the filesystem</li>
+<li><code class="verbatim">~</code> your home directory</li>
+<li><code class="verbatim">..</code> parent directory</li>
+<li><code class="verbatim">-</code> previous directory</li>
+</ul>
+</section>
+<section>
+<h3>Make directories: =mkdir=</h3>
+<pre><code class="language-bash" data-trim>mkdir terminal-demo
+cd terminal-demo
+
+mkdir notes
+mkdir -p project/src project/out project/tmp
+find . -maxdepth 2 -type d | sort
+</code></pre>
+</section>
+<section>
+<h3>Create files: =touch=</h3>
+<pre><code class="language-bash" data-trim>touch notes/first.txt
+touch project/src/main.txt
+ls -l notes project/src
+</code></pre>
+<ul>
+<li>creates an empty file if missing</li>
+<li>updates timestamps if present</li>
+</ul>
+</section>
+<section>
+<h3>Read files: =cat=, =head=, =tail=, =less=</h3>
+<pre><code class="language-bash" data-trim>printf &#39;alpha\nbeta\ngamma\ndelta\n&#39; &gt; notes/first.txt
+
+cat notes/first.txt
+head -n 2 notes/first.txt
+tail -n 2 notes/first.txt
+less notes/first.txt
+</code></pre>
+</section>
+<section>
+<h3>Move and rename: =mv=</h3>
+<pre><code class="language-bash" data-trim>mv notes/first.txt notes/renamed.txt
+ls notes
+
+mv notes/renamed.txt project/src/article.txt
+find . -type f | sort
+</code></pre>
+<ul>
+<li><code class="verbatim">mv OLD NEW</code> renames</li>
+<li><code class="verbatim">mv FILE DIR/</code> moves into a
+directory</li>
+</ul>
+</section>
+<section>
+<h3>Remove: =rm= and =rmdir=</h3>
+<pre><code class="language-bash" data-trim>rm project/src/article.txt
+rmdir notes
+rm -r project/tmp
+find . -maxdepth 3 | sort
+</code></pre>
+<ul>
+<li><code class="verbatim">rm FILE</code> removes a file</li>
+<li><code class="verbatim">rmdir DIR</code> removes an empty
+directory</li>
+<li><code class="verbatim">rm -r DIR</code> removes a directory tree
+recursively</li>
+</ul>
+<aside class="notes">
+<p>Be explicit: shell deletion usually skips the trash can. Teach care,
+not bravado.</p>
+</aside>
+</section>
+<section>
+<h3>Mini drill: build a workspace</h3>
+<pre><code class="language-bash" data-trim>mkdir -p workshop/{raw,clean,out}
+printf &#39;The shell is small tools.\n&#39; &gt; workshop/raw/text.txt
+cat workshop/raw/text.txt
+mv workshop/raw/text.txt workshop/clean/text.txt
+cp workshop/clean/text.txt workshop/out/copy.txt
+find workshop -type f | sort
+</code></pre>
+</section>
+</section>
+<section>
+<section>
+<h2>4. Fluency: history and key bindings</h2>
+<p>Editing the command line efficiently is part of terminal
+literacy.</p>
+</section>
+<section>
+<h3>The idea</h3>
+<pre><code data-trim>history       old commands remembered by the shell
+line editing  moving and changing the current command
+signals       keys that talk to the running process
+</code></pre>
+<p>Many default shell bindings are Emacs-style.</p>
+</section>
+<section>
+<h3>=Ctrl-R=: reverse history search</h3>
+<p><code class="verbatim">Ctrl-R</code> opens reverse incremental search
+through command history.</p>
+<pre><code data-trim>(reverse-i-search)`curl&#39;: curl -s &quot;$WP_URL/wp-json/wp/v2/posts?per_page=1&quot;
+</code></pre>
+<p>Useful rhythm:</p>
+<pre><code data-trim>Ctrl-R   start search
+curl     search for old curl commands
+Ctrl-R   jump to older matches
+Enter    run the selected command
+</code></pre>
+<p>Hands-on:</p>
+<pre><code class="language-bash" data-trim>history | tail -n 20
+# then press Ctrl-R interactively
+</code></pre>
+</section>
+<section>
+<h3>=Ctrl-C= and =Ctrl-D=</h3>
+<pre><code data-trim>Ctrl-C   interrupt the currently running command
+Ctrl-D   end input / exit shell when the line is empty
+</code></pre>
+<p>Try:</p>
+<pre><code class="language-bash" data-trim>sleep 999
+# press Ctrl-C
+
+sh
+# press Ctrl-D on an empty line to leave the subshell
+</code></pre>
+</section>
+<section>
+<h3>Movement keys</h3>
+<pre><code data-trim>Ctrl-A   beginning of line
+Ctrl-E   end of line
+Ctrl-B   backward one character
+Ctrl-F   forward one character
+Ctrl-P   previous history entry
+Ctrl-N   next history entry
+</code></pre>
+<p>Exercise:</p>
+<pre><code class="language-bash" data-trim>printf &#39;hello terminal tutorial\n&#39;
+# Before pressing Enter, move through the line with Ctrl-A/E/B/F
+# Then browse history with Ctrl-P and Ctrl-N
+</code></pre>
+</section>
+<section>
+<h3>Emacs bindings vs vi bindings</h3>
+<p>Many shells support either style.</p>
+<pre><code data-trim>Emacs-style:
+  Ctrl-A, Ctrl-E, Ctrl-R, Ctrl-P, Ctrl-N
+
+vi-style:
+  modal editing, often preferred by vim/neovim users
+</code></pre>
+<p>In <code class="verbatim">bash</code>:</p>
+<pre><code class="language-bash" data-trim>set -o emacs
+set -o vi
+</code></pre>
+<blockquote>
+<p>This is not an editor war. The important point is that command lines
+are editable text, not a one-shot prompt.</p>
+</blockquote>
+</section>
+</section>
+<section>
+<section>
+<h2>5. Streams, exit codes, and core text tools</h2>
+<p>The shell becomes deep once you understand streams and status.</p>
+</section>
+<section>
+<h3>Standard input, output, error</h3>
+<pre><code data-trim>stdin    standard input   stream 0
+stdout   standard output  stream 1
+stderr   standard error   stream 2
+</code></pre>
+<p>These streams explain piping and redirection.</p>
+</section>
+<section>
+<h3>stdin and stdout in practice</h3>
+<pre><code class="language-bash" data-trim>printf &#39;banana\napple\nbanana\n&#39; &gt; fruit.txt
+
+cat fruit.txt
+cat &lt; fruit.txt
+cat fruit.txt | sort
+</code></pre>
+<p>Three views of the same idea:</p>
+<pre><code data-trim>file argument   cat fruit.txt
+stdin redirect  cat &lt; fruit.txt
+pipe            cat fruit.txt | sort
+</code></pre>
+</section>
+<section>
+<h3>stderr is separate</h3>
+<pre><code class="language-bash" data-trim>ls fruit.txt missing-file.txt &gt; out.log 2&gt; err.log
+
+printf &#39;stdout:\n&#39;
+cat out.log
+
+printf &#39;stderr:\n&#39;
+cat err.log
+</code></pre>
+<p>Important idea:</p>
+<ul>
+<li><code class="verbatim">stdout</code> can be clean data</li>
+<li><code class="verbatim">stderr</code> can remain diagnostics</li>
+</ul>
+</section>
+<section>
+<h3>Combining or discarding streams</h3>
+<pre><code class="language-bash" data-trim>ls fruit.txt missing-file.txt &gt; combined.log 2&gt;&amp;1
+cat combined.log
+
+ls fruit.txt missing-file.txt 2&gt;/dev/null
+</code></pre>
+<p>Read <code class="verbatim">2&gt;&amp;1</code> as:</p>
+<pre><code data-trim>send stderr to the same destination stdout currently uses
+</code></pre>
+</section>
+<section>
+<h3>Exit codes</h3>
+<p>Every command exits with a status code.</p>
+<pre><code data-trim>0      success
+non-0  failure or a special condition
+</code></pre>
+<p>Hands-on:</p>
+<pre><code class="language-bash" data-trim>true
+echo &quot;$?&quot;
+
+false
+echo &quot;$?&quot;
+
+grep banana fruit.txt
+echo &quot;$?&quot;
+
+grep dragon fruit.txt
+echo &quot;$?&quot;
+</code></pre>
+</section>
+<section>
+<h3>=&amp;&amp;=, =;=, and =||=</h3>
+<pre><code data-trim>cmd1 ;  cmd2   run cmd2 regardless of success
+cmd1 &amp;&amp; cmd2   run cmd2 only if cmd1 succeeded
+cmd1 || cmd2   run cmd2 only if cmd1 failed
+</code></pre>
+<p>Hands-on:</p>
+<pre><code class="language-bash" data-trim>mkdir -p safe-demo &amp;&amp; cd safe-demo &amp;&amp; pwd
+false ;  echo &#39;semicolon still continues&#39;
+false &amp;&amp; echo &#39;this will not run&#39;
+false || echo &#39;this handles failure&#39;
+</code></pre>
+</section>
+<section>
+<h3>=grep=: search text</h3>
+<pre><code class="language-bash" data-trim>grep root /etc/passwd
+grep -n root /etc/passwd
+grep -R &#39;TODO&#39; .
+grep -i &#39;error&#39; logfile.txt
+</code></pre>
+<ul>
+<li><code class="verbatim">-n</code> line numbers</li>
+<li><code class="verbatim">-R</code> recursive search</li>
+<li><code class="verbatim">-i</code> case-insensitive</li>
+</ul>
+</section>
+<section>
+<h3>=find=: search the filesystem</h3>
+<pre><code class="language-bash" data-trim>find . -type f
+find . -type f -name &#39;*.org&#39;
+find . -type f -mtime -1
+find . -type f -size +10M
+</code></pre>
+<ul>
+<li>ask <code class="verbatim">find</code> precise questions</li>
+<li>then pipe the result onward if needed</li>
+</ul>
+</section>
+<section>
+<h3>=sed=: basic stream editing</h3>
+<pre><code class="language-bash" data-trim>printf &#39;cats like cats\n&#39; &gt; demo.txt
+sed &#39;s/cats/badgers/&#39; demo.txt
+sed &#39;s/cats/badgers/g&#39; demo.txt
+sed -n &#39;1,3p&#39; demo.txt
+</code></pre>
+<ul>
+<li><code class="verbatim">s/old/new/</code> replace first match on each
+line</li>
+<li><code class="verbatim">s/old/new/g</code> replace all matches on
+each line</li>
+<li><code class="verbatim">-n ... p</code> print only selected
+lines</li>
+</ul>
+</section>
+<section>
+<h3>=awk=: fields and rows</h3>
+<pre><code class="language-bash" data-trim>printf &#39;alice 10\nbob 25\ncarol 15\n&#39; &gt; scores.txt
+awk &#39;{ print $1 }&#39; scores.txt
+awk &#39;{ print $1, $2 * 2 }&#39; scores.txt
+awk &#39;$2 &gt;= 15 { print $1 }&#39; scores.txt
+</code></pre>
+<ul>
+<li><code class="verbatim">awk</code> works well on column-like
+text</li>
+<li><code class="verbatim">$1</code> first field, <code
+class="verbatim">$2</code> second field</li>
+</ul>
+</section>
+</section>
+<section>
+<section>
+<h2>6. Shell scripting</h2>
+<p>A shell script is often just the commands you would otherwise type,
+saved into a file.</p>
+</section>
+<section>
+<h3>The basic mental model</h3>
+<pre><code data-trim>terminal session        script file
+---------------         ----------------
+command 1               command 1
+command 2       ---&gt;    command 2
+command 3               command 3
+</code></pre>
+<p>It is a dynamic interpreted language: the shell reads and executes
+the file at runtime.</p>
+</section>
+<section>
+<h3>From command list to script</h3>
+<pre><code class="language-bash" data-trim>cat &gt; word-count-demo.sh &lt;&lt;&#39;SCRIPT&#39;
+#!/usr/bin/env sh
+set -eu
+
+mkdir -p reports
+printf &#39;hello\nterminal\nhello\n&#39; &gt; reports/input.txt
+cat reports/input.txt | sort | uniq -c
+SCRIPT
+
+chmod +x word-count-demo.sh
+./word-count-demo.sh
+</code></pre>
+</section>
+<section>
+<h3>Shebang and basic safety flags</h3>
+<pre><code class="language-bash" data-trim>#!/usr/bin/env sh
+set -eu
+</code></pre>
+<p>Meaning:</p>
+<pre><code data-trim>#!/usr/bin/env sh   run the file with sh
+set -e              stop on command failure
+set -u              stop on unset variables
+</code></pre>
+</section>
+<section>
+<h3>Command-line arguments: =$1= and =$2=</h3>
+<pre><code data-trim>$0   script name
+$1   first argument
+$2   second argument
+$@   all arguments
+$#   number of arguments
+</code></pre>
+<p>Example:</p>
+<pre><code class="language-bash" data-trim>cat &gt; greet.sh &lt;&lt;&#39;SCRIPT&#39;
+#!/usr/bin/env sh
+set -eu
+
+name=&quot;$1&quot;
+word=&quot;$2&quot;
+
+printf &#39;Hello %s, welcome to %s!\n&#39; &quot;$name&quot; &quot;$word&quot;
+SCRIPT
+
+chmod +x greet.sh
+./greet.sh Flo terminal
+</code></pre>
+</section>
+<section>
+<h3>Validate arguments</h3>
+<pre><code class="language-bash" data-trim>cat &gt; replace-word.sh &lt;&lt;&#39;SCRIPT&#39;
+#!/usr/bin/env sh
+set -eu
+
+if [ &quot;$#&quot; -lt 3 ]; then
+  printf &#39;usage: %s FILE WORD REPLACEMENT\n&#39; &quot;$0&quot; &gt;&amp;2
+  exit 2
+fi
+
+file=&quot;$1&quot;
+word=&quot;$2&quot;
+replacement=&quot;$3&quot;
+
+sed -E &quot;s/(^|[^[:alnum:]_])${word}([^[:alnum:]_]|$)/\1${replacement}\2/g&quot; &quot;$file&quot;
+SCRIPT
+
+chmod +x replace-word.sh
+./replace-word.sh article.txt terminal cyberbadger &gt; replaced-by-script.txt
+</code></pre>
+</section>
+<section>
+<h3>Script version of the WordPress remix with arguments</h3>
+<pre><code class="language-bash" data-trim>cat &gt; wp-remix-args.sh &lt;&lt;&#39;SCRIPT&#39;
+#!/usr/bin/env sh
+set -eu
+
+if [ &quot;$#&quot; -lt 4 ]; then
+  printf &#39;usage: %s WP_URL POST_ID WORD REPLACEMENT\n&#39; &quot;$0&quot; &gt;&amp;2
+  exit 2
+fi
+
+wp_url=&quot;$1&quot;
+post_id=&quot;$2&quot;
+word=&quot;$3&quot;
+replacement=&quot;$4&quot;
+
+curl -s &quot;$wp_url/wp-json/wp/v2/posts/$post_id?_fields=content&quot; \
+  | jq -r &#39;.content.rendered&#39; \
+  | sed -E &#39;s/&lt;[^&gt;]+&gt;/ /g; s/&amp;nbsp;/ /g; s/&amp;amp;/\&amp;/g; s/&amp;quot;/&quot;/g&#39; \
+  | sed -E &quot;s/(^|[^[:alnum:]_])${word}([^[:alnum:]_]|$)/\1${replacement}\2/g&quot;
+SCRIPT
+
+chmod +x wp-remix-args.sh
+./wp-remix-args.sh &quot;$WP_URL&quot; &quot;$POST_ID&quot; terminal cyberbadger &gt; remixed-args.txt
+</code></pre>
+</section>
+<section>
+<h3>Exercise ideas</h3>
+<p>Add one feature:</p>
+<ul>
+<li>print the post title first</li>
+<li>accept an optional output filename</li>
+<li>add a <code class="verbatim">--help</code> mode</li>
+<li>save the top 20 words next to the remixed article</li>
+</ul>
+</section>
+</section>
+<section>
+<section>
+<h2>7. Git by doing</h2>
+<p>Git records snapshots of a directory over time.</p>
+</section>
+<section>
+<h3>The Git mental model</h3>
+<pre><code data-trim>working tree  files as they exist now
+staging area  selected changes for the next commit
+commit        a saved snapshot
+branch        a movable name pointing at a commit
+</code></pre>
+</section>
+<section>
+<h3>Create a repository</h3>
+<pre><code class="language-bash" data-trim>mkdir -p git-demo
+cd git-demo
+
+git init
+git status
+</code></pre>
+</section>
+<section>
+<h3>Create a file and inspect status</h3>
+<pre><code class="language-bash" data-trim>printf &#39;# Terminal Demo\n\nFirst note.\n&#39; &gt; README.md
+
+git status
+git diff
+</code></pre>
+<p>Interpretation:</p>
+<ul>
+<li>the file exists in the working tree</li>
+<li>Git sees it as untracked</li>
+<li>it is not yet part of history</li>
+</ul>
+</section>
+<section>
+<h3>Stage and commit</h3>
+<pre><code class="language-bash" data-trim>git add README.md
+git status
+
+git commit -m &#39;Add README&#39;
+git log --oneline --decorate --graph
+</code></pre>
+</section>
+<section>
+<h3>Modify and inspect</h3>
+<pre><code class="language-bash" data-trim>printf &#39;\nSecond note: pipelines compose tools.\n&#39; &gt;&gt; README.md
+
+git status
+git diff
+</code></pre>
+<p>Read <code class="verbatim">git diff</code> like a patch:</p>
+<pre><code data-trim>--- old version
++++ new version
++ added line
+- removed line
+</code></pre>
+</section>
+<section>
+<h3>Commit again</h3>
+<pre><code class="language-bash" data-trim>git add README.md
+git commit -m &#39;Add pipeline note&#39;
+git log --oneline --decorate --graph --all
+</code></pre>
+</section>
+<section>
+<h3>Branch and try another version</h3>
+<pre><code class="language-bash" data-trim>git switch -c funny-version
+sed &#39;s/pipelines/bananaphones/g&#39; README.md &gt; README.next
+mv README.next README.md
+
+git diff
+git add README.md
+git commit -m &#39;Make README funny&#39;
+
+git log --oneline --decorate --graph --all
+</code></pre>
+</section>
+<section>
+<h3>Switch between versions</h3>
+<pre><code class="language-bash" data-trim>git switch main 2&gt;/dev/null || git switch master
+cat README.md
+
+git switch funny-version
+cat README.md
+</code></pre>
+<aside class="notes">
+<p>Some Git setups still default to master, others to main. This command
+handles both.</p>
+</aside>
+</section>
+</section>
+<section>
+<section>
+<h2>8. The Linux system toolkit</h2>
+<p>The terminal is also how we inspect the machine itself.</p>
+</section>
+<section>
+<h3>=du=: disk usage</h3>
+<pre><code class="language-bash" data-trim>du -sh .
+du -h --max-depth=1 . | sort -h
+</code></pre>
+<ul>
+<li><code class="verbatim">du</code> answers: where did the space
+go?</li>
+</ul>
+</section>
+<section>
+<h3>=df=: filesystem usage</h3>
+<pre><code class="language-bash" data-trim>df -h
+df -h /
+df -h /home
+</code></pre>
+<ul>
+<li><code class="verbatim">df</code> answers: how much space remains on
+this filesystem?</li>
+</ul>
+</section>
+<section>
+<h3>=systemctl=: services</h3>
+<pre><code class="language-bash" data-trim>systemctl status ssh
+systemctl is-active ssh
+systemctl list-units --type=service --state=running
+
+sudo systemctl restart ssh
+sudo systemctl enable --now ssh
+</code></pre>
+</section>
+<section>
+<h3>=journalctl=: logs</h3>
+<pre><code class="language-bash" data-trim>journalctl -b
+journalctl -u ssh
+journalctl -u ssh -n 50
+journalctl -u ssh -f
+journalctl --since &#39;1 hour ago&#39;
+</code></pre>
+</section>
+<section>
+<h3>=ps ax= and =htop=: processes</h3>
+<pre><code class="language-bash" data-trim>ps ax
+ps ax | grep ssh
+htop
+</code></pre>
+<ul>
+<li><code class="verbatim">ps ax</code> gives a quick process
+listing</li>
+<li><code class="verbatim">htop</code> gives an interactive process
+viewer</li>
+</ul>
+</section>
+<section>
+<h3>=kill=, =pkill=, =pgrep=</h3>
+<pre><code class="language-bash" data-trim>sleep 999 &amp;
+pgrep sleep
+kill $(pgrep sleep)
+
+sleep 999 &amp;
+pkill sleep
+pgrep -a ssh
+</code></pre>
+<ul>
+<li><code class="verbatim">kill PID</code> signal a process by id</li>
+<li><code class="verbatim">pkill NAME</code> signal by name</li>
+<li><code class="verbatim">pgrep</code> search processes more safely
+than <code class="verbatim">ps ax | grep ...</code></li>
+</ul>
+</section>
+<section>
+<h3>Mini incident: “the server is full”</h3>
+<pre><code class="language-bash" data-trim>df -h
+du -h --max-depth=1 /var | sort -h
+journalctl --disk-usage
+journalctl --vacuum-time=7d
+</code></pre>
+<blockquote>
+<p>Good terminal work means knowing which question each tool
+answers.</p>
+</blockquote>
+</section>
+</section>
+<section>
+<section>
+<h2>9. Enhancing the terminal</h2>
+<p>A default shell works. A tuned interactive shell can feel
+dramatically more humane.</p>
+</section>
+<section>
+<h3>Why Zsh is often the nicer interactive shell</h3>
+<ul>
+<li>strong completion system</li>
+<li>rich prompt customization</li>
+<li>large plugin ecosystem</li>
+<li>good integration with fuzzy search, autosuggestions, and syntax
+highlighting</li>
+</ul>
+<blockquote>
+<p>For interactive use, Zsh is often the nicer shell. For scripts, <code
+class="verbatim">sh</code> or <code class="verbatim">bash</code> still
+remain the practical default.</p>
+</blockquote>
+</section>
+<section>
+<h3>A pragmatic rule: =zsh= for humans, =sh= for scripts</h3>
+<pre><code data-trim>interactive daily shell:
+  zsh is often the most comfortable
+
+team / deployment scripts:
+  bash is common and predictable
+
+maximum portability:
+  POSIX sh
+</code></pre>
+</section>
+<section>
+<h3>Zsh for Humans: the idea</h3>
+<p><code class="verbatim">Zsh for Humans</code> is a curated Zsh setup
+that bundles many quality-of-life features people otherwise assemble
+manually.</p>
+<p>Typical value:</p>
+<ul>
+<li>better history search</li>
+<li>syntax highlighting</li>
+<li>autosuggestions</li>
+<li>better completion</li>
+<li>good prompt defaults</li>
+<li>tmux-oriented workflow</li>
+</ul>
+</section>
+<section>
+<h3>Better =Ctrl-R= history</h3>
+<p>With a fuzzy-history setup, <code class="verbatim">Ctrl-R</code>
+becomes more like a searchable command picker.</p>
+<pre><code data-trim>search: wp curl jq
+
+curl -s https://example.org/wp-json/wp/v2/posts?per_page=1 | jq .
+./wp-remix.sh https://example.org absurd badger
+jq -r &#39;.content.rendered&#39; post.json | sed &#39;s/&lt;[^&gt;]*&gt;//g&#39;
+</code></pre>
+<ul>
+<li>type fragments in any order</li>
+<li>preview old commands</li>
+<li>reuse complex commands without retyping them</li>
+</ul>
+</section>
+<section>
+<h3>Syntax highlighting and autosuggestions</h3>
+<pre><code data-trim>valid command      -&gt; visually reassuring
+unknown command    -&gt; warning color
+quoted strings     -&gt; visually distinct
+history suggestion -&gt; ghost text after the cursor
+</code></pre>
+<p>This reduces mistakes before you press <code
+class="verbatim">Enter</code>.</p>
+</section>
+<section>
+<h3>Tmux by default</h3>
+<p><code class="verbatim">tmux</code> is a terminal multiplexer.</p>
+<pre><code data-trim>one terminal window
+  -&gt; multiple sessions
+  -&gt; multiple windows
+  -&gt; multiple panes
+  -&gt; survives disconnects
+</code></pre>
+<p>Why it matters:</p>
+<ul>
+<li>long-running commands</li>
+<li>SSH sessions</li>
+<li>side-by-side logs and shell work</li>
+<li>resume after network interruption</li>
+</ul>
+</section>
+<section>
+<h3>Unicode characters and fonts</h3>
+<p>Modern terminal setups often use Unicode for:</p>
+<ul>
+<li>prompt separators</li>
+<li>Git branch icons</li>
+<li>status indicators</li>
+<li>box drawing</li>
+<li>powerline-like segments</li>
+</ul>
+<p>Practical warning:</p>
+<ul>
+<li>use a font with the required glyphs</li>
+<li>keep a simple fallback prompt for remote machines</li>
+<li>broken glyphs are usually configuration issues, not mystery
+breakage</li>
+</ul>
+</section>
+<section>
+<h3>Installation philosophy</h3>
+<pre><code data-trim>1. read the README
+2. inspect what the installer changes
+3. back up ~/.zshrc and related config
+4. test on a VM or non-critical user first
+5. keep a rescue shell open
+</code></pre>
+<blockquote>
+<p>A better shell should reduce friction without hiding how the system
+works.</p>
+</blockquote>
+</section>
+</section>
+<section>
+<h2>Recap</h2>
+<pre><code data-trim>practice first    -&gt; WordPress text remix
+mental model      -&gt; CLI / terminal / shell / paths / pipes
+everyday basics   -&gt; ls cd mkdir touch cat mv rm
+fluency           -&gt; history and key bindings
+composition       -&gt; streams, exit codes, grep, find, sed, awk
+automation        -&gt; shell scripts with arguments
+history of work   -&gt; Git
+system operation  -&gt; du df systemctl journalctl ps htop kill
+comfort           -&gt; zsh, zsh4humans, tmux, Unicode
+</code></pre>
+<blockquote>
+<p>The terminal is not one skill. It is a small number of patterns
+repeated across many domains.</p>
+</blockquote>
+</section>
+<section>
+<section>
+<h2>Appendix: export from Emacs to Reveal.js</h2>
+<p>This file is intended for Org export to Reveal.js.</p>
+<p>Typical preparation:</p>
+<pre><code class="language-bash" data-trim>git clone https://github.com/hakimel/reveal.js.git
+</code></pre>
+<p>Relevant header settings in this deck:</p>
+<pre><code data-trim></code></pre>
+<p>Reading the <code class="verbatim">REVEAL_HLEVEL</code> choice:</p>
+<ul>
+<li><code class="verbatim">*</code> headings become horizontal
+slides</li>
+<li><code class="verbatim">**</code> headings become vertical
+sub-slides</li>
+</ul>
+</section>
+<section>
+<h3>Presenter checklist</h3>
+<p>Before the talk:</p>
+<ul>
+<li>install <code class="verbatim">curl</code>, <code
+class="verbatim">jq</code>, <code class="verbatim">sed</code>, <code
+class="verbatim">sort</code>, <code class="verbatim">uniq</code>, <code
+class="verbatim">grep</code></li>
+<li>test the WordPress URL and post id once</li>
+<li>keep fallback <code class="verbatim">article.html</code> and <code
+class="verbatim">article.txt</code> locally</li>
+<li>increase terminal font size</li>
+<li>use a clean demo directory</li>
+<li>avoid live production credentials</li>
+</ul>
+</section>
+<section>
+<h3>Fallback without WordPress</h3>
+<p>If the network fails, create local demo text instead.</p>
+<pre><code class="language-bash" data-trim>cat &gt; article.txt &lt;&lt;&#39;TEXT&#39;
+The terminal is a small room with a very large door.
+The shell waits for a command.
+The command calls a program.
+The program reads text, writes text, and changes the world a little.
+TEXT
+
+cat article.txt \
+  | tr &#39;[:upper:]&#39; &#39;[:lower:]&#39; \
+  | sed -E &#39;s/[^[:alpha:]]+/\n/g&#39; \
+  | sed &#39;/^$/d&#39; \
+  | sort \
+  | uniq -c \
+  | sort -nr
+</code></pre>
+</section>
+</section>
+  </div></div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/search/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    const mermaidTheme = { theme: 'base', themeVariables: { darkMode: true, background: '#1d1f21', primaryColor: '#282a2e', primaryTextColor: '#c5c8c6', primaryBorderColor: '#81a2be', lineColor: '#8abeb7', secondaryColor: '#373b41', tertiaryColor: '#1d1f21', fontFamily: 'Inter, Avenir, Helvetica, Arial, sans-serif' } };
+    function renderMermaid() { if (!window.mermaid) return; mermaid.run({ querySelector: '.mermaid' }).catch((err) => console.warn('Mermaid render failed', err)); }
+    if (window.mermaid) { mermaid.initialize(Object.assign({ startOnLoad: false, securityLevel: 'loose' }, mermaidTheme)); }
+    Reveal.initialize({
+      hash: true, controls: true, progress: true, center: true, slideNumber: true, transition: 'slide', width: 1400, height: 900, margin: 0.06,
+      navigationMode: 'default', keyboard: true, overview: true, showNotes: false,
+      highlight: { highlightOnLoad: true, escapeHTML: false },
+      customcontrols: { controls: [
+        { icon: '<span aria-label="clear">DEL</span>', title: 'Clear canvas (DEL)', action: 'RevealChalkboard.clear();' },
+        { icon: '<span aria-label="chalkboard">B</span>', title: 'Toggle chalkboard (B)', action: 'RevealChalkboard.toggleChalkboard();' },
+        { icon: '<span aria-label="notes">C</span>', title: 'Toggle notes canvas (C)', action: 'RevealChalkboard.toggleNotesCanvas();' }
+      ] },
+      chalkboard: { theme: 'whiteboard', boardmarkerWidth: 4, chalkWidth: 7, transition: 400, storage: 'terminal-power-whiteboard', background: [ 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.92)' ], grid: { color: 'rgba(129,162,190,0.18)', distance: 48, width: 1 }, rememberColor: true },
+      plugins: [ RevealHighlight, RevealNotes, RevealSearch, RevealZoom, RevealCustomControls, RevealChalkboard ]
+    }).then(renderMermaid);
+    Reveal.on('slidechanged', renderMermaid); Reveal.on('ready', renderMermaid);
+  </script>
+</body>
+</html>

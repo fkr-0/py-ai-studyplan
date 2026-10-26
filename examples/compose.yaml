@@ -1,0 +1,12 @@
+# Browser UI is loopback-only. The model server is deliberately NOT published here.
+services:
+  ui:
+    build: .
+    ports:
+      - "127.0.0.1:8501:8501"
+    environment:
+      # On Linux this host gateway is NOT reachable if Ollama only binds
+      # host loopback. Keep Ollama private; see docs/08-docker.md.
+      OLLAMA_HOST: "http://host.docker.internal:11434"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

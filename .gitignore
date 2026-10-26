@@ -1,0 +1,14 @@
+# Project-local python artifacts
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.env
+.env.*
+!.env.example
+*.log
+# App artifacts and learner exports
+examples/chat-history.json
+examples/.streamlit/secrets.toml

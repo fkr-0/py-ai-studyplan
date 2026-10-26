@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Python + AI · Study Plan</title>
+  <meta name="author" content="Flo Kri">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/night.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/monokai.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/style.css">
+  <link rel="stylesheet" href="assets/tomorrow-night-terminal.css">
+  <link rel="stylesheet" href="assets/studyplan.css">
+  <style>
+    .reveal { font-size: 34px; }
+    .reveal h1, .reveal h2, .reveal h3 { text-transform: none; }
+    .reveal pre code { max-height: 520px; font-size: 0.66em; }
+    .reveal a { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="reveal"><div class="slides">
+<section class="slide level2">
+
+
+</section>
+<section id="python-ai-1" class="title-slide slide level1" data-reveal_background="#151719">
+<h1 data-reveal_background="#151719">Python + AI</h1>
+<p>From a first Python function to a private local chatbot.</p>
+<ul>
+<li>Eight flexible sessions · roughly 25–35 hours including practice</li>
+<li>Understand the ideas, learn the tools, build something you can explain</li>
+</ul>
+<p class="materials-download"><a href="py-ai-studyplan-materials.zip" download>⬇ Download the complete study materials (.zip)</a></p>
+
+<ul>
+<li>Hardware ready: M4 MacBook Pro with 24 GB unified memory; local inference starts in session 5</li>
+</ul>
+<aside class="notes">Opening prompt: what could the learner build that they would actually use? Make clear this is an application course rather than neural-network research.</aside>
+
+</section>
+
+<section id="roadmap" class="title-slide slide level1">
+<h1>Roadmap</h1>
+<div class="study-roadmap">
+<span>AI intuition</span><b>→</b><span>Python</span><b>→</b><span>Dev workflow</span><b>→</b><span>Neural networks</span><b>→</b><span>Ollama</span><b>→</b><span>Streamlit</span><b>→</b><span>Quality</span><b>→</b><span>Docker</span>
+</div>
+
+<ul>
+<li>Each step produces a thing you can demonstrate</li>
+<li>Vertical slides contain demos/resources (↓)</li>
+<li>Skip longer videos in class; use them as homework</li>
+<li>Course notes: <code class="verbatim">docs/</code> · example programs: <code class="verbatim">examples/</code></li>
+</ul>
+<p class="materials-download materials-download-small"><a href="py-ai-studyplan-materials.zip" download>Download all notes, exercises &amp; slide sources ↗</a></p>
+
+</section>
+
+<section>
+<section id="your-learning-track-21-days-on-a-macbook-pro-m4" class="title-slide slide level1">
+<h1>Your learning track: 21 days on a MacBook Pro M4</h1>
+<ul>
+<li><strong><strong>Machine:</strong></strong> 2024 MacBook Pro, M4-family, 24 GB unified memory.</li>
+<li><strong><strong>Time:</strong></strong> 1–2 hours each day, around three weeks plus catch-up.</li>
+<li><strong><strong>Language:</strong></strong> English for sessions, code and exercises.</li>
+<li><strong><strong>Model:</strong></strong> start with <code class="verbatim">gemma3:4b</code>; later compare to <code class="verbatim">qwen3:8b</code> if useful.</li>
+</ul>
+</section>
+<section id="each-days-learning-loop" class="slide level2">
+<h2>Each day's learning loop</h2>
+<ol>
+<li>5–10 min recall and prediction</li>
+<li>15–20 min explanation or visual lesson</li>
+<li>35–65 min programming with the learner at keyboard</li>
+<li>10–20 min independent change and explanation</li>
+</ol>
+<p>For a one-hour day, split a topic rather than skipping practice.</p>
+</section>
+<section id="macos-setup-and-daily-checklist" class="slide level2">
+<h2>macOS setup and daily checklist</h2>
+<ul>
+<li><a href="../docs/21-day-mac-track.md">Open the full 21-day day-by-day plan ↗</a></li>
+<li><a href="../docs/mac-m4-setup.md">Open the MacBook M4 setup instructions ↗</a></li>
+<li>Terminal.app · Python 3.11+ · editor · Git · Ollama later.</li>
+<li>Check <code class="verbatim">uname -m</code> gives <code class="verbatim">arm64</code>; create virtual environments with <code class="verbatim">python3 -m venv .venv</code>.</li>
+</ul>
+</section></section>
+<section>
+<section id="what-is-ai-doing" class="title-slide slide level1">
+<h1>01 · What is AI doing?</h1>
+<p>Rule-based computation vs search/planning vs trained models.</p>
+<ul>
+<li>A Tetris advisor can use a <strong>search algorithm</strong></li>
+<li>A neural network is a learned function</li>
+<li>An LLM predicts text tokens using trained parameters</li>
+<li>A fluent answer is not a correctness guarantee</li>
+</ul>
+</section>
+<section id="inference-is-not-training" class="slide level2">
+<h2>Inference is not training</h2>
+<div class="study-flow">
+<div><b>Training</b><small>examples → loss → gradients → updated weights</small></div>
+<div><b>Inference</b><small>prompt → fixed weights → output tokens</small></div>
+</div>
+
+<p>Discuss: Does changing temperature re-train the network? <strong>No.</strong></p>
+</section>
+<section id="blue1brown-what-is-a-neural-network" class="slide level2">
+<h2>3Blue1Brown · What is a neural network?</h2>
+<p>Watch ~19 min: neurons, weights, biases, layers.</p>
+<div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/aircAruvnKk" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<p class="media-fallback"><a href="https://www.youtube.com/watch?v=aircAruvnKk" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
+<aside class="notes">Pause at 8 minutes: what is each layer trying to compute?</aside>
+
+</section>
+<section id="karpathy-intro-to-llms-optional" class="slide level2">
+<h2>Karpathy · Intro to LLMs (optional)</h2>
+<p>Start with minutes 00:00–18:00; security section is useful in session 7.</p>
+<div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/zjkBMFhNj_g" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<p class="media-fallback"><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
+<aside class="notes">This is an optional 2023 overview, not a statement about present-day model rankings.</aside>
+
+</section>
+<section id="checkpoint-draw-the-boxes" class="slide level2">
+<h2>Checkpoint: draw the boxes</h2>
+<pre class="example"><code>USER ──▶ PYTHON APP ──▶ OLLAMA ──▶ MODEL
+             ▲                        │
+             └──────── response ◀─────┘
+</code></pre>
+<p>Explain the responsibility of each box. What would be different for a rule-based program?</p>
+</section></section>
+<section>
+<section id="python-foundations" class="title-slide slide level1">
+<h1>02 · Python foundations</h1>
+<ul>
+<li>Values and variables: strings, integers, lists, dictionaries</li>
+<li>Decisions and loops: <code class="verbatim">if</code>, <code class="verbatim">for</code>, <code class="verbatim">while</code></li>
+<li>Functions: parameters and <code class="verbatim">return</code></li>
+<li>The goal: build a tiny <strong>rule-based</strong> terminal chatbot</li>
+</ul>
+</section>
+<section id="python-first-steps" class="slide level2">
+<h2>Python first steps</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> respond(message: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> message.lower().strip()</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;hello&quot;</span> <span class="kw">in</span> text:</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Hello!&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> text.endswith(<span class="st">&quot;?&quot;</span>):</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;I don&#39;t know yet.&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;Tell me more.&quot;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(respond(<span class="st">&quot;Hello there&quot;</span>))</span></code></pre></div>
+<p>Independent change: detect three additional phrases.</p>
+</section>
+<section id="cs50p-lecture-pdf" class="slide level2">
+<h2>CS50P lecture &amp; PDF</h2>
+<p>Harvard CS50's <strong>Introduction to Programming with Python</strong> · Week 0: functions and variables.</p>
+<div class="media-box media-pdf"><iframe src="https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.pdf" title="Lecture PDF slides" loading="lazy"></iframe></div>
+<p class="media-fallback"><a href="https://cdn.cs50.net/python/2022/x/lectures/0/lecture0.pdf" target="_blank" rel="noopener noreferrer">Open 32-page PDF ↗</a> · <a href="https://cs50.harvard.edu/python/weeks/0/" target="_blank" rel="noopener noreferrer">Current lecture page ↗</a> · <a href="https://www.youtube.com/watch?v=JP7ITIXGpHk" target="_blank" rel="noopener noreferrer">Lecture video ↗</a></p>
+
+</section>
+<section id="session-2-exercise" class="slide level2">
+<h2>Session 2 exercise</h2>
+<ol>
+<li>Create a message loop; quit when input is <code class="verbatim">quit</code></li>
+<li>Explain the difference between <code class="verbatim">print</code> and <code class="verbatim">return</code></li>
+<li>Test the greeting, unknown question, and empty input</li>
+<li>Change one feature <strong>without</strong> an AI coding assistant</li>
+</ol>
+</section></section>
+<section>
+<section id="developer-workflow" class="title-slide slide level1">
+<h1>03 · Developer workflow</h1>
+<p>Minimal skills to operate the project:</p>
+<ul>
+<li>Terminal: paths, directories, running programs</li>
+<li>Editor: read a traceback before searching for solutions</li>
+<li><code class="verbatim">python -m venv</code>: isolate project packages</li>
+<li>JSON: load and save structured data</li>
+<li>Git: record what changed</li>
+</ul>
+</section>
+<section id="first-environment" class="slide level2">
+<h2>First environment</h2>
+<div class="sourceCode" id="cb3" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> python-ai-lab <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> python-ai-lab</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">&#39;print(&quot;Ready&quot;)&#39;</span></span></code></pre></div>
+<p>Windows PowerShell uses <code class="verbatim">.venv\Scripts\Activate.ps1</code>.</p>
+</section>
+<section id="mit-missing-semester" class="slide level2">
+<h2>MIT Missing Semester</h2>
+<p>Choose only: shell, debugging, Git. No need for every lecture.</p>
+<p class="resource-link"><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
+
+</section>
+<section id="workflow-exercise" class="slide level2">
+<h2>Workflow exercise</h2>
+<ol>
+<li>Save prompt presets into a JSON file</li>
+<li>Reload them and display available names</li>
+<li>Create a deliberate error and explain its traceback</li>
+<li>Commit the working code (not <code class="verbatim">.venv</code> or secrets)</li>
+</ol>
+</section></section>
+<section>
+<section id="neural-networks" class="title-slide slide level1">
+<h1>04 · Neural networks</h1>
+<p>The intuitive chain:</p>
+<ul>
+<li><strong>Loss</strong>: how wrong were the predictions?</li>
+<li><strong>Gradient</strong>: how do changes affect the loss?</li>
+<li><strong>Backpropagation</strong>: how we efficiently compute those gradients</li>
+<li><strong>Optimization</strong>: how parameters are updated</li>
+</ul>
+</section>
+<section id="gradient-descent-3blue1brown" class="slide level2">
+<h2>Gradient descent · 3Blue1Brown</h2>
+<p>~21 min · What training means in practice.</p>
+<div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/IHZwWFHWa-w" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<p class="media-fallback"><a href="https://www.youtube.com/watch?v=IHZwWFHWa-w" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
+<aside class="notes">Pause around 07:00 and ask why learning rate can be too high.</aside>
+
+</section>
+<section id="backpropagation-intuitively" class="slide level2">
+<h2>Backpropagation, intuitively</h2>
+<p>~14 min · The gradients come from propagating sensitivity backward.</p>
+<div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/Ilg3gGewQ5U" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<p class="media-fallback"><a href="https://www.youtube.com/watch?v=Ilg3gGewQ5U" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
+<aside class="notes">No need to derive chain rule in detail. Emphasize backprop vs parameter update.</aside>
+
+</section>
+<section id="neural-network-playground" class="slide level2">
+<h2>Neural Network Playground</h2>
+<p>Live exercise: vary layers, learning rate and noise. Compare training and test loss.</p>
+<p class="resource-link"><a href="https://playground.tensorflow.org/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
+
+</section>
+<section id="transformers-3blue1brown" class="slide level2">
+<h2>Transformers · 3Blue1Brown</h2>
+<p>~27 min · Tokens, embeddings, attention and next-token prediction.</p>
+<div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/wjZofJX0v4M" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<p class="media-fallback"><a href="https://www.youtube.com/watch?v=wjZofJX0v4M" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
+<aside class="notes">Bridge intuition from feedforward networks to transformer blocks. Avoid equating next-token prediction with correctness.</aside>
+
+</section>
+<section id="transformer-explainer" class="slide level2">
+<h2>Transformer Explainer</h2>
+<p>Interact with a small GPT-2 model in-browser and inspect probable next tokens and attention.</p>
+<p class="resource-link"><a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
+
+</section></section>
+<section>
+<section id="local-inference-with-ollama" class="title-slide slide level1">
+<h1>05 · Local inference with Ollama</h1>
+<p>You need a <strong>model</strong>, a <strong>runtime/server</strong>, and a <strong>Python client</strong>.</p>
+<pre class="example"><code>Python (ollama client)
+   │ HTTP /api/chat
+   ▼
+Ollama (inference runtime)
+   │ loads quantized model weights
+   ▼
+Local model (CPU or GPU)
+</code></pre>
+</section>
+<section id="first-ollama-call" class="slide level2">
+<h2>First Ollama call</h2>
+<div class="sourceCode" id="cb5" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:1b</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run gemma3:1b</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In another terminal, activate your venv:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install ollama</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:1b</span></code></pre></div>
+</section>
+<section id="hardware-branch" class="slide level2">
+<h2>Hardware branch</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Environment</th>
+<th>First experiment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Little RAM / CPU-only</td>
+<td><code class="verbatim">qwen3:0.6b</code></td>
+</tr>
+<tr class="even">
+<td>8 GB RAM</td>
+<td><code class="verbatim">gemma3:1b</code></td>
+</tr>
+<tr class="odd">
+<td>16 GB RAM</td>
+<td><code class="verbatim">gemma3:4b</code></td>
+</tr>
+<tr class="even">
+<td>~8 GB VRAM + RAM</td>
+<td><code class="verbatim">qwen3:8b</code></td>
+</tr>
+</tbody>
+</table>
+<p>Model disk sizes are not full RAM requirements. If inference is impractical, continue UI lessons with a deterministic local responder.</p>
+</section>
+<section id="official-ollama-resources" class="slide level2">
+<h2>Official Ollama resources</h2>
+<ul>
+<li><a href="https://docs.ollama.com/quickstart">Ollama quickstart ↗</a></li>
+<li><a href="https://docs.ollama.com/api">HTTP API reference ↗</a></li>
+<li><a href="https://github.com/ollama/ollama-python">Python client ↗</a></li>
+<li><a href="https://ollama.com/library">Model library and exact tags ↗</a></li>
+</ul>
+</section></section>
+<section>
+<section id="build-a-web-interface" class="title-slide slide level1">
+<h1>06 · Build a web interface</h1>
+<p>Streamlit makes a first browser UI possible without teaching JavaScript.</p>
+<ul>
+<li><code class="verbatim">st.chat_input</code> · user question</li>
+<li><code class="verbatim">st.chat_message</code> · display turns</li>
+<li><code class="verbatim">st.session_state</code> · keep app state across reruns</li>
+<li>Python Ollama client · inference request</li>
+<li>Friendly offline/error messages</li>
+</ul>
+</section>
+<section id="architecture" class="slide level2">
+<h2>Architecture</h2>
+<pre class="example"><code>Browser → Streamlit server → Ollama HTTP API
+               │                  │
+         chat history          model weights
+               │                  │
+         UI rendering ◀──── generated response
+</code></pre>
+</section>
+<section id="run-your-chatbot" class="slide level2">
+<h2>Run your chatbot</h2>
+<div class="sourceCode" id="cb7" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:1b</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> streamlit run examples/chat_app.py</span></code></pre></div>
+<p>Observe: when you stop Ollama, Python can still display the web UI but cannot serve model completions.</p>
+</section>
+<section id="official-streamlit-tutorial" class="slide level2">
+<h2>Official Streamlit tutorial</h2>
+<ul>
+<li><a href="https://docs.streamlit.io/develop/tutorials/chat-and-llm-apps/build-conversational-apps">Build conversational apps ↗</a></li>
+<li><a href="https://docs.streamlit.io/develop/api-reference/chat">Chat element reference ↗</a></li>
+</ul>
+</section>
+<section id="stretch-tasks" class="slide level2">
+<h2>Stretch tasks</h2>
+<ul>
+<li>Add a model picker (or fixed model if there is only one)</li>
+<li>Clear messages</li>
+<li>Try two temperature settings</li>
+<li>Add an export to JSON</li>
+</ul>
+</section></section>
+<section>
+<section id="make-it-useful" class="title-slide slide level1">
+<h1>07 · Make it useful</h1>
+<ul>
+<li>Structured output must be <strong>parsed and validated</strong></li>
+<li>Models can make arithmetic/factual mistakes</li>
+<li>Treat model text as untrusted data</li>
+<li>Handle Ollama offline, missing models, and invalid responses</li>
+<li>Measure behavior with a tiny repeatable test set</li>
+</ul>
+</section>
+<section id="evaluation-exercise" class="slide level2">
+<h2>Evaluation exercise</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Input type</th>
+<th>Test</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Exact format</td>
+<td>Is JSON parseable and schema-valid?</td>
+</tr>
+<tr class="even">
+<td>Arithmetic</td>
+<td>Verify with ordinary Python</td>
+</tr>
+<tr class="odd">
+<td>Summarization</td>
+<td>Check facts against original</td>
+</tr>
+<tr class="even">
+<td>Failures</td>
+<td>Stop Ollama and observe feedback</td>
+</tr>
+<tr class="odd">
+<td>Compare models</td>
+<td>Record model, settings, latency</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="karpathy-prompt-injection-security" class="slide level2">
+<h2>Karpathy · Prompt injection &amp; security</h2>
+<p>Optional segment near 45:40. Ask: why can't we trust instructions inside model outputs?</p>
+<div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/zjkBMFhNj_g?start=2740" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
+<p class="media-fallback"><a href="https://www.youtube.com/watch?v=zjkBMFhNj_g&t=2740s" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
+<aside class="notes">Embedded start position uses YouTube's start parameter. Explain command injection and prompt injection as different threats.</aside>
+
+</section></section>
+<section>
+<section id="docker" class="title-slide slide level1">
+<h1>08 · Docker</h1>
+<p>Pack the <strong>web UI</strong> after it works locally.</p>
+<ul>
+<li>Dockerfile → reproducible image</li>
+<li>Container → process started from the image</li>
+<li>Ports → how the browser reaches the app</li>
+<li>Environment variables → configuration</li>
+<li>Compose → coordinate one or more services</li>
+</ul>
+</section>
+<section id="build-and-launch-optional" class="slide level2">
+<h2>Build and launch (optional)</h2>
+<div class="sourceCode" id="cb8" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> py-ai-studyplan-ui ./examples</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml up <span class="at">--build</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml down</span></code></pre></div>
+<p>Docker-internal <code class="verbatim">127.0.0.1</code> is <strong>not</strong> host-localhost. Keep Ollama private; the UI can demonstrate its offline fallback in a container.</p>
+</section>
+<section id="docker-official-guides" class="slide level2">
+<h2>Docker official guides</h2>
+<ul>
+<li><a href="https://docs.docker.com/get-started/">Docker Get Started ↗</a></li>
+<li><a href="https://docs.docker.com/guides/python/">Python packaging guide ↗</a></li>
+<li><a href="https://docs.docker.com/compose/gettingstarted/">Compose Quickstart ↗</a></li>
+</ul>
+</section></section>
+<section>
+<section id="two-graduation-projects" class="title-slide slide level1">
+<h1>Two graduation projects</h1>
+
+</section>
+<section id="project-a-local-llm-playground" class="slide level2">
+<h2>Project A · Local LLM playground</h2>
+<p>Must-have:</p>
+<ul>
+<li>Start a model, send a prompt, render a response</li>
+<li>Preserve and clear chat history</li>
+<li>Explain each process and HTTP boundary</li>
+<li>Fail gracefully if model is unavailable</li>
+<li>Reproduce setup from the README</li>
+</ul>
+</section>
+<section id="project-b-classical-tetris-ai-optional" class="slide level2">
+<h2>Project B · Classical Tetris AI (optional)</h2>
+<ol>
+<li>Represent a board and valid piece placements</li>
+<li>Score lines, holes, height and bumpiness</li>
+<li>Search legal placements and choose a move</li>
+<li>Compare to random moves on fixed seeds</li>
+<li>Optional LLM explains the chosen move</li>
+</ol>
+<p>A Tetris <strong>solver</strong> is primarily a search/planning lesson. Do not imply that an LLM inherently solves Tetris.</p>
+</section></section>
+<section>
+<section id="final-review" class="title-slide slide level1">
+<h1>Final review</h1>
+<p>Can they independently:</p>
+<ol>
+<li>Write a simple Python function and a test?</li>
+<li>Explain training vs inference and tokens?</li>
+<li>Show Python → Ollama → browser?</li>
+<li>Debug an HTTP or model error?</li>
+<li>Recreate the development environment?</li>
+<li>Explain image vs container and why public API exposure is unsafe?</li>
+</ol>
+<blockquote>
+<p>Success is understanding and modifying the system — not copying a chatbot.</p>
+</blockquote>
+</section>
+<section id="learning-resources" class="slide level2">
+<h2>Learning resources</h2>
+<p>Full curated catalog: <a href="../docs/resources.md">docs/resources.md</a> (also linked from the project <a href="../README.md">README</a>).</p>
+<ul>
+<li><a href="https://cs50.harvard.edu/python/weeks/0/">CS50 Python ↗</a></li>
+<li><a href="https://www.3blue1brown.com/topics/neural-networks">3Blue1Brown neural networks ↗</a></li>
+<li><a href="https://poloclub.github.io/transformer-explainer/">Transformer Explainer ↗</a></li>
+<li><a href="https://www.youtube.com/watch?v=7xTGNNLPyMI">Karpathy · Deep Dive into LLMs (optional, &gt;3h) ↗</a></li>
+<li><a href="https://cs50.harvard.edu/ai/weeks/0/">CS50 AI · Search (optional Tetris project) ↗</a></li>
+<li><a href="https://docs.ollama.com/quickstart">Ollama ↗</a></li>
+<li><a href="https://docs.streamlit.io/develop/tutorials/chat-and-llm-apps/build-conversational-apps">Streamlit ↗</a></li>
+<li><a href="https://docs.docker.com/guides/python/">Docker ↗</a></li>
+</ul>
+</section></section>
+  </div></div>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/highlight/highlight.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/search/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/zoom/zoom.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/customcontrols/plugin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@latest/chalkboard/plugin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    const mermaidTheme = { theme: 'base', themeVariables: { darkMode: true, background: '#1d1f21', primaryColor: '#282a2e', primaryTextColor: '#c5c8c6', primaryBorderColor: '#81a2be', lineColor: '#8abeb7', secondaryColor: '#373b41', tertiaryColor: '#1d1f21', fontFamily: 'Inter, Avenir, Helvetica, Arial, sans-serif' } };
+    function renderMermaid() { if (!window.mermaid) return; mermaid.run({ querySelector: '.mermaid' }).catch((err) => console.warn('Mermaid render failed', err)); }
+    if (window.mermaid) { mermaid.initialize(Object.assign({ startOnLoad: false, securityLevel: 'loose' }, mermaidTheme)); }
+    Reveal.initialize({
+      hash: true, controls: true, progress: true, center: true, slideNumber: true, transition: 'slide', width: 1400, height: 900, margin: 0.06,
+      navigationMode: 'default', keyboard: true, overview: true, showNotes: false,
+      highlight: { highlightOnLoad: true, escapeHTML: false },
+      customcontrols: { controls: [
+        { icon: '<span aria-label="clear">DEL</span>', title: 'Clear canvas (DEL)', action: 'RevealChalkboard.clear();' },
+        { icon: '<span aria-label="chalkboard">B</span>', title: 'Toggle chalkboard (B)', action: 'RevealChalkboard.toggleChalkboard();' },
+        { icon: '<span aria-label="notes">C</span>', title: 'Toggle notes canvas (C)', action: 'RevealChalkboard.toggleNotesCanvas();' }
+      ] },
+      chalkboard: { theme: 'whiteboard', boardmarkerWidth: 4, chalkWidth: 7, transition: 400, storage: 'py-ai-studyplan-whiteboard', background: [ 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.92)' ], grid: { color: 'rgba(129,162,190,0.18)', distance: 48, width: 1 }, rememberColor: true },
+      plugins: [ RevealHighlight, RevealNotes, RevealSearch, RevealZoom, RevealCustomControls, RevealChalkboard ]
+    }).then(renderMermaid);
+    Reveal.on('slidechanged', renderMermaid); Reveal.on('ready', renderMermaid);
+  </script>
+</body>
+</html>

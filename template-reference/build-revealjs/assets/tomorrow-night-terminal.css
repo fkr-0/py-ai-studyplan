@@ -1,0 +1,35 @@
+:root {
+  --tn-bg: #1d1f21; --tn-bg-2: #282a2e; --tn-bg-3: #373b41; --tn-fg: #c5c8c6; --tn-muted: #969896;
+  --tn-red: #cc6666; --tn-orange: #de935f; --tn-yellow: #f0c674; --tn-green: #b5bd68; --tn-aqua: #8abeb7; --tn-blue: #81a2be; --tn-purple: #b294bb;
+}
+html, body { background: radial-gradient(circle at 18% 12%, #2a2d33 0%, var(--tn-bg) 35%, #151719 100%); }
+.reveal { color: var(--tn-fg); font-family: Inter, Avenir, Helvetica, Arial, sans-serif; }
+.reveal .slides section { text-align: left; }
+.reveal .slides section > h2, .reveal .slides section > h3 { color: var(--tn-blue); letter-spacing: -0.03em; line-height: 1.02; margin-bottom: 0.45em; }
+.reveal h2 { font-size: 1.7em; } .reveal h3 { font-size: 1.35em; color: var(--tn-aqua); }
+.reveal p, .reveal li { font-size: 0.72em; line-height: 1.4; }
+.reveal ul, .reveal ol { display: block; margin-left: 1.15em; }
+.reveal blockquote { width: 86%; margin-left: 0; padding: .55em .8em; border-left: .18em solid var(--tn-purple); background: rgba(40,42,46,0.75); color: #e6e6e6; box-shadow: none; font-style: normal; }
+.reveal pre { width: 100%; margin: .4em 0; box-shadow: none; border-radius: 14px; border: 1px solid rgba(129,162,190,.28); background: #151719; }
+.reveal pre code { max-height: 500px; padding: 1em; font-size: 0.62em; line-height: 1.3; font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Menlo, Consolas, monospace; border-radius: 14px; }
+.reveal code { color: var(--tn-yellow); background: rgba(40,42,46,.75); border-radius: 6px; padding: .05em .22em; }
+.reveal pre code { background: transparent; color: inherit; padding: .9em; }
+.reveal table { font-size: .62em; } .reveal strong { color: var(--tn-yellow); } .reveal a { color: var(--tn-aqua); }
+.reveal .progress { color: var(--tn-purple); height: 5px; } .reveal .controls { color: var(--tn-blue); }
+.reveal .slide-number {
+  right: 92px;
+  bottom: 16px;
+  padding: .2em .55em;
+  border-radius: 999px;
+  border: 1px solid rgba(129,162,190,.35);
+  background: rgba(21,23,25,.78);
+  color: var(--tn-fg);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+}
+.reveal .slide-number a { color: inherit; }
+.mermaid { background: rgba(21,23,25,.55); border: 1px solid rgba(129,162,190,.35); border-radius: 20px; padding: 18px; text-align: center; font-size: 0.62em; }
+.mermaid svg { max-width: 100%; height: auto; }
+.reveal .customcontrols { z-index: 40; }
