@@ -12,7 +12,7 @@ from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 DEST = ROOT / "_site"
-FILE_PATHS = ("index.html", "CNAME", ".nojekyll")
+FILE_PATHS = ("index.html", "studyplan.html", "CNAME", ".nojekyll")
 TREE_CONTENT = {
     "docs": {".md"},
     "build-revealjs": {".html", ".css", ".zip"},

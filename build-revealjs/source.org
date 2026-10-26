@@ -25,6 +25,7 @@ From a first Python function to a private local chatbot.
 
 #+begin_export html
 <aside class="notes">Opening prompt: what could the learner build that they would actually use? Make clear this is an application course rather than neural-network research.</aside>
+<p class="project-page-link">Looking for the study plan overview? <a href="../studyplan.html">Open the project page ↗</a></p>
 #+end_export
 
 * Roadmap

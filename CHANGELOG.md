@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Open slide 1 directly from the site root, with a small link back to the preserved welcome page at `studyplan.html`.
+- Add a GitHub repository icon in the top-right corner throughout the presentation.
+
 ## [0.0.2] — 2026-10-26
 
 ### Added

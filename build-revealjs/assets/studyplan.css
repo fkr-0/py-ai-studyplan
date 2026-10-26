@@ -16,6 +16,11 @@
 .reveal .study-flow div { border-left:5px solid #b294bb; background:#292c31; padding:.8rem 1rem; font-size:.7em; }
 .reveal .study-flow small { display:block; font-size:.68em; color:#c5c8c6; margin-top:.5rem; }
 .reveal table { width:100%; }
+.reveal .slides .project-page-link { font-size:.42em; margin:2em 0 0; text-align:center; color:#bec3cc; }
+.repository-link { position:fixed; top:12px; right:12px; z-index:30; display:grid; place-items:center; width:44px; height:44px; color:#bec3cc; background:#17191e; border:1px solid #454951; border-radius:50%; }
+.repository-link:hover { color:#9ccccc; border-color:#9ccccc; }
+.repository-link:focus-visible { outline:3px solid #f0c674; outline-offset:3px; }
+@media print { .repository-link { display:none; } }
 .reveal .course-timetable { font-size:.51em; line-height:1.35; margin:.8em auto; }
 .reveal .course-timetable caption { color:#8abeb7; text-align:left; margin-bottom:.65em; }
 .reveal .course-timetable th, .reveal .course-timetable td { padding:.45em .55em; vertical-align:top; }
