@@ -23,10 +23,6 @@
 </head>
 <body>
   <div class="reveal"><div class="slides">
-<section class="slide level2">
-
-
-</section>
 <section id="python-ai-1" class="title-slide slide level1" data-reveal_background="#151719">
 <h1 data-reveal_background="#151719">Python + AI</h1>
 <p>From a first Python function to a private local chatbot.</p>
@@ -133,26 +129,163 @@
 <p>Explain the responsibility of each box. What would be different for a rule-based program?</p>
 </section></section>
 <section>
-<section id="python-foundations" class="title-slide slide level1">
-<h1>02 · Python foundations</h1>
+<section id="mac-workbench-python-foundations" class="title-slide slide level1">
+<h1>02 · Mac workbench → Python foundations</h1>
+<p>Before writing the first function, build a <strong><strong>real editor + terminal workflow</strong></strong>.</p>
 <ul>
-<li>Values and variables: strings, integers, lists, dictionaries</li>
-<li>Decisions and loops: <code class="verbatim">if</code>, <code class="verbatim">for</code>, <code class="verbatim">while</code></li>
-<li>Functions: parameters and <code class="verbatim">return</code></li>
-<li>The goal: build a tiny <strong>rule-based</strong> terminal chatbot</li>
+<li><strong><strong>macOS Terminal.app</strong></strong>: window displaying commands and output</li>
+<li><strong><strong>zsh</strong></strong>: shell interpreting commands and remembering history</li>
+<li><strong><strong>VS Code</strong></strong>: editor used to change source code</li>
+<li><strong><strong>Python</strong></strong>: interpreter running <strong>saved</strong> source files</li>
 </ul>
+<aside class="notes">Work from macOS, not a Linux shell demo. Day 2 is the workbench; Day 3 repeats shortcuts and adds Python. Students should be at the keyboard throughout.</aside>
+
+</section>
+<section id="four-distinct-programs-one-project" class="slide level2">
+<h2>Four distinct programs, one project</h2>
+<div class="study-workbench">
+  <div><strong>VS Code</strong><span>open folder · edit file · ⌘S save</span></div>
+  <div><strong>Terminal.app</strong><span>zsh prompt · history · commands</span></div>
+  <div><strong>Python</strong><span>runs the saved hello.py</span></div>
+  <div><strong>Output</strong><span>read result · debug · edit again ↻</span></div>
+</div>
+<p class="reference-line"><a href="../docs/01b-macos-workbench.md" target="_blank" rel="noopener noreferrer">Follow the hands-on Mac workbench lesson ↗</a></p>
+
+</section>
+<section id="day-2-install-editor-and-prepare-terminal" class="slide level2">
+<h2>Day 2 — Install editor and prepare Terminal</h2>
+<ul>
+<li>Install <a href="https://www.python.org/downloads/macos/">Python for macOS</a> and <a href="https://code.visualstudio.com/docs/setup/mac">VS Code for Apple Silicon</a>.</li>
+<li>Open <strong><strong>Terminal.app</strong></strong> using Spotlight (⌘ Space).</li>
+<li>Open VS Code → <strong><strong>⌘⇧P</strong></strong> → “Shell Command: Install 'code' command in PATH”.</li>
+<li>Restart Terminal, then try these <strong><strong>read-only</strong></strong> commands:</li>
+</ul>
+<div class="sourceCode" id="cb2" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-m</span>            <span class="co"># native Apple Silicon: arm64</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">$SHELL</span><span class="st">&quot;</span>       <span class="co"># usually /bin/zsh</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">--version</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">pwd</span></span></code></pre></div>
+<div class="NOTES">
+<p>The optional VS Code Copilot CLI is not required. If code is absent, use File → Open Folder instead. Learners must not modify the system-owned Python.</p>
+</div>
+</section>
+<section id="open-the-same-folder-in-both-apps" class="slide level2">
+<h2>Open the same folder in both apps</h2>
+<div class="sourceCode" id="cb3" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/Projects/python-ai-playground</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/python-ai-playground</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div>
+<ul>
+<li>VS Code <strong><strong>File → New Text File</strong></strong>, name it <code class="verbatim">hello.py</code>.</li>
+<li>Type and <strong><strong>save</strong></strong> (⌘S); back in Terminal run <code class="verbatim">python3 hello.py</code>.</li>
+<li>If <code class="verbatim">code .</code> fails, choose <strong><strong>File → Open Folder</strong></strong> in VS Code.</li>
+</ul>
+<p class="reference-line"><a href="https://code.visualstudio.com/docs/setup/mac" target="_blank" rel="noopener noreferrer">Official VS Code setup for macOS ↗</a></p>
+
+</section>
+<section id="two-key-families-do-not-mix-them" class="slide level2">
+<h2>Two key families (do not mix them)</h2>
+<div class="study-shortcut-twins">
+<div><h4>⌘ Command — Mac application</h4>
+<p><kbd>⌘C</kbd> copy selected terminal output</p>
+<p><kbd>⌘V</kbd> paste at shell prompt / in editor</p>
+<p><kbd>⌘S</kbd> save a file in VS Code</p>
+<p><kbd>⌘T</kbd> new Terminal.app tab</p>
+</div>
+<div><h4>⌃ Control — zsh / running process</h4>
+<p><kbd>⌃A</kbd> start · <kbd>⌃E</kbd> end of command</p>
+<p><kbd>⌃P</kbd> previous · <kbd>⌃N</kbd> next command</p>
+<p><kbd>⌃R</kbd> reverse history search</p>
+<p><kbd>⌃C</kbd> interrupt a running command</p>
+</div>
+</div>
+
+</section>
+<section id="learn-a-e-p-n-r" class="slide level2">
+<h2>Learn ⌃A · ⌃E · ⌃P · ⌃N · ⌃R</h2>
+<table>
+<thead>
+<tr class="header">
+<th>In the zsh prompt</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Control-A</strong></td>
+<td>move cursor to **A**/start</td>
+</tr>
+<tr class="even">
+<td><strong>Control-E</strong></td>
+<td>move cursor to **E**nd</td>
+</tr>
+<tr class="odd">
+<td><strong>Control-P</strong></td>
+<td>**P**revious command</td>
+</tr>
+<tr class="even">
+<td><strong>Control-N</strong></td>
+<td>**N**ext command</td>
+</tr>
+<tr class="odd">
+<td><strong>Control-R</strong></td>
+<td>**R**everse search in command history</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>These act in the <strong><strong>terminal shell prompt</strong></strong>, not when VS Code's editor has focus.</p>
+</blockquote>
+</section>
+<section id="two-minute-shortcut-drill-no-copying" class="slide level2">
+<h2>Two-minute shortcut drill (no copying)</h2>
+<ol>
+<li>Execute <code class="verbatim">echo APPLES</code>; then <code class="verbatim">echo BANANAS</code>.</li>
+<li>Hit <strong>⌃P</strong>, again <strong>⌃P</strong>, then <strong>⌃N</strong>. What changed?</li>
+<li>Hit <strong>⌃R</strong>, search <code class="verbatim">APPLES</code>, select it.</li>
+<li>Type <code class="verbatim">echo hello there</code> <strong><strong>without Enter</strong></strong>.</li>
+<li>Hit <strong>⌃A</strong> then <strong>⌃E</strong>; press Enter only at the end.</li>
+</ol>
+<div class="NOTES">
+<p>Perform live; keep the cursor visible. In default zsh Emacs-style line editing these bindings are standard. Optional plugins may remap them. Allow mistakes: use the arrow keys to recover, then try again.</p>
+</div>
+</section>
+<section id="copy-paste-is-not-control-c" class="slide level2">
+<h2>Copy + paste is NOT Control-C</h2>
+<ul>
+<li><strong><strong>⌘C</strong></strong> copies selected terminal output; <strong><strong>⌘V</strong></strong> pastes it.</li>
+<li><strong><strong>⌃C</strong></strong> interrupts a program. Test: <code class="verbatim">sleep 30</code> → ⌃C.</li>
+<li><strong><strong>⌃L</strong></strong> clears the terminal; <strong><strong>Tab</strong></strong> attempts completion.</li>
+<li>Select text with trackpad; copy into VS Code with ⌘C/⌘V.</li>
+<li>Copy the command below into Terminal, <strong>inspect it</strong>, then press Enter.</li>
+</ul>
+<div class="sourceCode" id="cb4" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Pasted safely into the terminal\n&#39;</span></span></code></pre></div>
+<p><strong><strong>Never blindly paste multiline commands or run unknown <code class="verbatim">curl | sh</code> installers.</strong></strong></p>
+<p class="reference-line"><a href="https://support.apple.com/guide/terminal/keyboard-shortcuts-trmlshtcts/mac" target="_blank" rel="noopener noreferrer">Apple's Terminal shortcut reference ↗</a></p>
+
+</section>
+<section id="day-2-checkpoint-edit-save-run-debug" class="slide level2">
+<h2>Day 2 checkpoint — edit → save → run → debug</h2>
+<p>In VS Code create <code class="verbatim">hello.py</code> and type:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>name <span class="op">=</span> <span class="st">&quot;friend&quot;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Hello, </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">!&quot;</span>)</span></code></pre></div>
+<ul>
+<li><strong><strong>⌘S</strong></strong> save. Terminal: <code class="verbatim">python3 hello.py</code>.</li>
+<li>Change <code class="verbatim">friend</code> to your name → <strong><strong>⌘S</strong></strong> → <strong><strong>⌃P</strong></strong> → Enter.</li>
+<li>Break a quote deliberately. Read the error. Fix it.</li>
+<li>Copy output (⌘C), paste into a scratch note (⌘V).</li>
+</ul>
+<p><strong><strong>Check:</strong></strong> <strong>Can you explain which app each key affected?</strong></p>
 </section>
 <section id="python-first-steps" class="slide level2">
 <h2>Python first steps</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> respond(message: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> message.lower().strip()</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;hello&quot;</span> <span class="kw">in</span> text:</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Hello!&quot;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> text.endswith(<span class="st">&quot;?&quot;</span>):</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;I don&#39;t know yet.&quot;</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;Tell me more.&quot;</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(respond(<span class="st">&quot;Hello there&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> respond(message: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> message.lower().strip()</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;hello&quot;</span> <span class="kw">in</span> text:</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;Hello!&quot;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> text.endswith(<span class="st">&quot;?&quot;</span>):</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">&quot;I don&#39;t know yet.&quot;</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">&quot;Tell me more.&quot;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(respond(<span class="st">&quot;Hello there&quot;</span>))</span></code></pre></div>
 <p>Independent change: detect three additional phrases.</p>
 </section>
 <section id="cs50p-lecture-pdf" class="slide level2">
@@ -172,9 +305,9 @@
 </ol>
 </section></section>
 <section>
-<section id="developer-workflow" class="title-slide slide level1">
-<h1>03 · Developer workflow</h1>
-<p>Minimal skills to operate the project:</p>
+<section id="developer-workflow-on-macos" class="title-slide slide level1">
+<h1>03 · Developer workflow (on macOS)</h1>
+<p>Now that you can edit, save and run, learn to manage a project:</p>
 <ul>
 <li>Terminal: paths, directories, running programs</li>
 <li>Editor: read a traceback before searching for solutions</li>
@@ -183,14 +316,32 @@
 <li>Git: record what changed</li>
 </ul>
 </section>
-<section id="first-environment" class="slide level2">
-<h2>First environment</h2>
-<div class="sourceCode" id="cb3" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> python-ai-lab <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> python-ai-lab</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-c</span> <span class="st">&#39;print(&quot;Ready&quot;)&#39;</span></span></code></pre></div>
-<p>Windows PowerShell uses <code class="verbatim">.venv\Scripts\Activate.ps1</code>.</p>
+<section id="day-7-isolated-python-environment" class="slide level2">
+<h2>Day 7 — isolated Python environment</h2>
+<p>In Terminal.app, create a <strong>separate</strong> project for experimenting:</p>
+<div class="sourceCode" id="cb7" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/Projects/prompt-library</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/prompt-library</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python3</span> <span class="at">-m</span> venv .venv</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div>
+<ul>
+<li>VS Code edits; the terminal runs. <code class="verbatim">.venv/</code> stays out of Git.</li>
+<li>Leave this shell configured until finished with this little project.</li>
+</ul>
+</section>
+<section id="native-zsh-first-z4h-is-an-optional-extra" class="slide level2">
+<h2>Native zsh first; z4h is an optional extra</h2>
+<ul>
+<li>macOS already includes <strong><strong>zsh</strong></strong> — no framework required.</li>
+<li><a href="https://github.com/romkatv/zsh4humans">Zsh for Humans (z4h) ↗</a> <strong>works on macOS</strong> and adds autosuggestions, completions and fuzzy history.</li>
+<li>Its maintainer states support is <strong><strong>very limited</strong></strong>; most bugs will go unfixed.</li>
+<li>Its installer changes shell startup files (with backup prompts).</li>
+<li><strong><strong>Do not install automatically</strong></strong> or teach shell shortcuts through z4h first.</li>
+</ul>
+<div class="NOTES">
+<p>Introduce only after the Control-A/E/P/N/R drill and getting comfortable in stock zsh. Discuss tradeoffs, original README, backups, rollback. Do not pipe a remote script into a shell for a beginner.</p>
+</div>
 </section>
 <section id="mit-missing-semester" class="slide level2">
 <h2>MIT Missing Semester</h2>
@@ -198,14 +349,17 @@
 <p class="resource-link"><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
 
 </section>
-<section id="workflow-exercise" class="slide level2">
-<h2>Workflow exercise</h2>
+<section id="days-89-one-reproducible-project" class="slide level2">
+<h2>Days 8–9 — one reproducible project</h2>
 <ol>
-<li>Save prompt presets into a JSON file</li>
-<li>Reload them and display available names</li>
-<li>Create a deliberate error and explain its traceback</li>
-<li>Commit the working code (not <code class="verbatim">.venv</code> or secrets)</li>
+<li>In VS Code, save JSON prompt presets and a reader function.</li>
+<li>Run it in Terminal; recall the command with <strong><strong>⌃P</strong></strong>, search with <strong><strong>⌃R</strong></strong>.</li>
+<li>Create a deliberate error and <strong><strong>read its traceback</strong></strong>.</li>
+<li>In <code class="verbatim">~/Projects/prompt-library</code>, <code class="verbatim">git init</code>, <code class="verbatim">git status</code>, then commit source.</li>
+<li>Explain why <code class="verbatim">.venv/</code> and secrets should not be committed.</li>
 </ol>
+<p class="reference-line"><a href="../docs/03-dev-workflow.md" target="_blank" rel="noopener noreferrer">Detailed macOS + Git lab ↗</a></p>
+
 </section></section>
 <section>
 <section id="neural-networks" class="title-slide slide level1">
@@ -269,41 +423,23 @@ Local model (CPU or GPU)
 </section>
 <section id="first-ollama-call" class="slide level2">
 <h2>First Ollama call</h2>
-<div class="sourceCode" id="cb5" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:1b</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run gemma3:1b</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># In another terminal, activate your venv:</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install ollama</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:1b</span></code></pre></div>
+<div class="sourceCode" id="cb9" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate  <span class="co"># create .venv first if absent</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:4b</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run gemma3:4b</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># In another Terminal tab (⌘T), same project + venv:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:4b</span></code></pre></div>
 </section>
-<section id="hardware-branch" class="slide level2">
-<h2>Hardware branch</h2>
-<table>
-<thead>
-<tr class="header">
-<th>Environment</th>
-<th>First experiment</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Little RAM / CPU-only</td>
-<td><code class="verbatim">qwen3:0.6b</code></td>
-</tr>
-<tr class="even">
-<td>8 GB RAM</td>
-<td><code class="verbatim">gemma3:1b</code></td>
-</tr>
-<tr class="odd">
-<td>16 GB RAM</td>
-<td><code class="verbatim">gemma3:4b</code></td>
-</tr>
-<tr class="even">
-<td>~8 GB VRAM + RAM</td>
-<td><code class="verbatim">qwen3:8b</code></td>
-</tr>
-</tbody>
-</table>
-<p>Model disk sizes are not full RAM requirements. If inference is impractical, continue UI lessons with a deterministic local responder.</p>
+<section id="your-mac-m4-24-gb-unified-memory" class="slide level2">
+<h2>Your Mac M4 · 24 GB unified memory</h2>
+<ul>
+<li>Start with <strong><strong><code class="verbatim">gemma3:4b</code></strong></strong>, adequate for a practical first local chatbot.</li>
+<li>Compare with <code class="verbatim">qwen3:8b</code> later (optional).</li>
+<li>Use <code class="verbatim">gemma3:1b</code> only if the larger model is too slow or unavailable.</li>
+<li>Unified RAM is shared with macOS: file size ≠ runtime memory use.</li>
+<li>An LLM is not necessary to practice writing and debugging Streamlit controls.</li>
+</ul>
 </section>
 <section id="official-ollama-resources" class="slide level2">
 <h2>Official Ollama resources</h2>
@@ -337,9 +473,11 @@ Local model (CPU or GPU)
 </section>
 <section id="run-your-chatbot" class="slide level2">
 <h2>Run your chatbot</h2>
-<div class="sourceCode" id="cb7" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:1b</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> streamlit run examples/chat_app.py</span></code></pre></div>
+<div class="sourceCode" id="cb11" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ollama desktop app is already running and model pulled.</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> streamlit run examples/chat_app.py <span class="at">--server.address</span> 127.0.0.1</span></code></pre></div>
 <p>Observe: when you stop Ollama, Python can still display the web UI but cannot serve model completions.</p>
 </section>
 <section id="official-streamlit-tutorial" class="slide level2">
@@ -352,10 +490,10 @@ Local model (CPU or GPU)
 <section id="stretch-tasks" class="slide level2">
 <h2>Stretch tasks</h2>
 <ul>
-<li>Add a model picker (or fixed model if there is only one)</li>
-<li>Clear messages</li>
-<li>Try two temperature settings</li>
-<li>Add an export to JSON</li>
+<li>Baseline app: model picker, clear history, temperature, JSON export.</li>
+<li><strong><strong>Your changes:</strong></strong> add a system prompt preset and report the difference.</li>
+<li>With Ollama stopped, show a <strong>friendly error</strong>, not a crash.</li>
+<li>Explain why edited code must be <strong><strong>saved</strong></strong> before rerunning.</li>
 </ul>
 </section></section>
 <section>
@@ -424,9 +562,9 @@ Local model (CPU or GPU)
 </section>
 <section id="build-and-launch-optional" class="slide level2">
 <h2>Build and launch (optional)</h2>
-<div class="sourceCode" id="cb8" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> py-ai-studyplan-ui ./examples</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml up <span class="at">--build</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml down</span></code></pre></div>
+<div class="sourceCode" id="cb12" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> py-ai-studyplan-ui ./examples</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml up <span class="at">--build</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml down</span></code></pre></div>
 <p>Docker-internal <code class="verbatim">127.0.0.1</code> is <strong>not</strong> host-localhost. Keep Ollama private; the UI can demonstrate its offline fallback in a container.</p>
 </section>
 <section id="docker-official-guides" class="slide level2">
@@ -516,7 +654,7 @@ Local model (CPU or GPU)
         { icon: '<span aria-label="chalkboard">B</span>', title: 'Toggle chalkboard (B)', action: 'RevealChalkboard.toggleChalkboard();' },
         { icon: '<span aria-label="notes">C</span>', title: 'Toggle notes canvas (C)', action: 'RevealChalkboard.toggleNotesCanvas();' }
       ] },
-      chalkboard: { theme: 'whiteboard', boardmarkerWidth: 4, chalkWidth: 7, transition: 400, storage: 'py-ai-studyplan-whiteboard', background: [ 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.92)' ], grid: { color: 'rgba(129,162,190,0.18)', distance: 48, width: 1 }, rememberColor: true },
+      chalkboard: { theme: 'whiteboard', boardmarkerWidth: 4, chalkWidth: 7, transition: 400, storage: 'py-ai-studyplan-whiteboard', grid: { color: 'rgba(129,162,190,0.18)', distance: 48, width: 1 }, rememberColor: true },
       plugins: [ RevealHighlight, RevealNotes, RevealSearch, RevealZoom, RevealCustomControls, RevealChalkboard ]
     }).then(renderMermaid);
     Reveal.on('slidechanged', renderMermaid); Reveal.on('ready', renderMermaid);

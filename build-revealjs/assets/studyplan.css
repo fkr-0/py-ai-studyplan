@@ -21,3 +21,32 @@
 .reveal pre { border-radius:2px; }
 .reveal pre code { border-radius:2px; }
 @media(max-width:700px){ .reveal .slides .media-box { max-height:45vh; } .reveal .slides .media-pdf { max-height:47vh; } }
+
+/* macOS editor + terminal teaching slides */
+.reveal .study-workbench {
+  display: grid; grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0.5em; margin: 0.75em auto; max-width: 1040px;
+}
+.reveal .study-workbench div {
+  min-height: 105px; border: 1px solid rgba(129,162,190,.42);
+  background: #22262d; padding: .56em .7em; text-align: left;
+}
+.reveal .study-workbench strong { display: block; font-size: .82em; color: #8abeb7; }
+.reveal .study-workbench span { display: block; margin-top: .3em; font-size: .52em; color: #d4d5da; }
+.reveal .study-shortcut-twins {
+  display: grid; grid-template-columns: 1fr 1fr; gap: .6em; margin: .6em 0;
+}
+.reveal .study-shortcut-twins > div {
+  padding: .45em .55em; border: 1px solid rgba(129,162,190,.4);
+  background: rgba(40,42,46,.9);
+}
+.reveal .study-shortcut-twins h4 { text-transform:none; color:#8abeb7; font-size:.68em; margin:0 0 .55em; }
+.reveal .study-shortcut-twins p { margin:.4em 0; font-size:.57em; white-space:nowrap; }
+.reveal kbd { display:inline-block; padding:.08em .25em; min-width:1.5em;
+  border:1px solid #818a98; color:#f0c674; background:#202228; font:600 .9em monospace; }
+.reveal .reference-line { font-size: .52em; text-align:center; margin-top:.45em; }
+.reveal .slides section a:focus-visible { outline: 3px solid #f0c674; outline-offset:3px; }
+@media(max-width:800px) {
+  .reveal .study-shortcut-twins {grid-template-columns:1fr;}
+  .reveal .study-shortcut-twins p {white-space:normal;}
+}

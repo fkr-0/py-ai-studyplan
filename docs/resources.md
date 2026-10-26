@@ -4,6 +4,10 @@ Links checked or cross-referenced to primary publishers on **2026-10-26**. Exter
 
 | ID | Resource | Type | Course | Reveal.js presentation |
 | --- | --- | --- | --- | --- |
+| MAC-01 | [Apple Terminal keyboard shortcuts](https://support.apple.com/guide/terminal/keyboard-shortcuts-trmlshtcts/mac) | Official guide | 02 | Link + live shortcut drill |
+| MAC-02 | [VS Code macOS setup](https://code.visualstudio.com/docs/setup/mac) | Official guide | 02 | Link + `code .` exercise |
+| MAC-03 | [Python macOS installer](https://www.python.org/downloads/macos/) | Official download | 02 | Link |
+| MAC-04 | [Zsh for Humans](https://github.com/romkatv/zsh4humans) | Optional tool (limited upstream support) | 03 optional | Link + caveat |
 | NN-01 | [3Blue1Brown: Neural network](https://www.youtube.com/watch?v=aircAruvnKk) | YouTube | 01 | Embedded video + direct link |
 | NN-02 | [3Blue1Brown: Gradient descent](https://www.youtube.com/watch?v=IHZwWFHWa-w) | YouTube | 04 | Embedded video + link |
 | NN-03 | [3Blue1Brown: Backpropagation](https://www.youtube.com/watch?v=Ilg3gGewQ5U) | YouTube | 04 | Embedded video + link |

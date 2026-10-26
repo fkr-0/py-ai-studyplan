@@ -12,13 +12,14 @@ from pathlib import Path
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
-DOCS = sorted(ROOT.rglob("*.md"))
-SKIP = ("template-reference", ".venv", "node_modules")
+SKIP = ("template-reference", ".venv", "node_modules", "_site", ".git")
+DOCS = sorted(
+    p for p in ROOT.rglob("*.md")
+    if not any(piece in SKIP for piece in p.relative_to(ROOT).parts)
+)
 failures: list[str] = []
 checked_links = 0
 for md in DOCS:
-    if any(piece in SKIP for piece in md.relative_to(ROOT).parts):
-        continue
     text = md.read_text(encoding="utf-8")
     # Markdown inline links; external URLs are deliberately not fetched here.
     for match in re.finditer(r"(?<!!)\[[^\]]+\]\(([^\s)]+)(?:\s+[^)]*)?\)", text):

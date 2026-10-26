@@ -7,6 +7,8 @@ English throughout. 2024 MacBook Pro M4-family chip with 24 GB unified memory, s
 ## Principles
 
 - Demonstrate a **purpose**, then explain terms, then let the student change code on their own.
+- **Essential early dependency:** [Mac editor + terminal workbench](01b-macos-workbench.md) before the first Python function. Do not assume understanding of Save vs Run, editor vs shell, or Command vs Control.
+- Observe a learner using **Control-A/E/P/N/R**, copying terminal output with **Command-C/V**, and interrupting `sleep` with **Control-C**. z4h is an optional extension after native zsh.
 - Lead with the distinction *deterministic computation / learned parameters / generative inference*.
 - After each video, pause for one question and one experiment.
 - Treat progress as demonstrable behavior, not videos watched.
@@ -18,8 +20,8 @@ English throughout. 2024 MacBook Pro M4-family chip with 24 GB unified memory, s
 | Session | 10–25 min explanation | 45–65 min guided lab | Independent extension | Exit question |
 | --- | --- | --- | --- | --- |
 | 01 | What is AI? NN video | Compare rule vs LLM | Draw architecture | Training vs inference? |
-| 02 | Variables, functions, loops | Rule chatbot | New rules and tests | What does `return` do? |
-| 03 | CLI, venv, files, Git | JSON prompt library | Recover from traceback | What is in a venv? |
+| 02 | VS Code + Terminal.app, shortcuts; then functions | `hello.py` save/run, then rule chatbot | Recall with Control-P and explain Command-C/V vs Control-C | Which program handles each key? |
+| 03 | zsh history/search, venv, files, Git | JSON prompt library | Recover from traceback; optional z4h discussion | What is in a venv? |
 | 04 | Gradients, backprop, tokens | Neural Playground | Tune rate / layers | Why need held-out tests? |
 | 05 | Local runtime architecture | Ollama chat from Python | Change model tag | What does the client send? |
 | 06 | Request/state/response | Streamlit chat | Clear conversation | Where does state live? |
@@ -36,7 +38,7 @@ Sessions 1–4 can run on a modest computer. Run session 6 initially against a d
 
 ### When learning time is limited
 
-In 2 h/week schedule, assign one 15–20 minute video plus a 20 minute coding exercise between meetings. For experienced programmers, omit beginner Python labs but retain local inference, safety and architecture lessons.
+For this learner studying **1–2 hours/day**, use the [21-day schedule](21-day-mac-track.md), leaving extra time for terminal/editor fluency on Days 2–3. If lessons run long, split them instead of skipping independent practice. For experienced programmers, omit beginner Python labs but retain local inference, safety and architecture lessons.
 
 ### Ethical/software boundaries
 

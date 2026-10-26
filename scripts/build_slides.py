@@ -92,6 +92,15 @@ def build() -> None:
          "--wrap=none"],
         input=source, text=True, capture_output=True, check=True,
     ).stdout
+    # Pandoc's Org -> Reveal.js writer emits a phantom empty first slide
+    # when the document has #+TITLE metadata. Strip that wrapper so the
+    # opening presentation page is our actual cover and ZIP button.
+    converted = converted.lstrip()
+    phantom = '<section class="slide level2">\n\n\n</section>'
+    if converted.startswith(phantom):
+        converted = converted[len(phantom):].lstrip()
+    if converted.startswith('<section class="slide level2">'):
+        raise RuntimeError("Unexpected initial empty Reveal.js slide")
     if converted.count("<section") < 15:
         raise RuntimeError("Slide export unexpectedly short")
     needle = f'href="{DEFAULT_ARCHIVE_LINK}"'
@@ -122,6 +131,12 @@ def build() -> None:
                         '<meta charset="utf-8">\n'
                         '  <meta name="referrer" content="strict-origin-when-cross-origin">')
     foot = foot.replace("terminal-power-whiteboard", "py-ai-studyplan-whiteboard")
+    # Chalkboard's background option expects URLs, not CSS colors. The copied
+    # terminal-talk values caused /rgba(...) 404s. Keep theme defaults.
+    foot = foot.replace(
+        "background: [ 'rgba(255,255,255,0.03)', 'rgba(255,255,255,0.92)' ], ",
+        "",
+    )
     foot = foot.replace("transition: 'slide', width: 1400, height: 900",
                         "transition: 'slide', width: 1400, height: 900")
     body = head + START + "\n" + converted.strip() + "\n" + END + foot

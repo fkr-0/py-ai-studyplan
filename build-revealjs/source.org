@@ -117,12 +117,143 @@ USER ──▶ PYTHON APP ──▶ OLLAMA ──▶ MODEL
 
 Explain the responsibility of each box. What would be different for a rule-based program?
 
-* 02 · Python foundations
+* 02 · Mac workbench → Python foundations
 
-- Values and variables: strings, integers, lists, dictionaries
-- Decisions and loops: =if=, =for=, =while=
-- Functions: parameters and =return=
-- The goal: build a tiny *rule-based* terminal chatbot
+Before writing the first function, build a **real editor + terminal workflow**.
+
+- **macOS Terminal.app**: window displaying commands and output
+- **zsh**: shell interpreting commands and remembering history
+- **VS Code**: editor used to change source code
+- **Python**: interpreter running *saved* source files
+
+#+begin_export html
+<aside class="notes">Work from macOS, not a Linux shell demo. Day 2 is the workbench; Day 3 repeats shortcuts and adds Python. Students should be at the keyboard throughout.</aside>
+#+end_export
+
+** Four distinct programs, one project
+
+#+begin_export html
+<div class="study-workbench">
+  <div><strong>VS Code</strong><span>open folder · edit file · ⌘S save</span></div>
+  <div><strong>Terminal.app</strong><span>zsh prompt · history · commands</span></div>
+  <div><strong>Python</strong><span>runs the saved hello.py</span></div>
+  <div><strong>Output</strong><span>read result · debug · edit again ↻</span></div>
+</div>
+<p class="reference-line"><a href="../docs/01b-macos-workbench.md" target="_blank" rel="noopener noreferrer">Follow the hands-on Mac workbench lesson ↗</a></p>
+#+end_export
+
+** Day 2 — Install editor and prepare Terminal
+
+- Install [[https://www.python.org/downloads/macos/][Python for macOS]] and [[https://code.visualstudio.com/docs/setup/mac][VS Code for Apple Silicon]].
+- Open **Terminal.app** using Spotlight (⌘ Space).
+- Open VS Code → **⌘⇧P** → “Shell Command: Install 'code' command in PATH”.
+- Restart Terminal, then try these **read-only** commands:
+
+#+begin_src sh
+uname -m            # native Apple Silicon: arm64
+echo "$SHELL"       # usually /bin/zsh
+python3 --version
+pwd
+#+end_src
+
+#+BEGIN_NOTES
+The optional VS Code Copilot CLI is not required. If code is absent, use File → Open Folder instead. Learners must not modify the system-owned Python.
+#+END_NOTES
+
+** Open the same folder in both apps
+
+#+begin_src sh
+mkdir -p ~/Projects/python-ai-playground
+cd ~/Projects/python-ai-playground
+code .
+#+end_src
+
+- VS Code **File → New Text File**, name it =hello.py=.
+- Type and **save** (⌘S); back in Terminal run =python3 hello.py=.
+- If =code .= fails, choose **File → Open Folder** in VS Code.
+
+#+begin_export html
+<p class="reference-line"><a href="https://code.visualstudio.com/docs/setup/mac" target="_blank" rel="noopener noreferrer">Official VS Code setup for macOS ↗</a></p>
+#+end_export
+
+** Two key families (do not mix them)
+
+#+begin_export html
+<div class="study-shortcut-twins">
+<div><h4>⌘ Command — Mac application</h4>
+<p><kbd>⌘C</kbd> copy selected terminal output</p>
+<p><kbd>⌘V</kbd> paste at shell prompt / in editor</p>
+<p><kbd>⌘S</kbd> save a file in VS Code</p>
+<p><kbd>⌘T</kbd> new Terminal.app tab</p>
+</div>
+<div><h4>⌃ Control — zsh / running process</h4>
+<p><kbd>⌃A</kbd> start · <kbd>⌃E</kbd> end of command</p>
+<p><kbd>⌃P</kbd> previous · <kbd>⌃N</kbd> next command</p>
+<p><kbd>⌃R</kbd> reverse history search</p>
+<p><kbd>⌃C</kbd> interrupt a running command</p>
+</div>
+</div>
+#+end_export
+
+** Learn ⌃A · ⌃E · ⌃P · ⌃N · ⌃R
+
+| In the zsh prompt | Action |
+|-------------------+--------|
+| *Control-A* | move cursor to **A**/start |
+| *Control-E* | move cursor to **E**nd |
+| *Control-P* | **P**revious command |
+| *Control-N* | **N**ext command |
+| *Control-R* | **R**everse search in command history |
+
+#+begin_quote
+These act in the **terminal shell prompt**, not when VS Code's editor has focus.
+#+end_quote
+
+** Two-minute shortcut drill (no copying)
+
+1. Execute =echo APPLES=; then =echo BANANAS=.
+2. Hit *⌃P*, again *⌃P*, then *⌃N*. What changed?
+3. Hit *⌃R*, search =APPLES=, select it.
+4. Type =echo hello there= **without Enter**.
+5. Hit *⌃A* then *⌃E*; press Enter only at the end.
+
+#+BEGIN_NOTES
+Perform live; keep the cursor visible. In default zsh Emacs-style line editing these bindings are standard. Optional plugins may remap them. Allow mistakes: use the arrow keys to recover, then try again.
+#+END_NOTES
+
+** Copy + paste is NOT Control-C
+
+- **⌘C** copies selected terminal output; **⌘V** pastes it.
+- **⌃C** interrupts a program. Test: =sleep 30= → ⌃C.
+- **⌃L** clears the terminal; **Tab** attempts completion.
+- Select text with trackpad; copy into VS Code with ⌘C/⌘V.
+- Copy the command below into Terminal, *inspect it*, then press Enter.
+
+#+begin_src sh
+printf 'Pasted safely into the terminal\n'
+#+end_src
+
+**Never blindly paste multiline commands or run unknown =curl | sh= installers.**
+
+#+begin_export html
+<p class="reference-line"><a href="https://support.apple.com/guide/terminal/keyboard-shortcuts-trmlshtcts/mac" target="_blank" rel="noopener noreferrer">Apple's Terminal shortcut reference ↗</a></p>
+#+end_export
+
+** Day 2 checkpoint — edit → save → run → debug
+
+In VS Code create =hello.py= and type:
+
+#+begin_src python
+name = "friend"
+print(f"Hello, {name}!")
+#+end_src
+
+- **⌘S** save. Terminal: =python3 hello.py=.
+- Change =friend= to your name → **⌘S** → **⌃P** → Enter.
+- Break a quote deliberately. Read the error. Fix it.
+- Copy output (⌘C), paste into a scratch note (⌘V).
+
+**Check:** *Can you explain which app each key affected?*
 
 ** Python first steps
 
@@ -156,9 +287,9 @@ Harvard CS50's *Introduction to Programming with Python* · Week 0: functions an
 3. Test the greeting, unknown question, and empty input
 4. Change one feature *without* an AI coding assistant
 
-* 03 · Developer workflow
+* 03 · Developer workflow (on macOS)
 
-Minimal skills to operate the project:
+Now that you can edit, save and run, learn to manage a project:
 
 - Terminal: paths, directories, running programs
 - Editor: read a traceback before searching for solutions
@@ -166,17 +297,33 @@ Minimal skills to operate the project:
 - JSON: load and save structured data
 - Git: record what changed
 
-** First environment
+** Day 7 — isolated Python environment
+
+In Terminal.app, create a *separate* project for experimenting:
 
 #+begin_src sh
-mkdir python-ai-lab && cd python-ai-lab
+mkdir -p ~/Projects/prompt-library
+cd ~/Projects/prompt-library
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip --version
-python -c 'print("Ready")'
+code .
 #+end_src
 
-Windows PowerShell uses =.venv\Scripts\Activate.ps1=.
+- VS Code edits; the terminal runs. =.venv/= stays out of Git.
+- Leave this shell configured until finished with this little project.
+
+** Native zsh first; z4h is an optional extra
+
+- macOS already includes **zsh** — no framework required.
+- [[https://github.com/romkatv/zsh4humans][Zsh for Humans (z4h) ↗]] *works on macOS* and adds autosuggestions, completions and fuzzy history.
+- Its maintainer states support is **very limited**; most bugs will go unfixed.
+- Its installer changes shell startup files (with backup prompts).
+- **Do not install automatically** or teach shell shortcuts through z4h first.
+
+#+BEGIN_NOTES
+Introduce only after the Control-A/E/P/N/R drill and getting comfortable in stock zsh. Discuss tradeoffs, original README, backups, rollback. Do not pipe a remote script into a shell for a beginner.
+#+END_NOTES
 
 ** MIT Missing Semester
 
@@ -186,12 +333,17 @@ Choose only: shell, debugging, Git. No need for every lecture.
 <p class="resource-link"><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
 #+end_export
 
-** Workflow exercise
+** Days 8–9 — one reproducible project
 
-1. Save prompt presets into a JSON file
-2. Reload them and display available names
-3. Create a deliberate error and explain its traceback
-4. Commit the working code (not =.venv= or secrets)
+1. In VS Code, save JSON prompt presets and a reader function.
+2. Run it in Terminal; recall the command with **⌃P**, search with **⌃R**.
+3. Create a deliberate error and **read its traceback**.
+4. In =~/Projects/prompt-library=, =git init=, =git status=, then commit source.
+5. Explain why =.venv/= and secrets should not be committed.
+
+#+begin_export html
+<p class="reference-line"><a href="../docs/03-dev-workflow.md" target="_blank" rel="noopener noreferrer">Detailed macOS + Git lab ↗</a></p>
+#+end_export
 
 * 04 · Neural networks
 
@@ -265,23 +417,22 @@ Local model (CPU or GPU)
 ** First Ollama call
 
 #+begin_src sh
-ollama pull gemma3:1b
-ollama run gemma3:1b
-# In another terminal, activate your venv:
-python -m pip install ollama
-python examples/cli_chat.py --model gemma3:1b
+cd ~/Projects/py-ai-studyplan
+source .venv/bin/activate  # create .venv first if absent
+ollama pull gemma3:4b
+ollama run gemma3:4b
+# In another Terminal tab (⌘T), same project + venv:
+python -m pip install -r examples/requirements.txt
+python examples/cli_chat.py --model gemma3:4b
 #+end_src
 
-** Hardware branch
+** Your Mac M4 · 24 GB unified memory
 
-| Environment | First experiment |
-|-------------+------------------|
-| Little RAM / CPU-only | =qwen3:0.6b= |
-| 8 GB RAM | =gemma3:1b= |
-| 16 GB RAM | =gemma3:4b= |
-| ~8 GB VRAM + RAM | =qwen3:8b= |
-
-Model disk sizes are not full RAM requirements. If inference is impractical, continue UI lessons with a deterministic local responder.
+- Start with **=gemma3:4b=**, adequate for a practical first local chatbot.
+- Compare with =qwen3:8b= later (optional).
+- Use =gemma3:1b= only if the larger model is too slow or unavailable.
+- Unified RAM is shared with macOS: file size ≠ runtime memory use.
+- An LLM is not necessary to practice writing and debugging Streamlit controls.
 
 ** Official Ollama resources
 
@@ -313,9 +464,11 @@ Browser → Streamlit server → Ollama HTTP API
 ** Run your chatbot
 
 #+begin_src sh
+cd ~/Projects/py-ai-studyplan
+source .venv/bin/activate
 python -m pip install -r examples/requirements.txt
-ollama pull gemma3:1b
-python -m streamlit run examples/chat_app.py
+# Ollama desktop app is already running and model pulled.
+python -m streamlit run examples/chat_app.py --server.address 127.0.0.1
 #+end_src
 
 Observe: when you stop Ollama, Python can still display the web UI but cannot serve model completions.
@@ -327,10 +480,10 @@ Observe: when you stop Ollama, Python can still display the web UI but cannot se
 
 ** Stretch tasks
 
-- Add a model picker (or fixed model if there is only one)
-- Clear messages
-- Try two temperature settings
-- Add an export to JSON
+- Baseline app: model picker, clear history, temperature, JSON export.
+- **Your changes:** add a system prompt preset and report the difference.
+- With Ollama stopped, show a *friendly error*, not a crash.
+- Explain why edited code must be **saved** before rerunning.
 
 * 07 · Make it useful
 

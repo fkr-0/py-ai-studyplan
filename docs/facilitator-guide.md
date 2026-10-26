@@ -4,6 +4,8 @@
 
 The learner uses a **2024 M4 MacBook Pro with 24 GB unified memory** and studies **1–2 hours daily**. Keep all teaching and exercises in **English**. The [21-day schedule](21-day-mac-track.md) translates the eight sessions into daily blocks, and [macOS setup](mac-m4-setup.md) replaces generic Linux examples when needed. Start model demonstrations with `gemma3:4b`.
 
+Before any coding, run the [macOS editor + Terminal workbench](01b-macos-workbench.md) with the learner at the keyboard: VS Code, Terminal.app, **Command-C/V vs Control-C**, **Control-A/E/P/N/R**. zsh4humans is an optional bonus, not a prerequisite.
+
 ## Before session 1
 
 Ask only about the next relevant decisions: their OS, available RAM (and GPU/VRAM if known), whether they have written any code before, and weekly availability. **Do not delay the first theory/Python lesson while waiting for a GPU.**

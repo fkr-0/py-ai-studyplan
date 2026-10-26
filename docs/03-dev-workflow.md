@@ -8,15 +8,25 @@
 - [Python venv documentation](https://docs.python.org/3/library/venv.html).
 - [Git book](https://git-scm.com/book/en/v2).
 
-## Terminal lab (Linux/macOS)
+## macOS Terminal + VS Code lab
 
-    mkdir python-ai-lab && cd python-ai-lab
+First complete the [hands-on Mac workbench](01b-macos-workbench.md). Use native Terminal.app and VS Code, not Linux/Windows instructions, and practise **Control-A** start, **Control-E** end, **Control-P/N** previous/next history, **Control-R** reverse search. **Command-C/V** copy/paste on macOS; **Control-C** interrupts. Use `code .` to open the current folder.
+
+The following commands work in zsh on Apple Silicon:
+
+    mkdir -p ~/Projects/prompt-library
+    cd ~/Projects/prompt-library
     python3 -m venv .venv
     source .venv/bin/activate
     python -m pip --version
+    code .
     python -c 'print("Environment is ready")'
 
-Windows PowerShell activation: ` .venv\Scripts\Activate.ps1 `. Use `python` / `py` as appropriate. Never `sudo pip install` into the system interpreter for a beginner project.
+macOS uses `python3` before activating a virtual environment and generally `python` inside it. Never use `sudo pip install` for this project. After unzipping course material, use `~/Projects/py-ai-studyplan` as the working directory.
+
+## Optional shell enhancement: Zsh for Humans
+
+[zsh4humans](https://github.com/romkatv/zsh4humans) works on macOS and adds completion, autosuggestions and fuzzy history; its [upstream tips](https://github.com/romkatv/zsh4humans/blob/master/tips.md) include macOS key variations. **But its maintainer warns of very limited support, with most bugs unfixed.** The installer changes zsh startup files after offering backups. Teach **built-in macOS zsh first**, then discuss whether an optional shell modification is worthwhile. It is never required to graduate, and remote install scripts should not run automatically. See [workbench tradeoffs](01b-macos-workbench.md#7-zsh-for-humans-z4h-macos-compatible-optional).
 
 ## JSON exercise
 

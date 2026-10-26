@@ -5,7 +5,7 @@
 - **Platform:** 2024 MacBook Pro, Apple M4-family chip, 24 GB unified memory.
 - **Availability:** 1–2 hours **per day**, not per week.
 - **Instruction language:** English throughout.
-- **Suggested route:** [21-day Mac study track](21-day-mac-track.md) with [Mac setup](mac-m4-setup.md); approximately 3 weeks at 1–2 hours daily, plus catch-up if completely new to programming.
+- **Suggested route:** [21-day Mac study track](21-day-mac-track.md), [editor + terminal first](01b-macos-workbench.md), then [Mac setup](mac-m4-setup.md); approximately 3 weeks at 1–2 hours daily, plus catch-up if completely new to programming.
 - **One important unknown:** prior coding experience. Adjust Python days based on observed performance, without delaying the first meeting.
 
 ## First conversation (10 minutes)

@@ -19,14 +19,14 @@ This is a *recommended sequence*, not a hard deadline. A day is complete only wh
 | Day | Focus | Concrete deliverable | Reference |
 |---:|---|---|---|
 | 01 | What are algorithms, ML and LLMs? | Draw the AI stack and distinguish training from inference | [Session 01](01-ai-intuition.md) |
-| 02 | Install and meet Python on macOS | Terminal, editor, `python3 --version`, `hello.py` | [Mac setup](mac-m4-setup.md) |
-| 03 | Variables, strings and functions | Prompt/response formatter | [Session 02](02-python-foundations.md) |
+| 02 | macOS workbench: Terminal + VS Code | Install tools; open same folder in both; save/run `hello.py` | [Mac workbench](01b-macos-workbench.md) |
+| 03 | Keyboard fluency + first Python functions | Drill **Ctrl-A/E/P/N/R**, Cmd-C/V vs Ctrl-C; then formatter | [Mac workbench](01b-macos-workbench.md) + [Python](02-python-foundations.md) |
 | 04 | Conditions and loops | Rule-based terminal chatbot | [Session 02](02-python-foundations.md) |
 | 05 | Lists, dictionaries and modules | Refactor chatbot rules into data | [Session 02](02-python-foundations.md) |
 | 06 | Errors and debugging | Reproduce and fix a deliberate exception | [Session 02](02-python-foundations.md) |
-| 07 | Shell, `venv`, `pip` | Fresh environment and clean run | [Session 03](03-dev-workflow.md) |
+| 07 | Shell history, `venv`, `pip` | Repeat shortcuts, create a clean environment; **optional** z4h discussion | [Developer workflow](03-dev-workflow.md) |
 | 08 | Files and JSON | Persist prompt templates in JSON | [Session 03](03-dev-workflow.md) |
-| 09 | Git and reproducibility | Commit, change, diff, restore one change | [Session 03](03-dev-workflow.md) |
+| 09 | Git, reproducibility and debugging | Commit, diff, restore; inspect an intentional error in VS Code/Terminal | [Developer workflow](03-dev-workflow.md) |
 | 10 | Neural-network intuition | Sketch neurons, weights and a loss | [Session 04](04-neural-networks.md) |
 | 11 | Gradient descent / backprop | Run three TensorFlow Playground variations | [Session 04](04-neural-networks.md) |
 | 12 | Tokens and Transformers | Explain next-token generation using an interactive demo | [Session 04](04-neural-networks.md) |
@@ -40,6 +40,10 @@ This is a *recommended sequence*, not a hard deadline. A day is complete only wh
 | 20 | Docker fundamentals | Build the UI image and inspect ports and logs | [Session 08](08-docker.md) |
 | 21 | Graduation and reflection | Start app from instructions; explain every boundary | [Assessment](assessment.md) |
 
+## Mac workbench gate before Python exercises
+
+Before Day 4, the learner must independently open a folder from Terminal in VS Code (`code .`, or File → Open Folder), save `hello.py` (Command-S), execute it (`python3 hello.py`), recall/revise a previous command (Control-P, A, E), search history (Control-R), copy/paste between terminal and editor (Command-C/V), and interrupt a command (Control-C). These are different contexts; the learner should explain which program owns each shortcut. See the [hands-on workbench lesson](01b-macos-workbench.md).
+
 ## Scope adjustments
 
 - **One hour most days:** reserve four additional catch-up days (Python basics, JSON, UI, Docker) and extend to about 25 days.
@@ -50,6 +54,7 @@ This is a *recommended sequence*, not a hard deadline. A day is complete only wh
 
 ## Completion checklist
 
+- [ ] Can use Terminal.app and VS Code together, and explain Command-C/V vs Control-C and Control-A/E/P/N/R.
 - [ ] Can run and explain a Python function, loop and dictionary.
 - [ ] Can create a venv and run with declared dependencies.
 - [ ] Can articulate loss, gradient and inference without requiring calculus.

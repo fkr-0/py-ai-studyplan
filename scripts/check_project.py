@@ -12,7 +12,8 @@ ROOT = Path(__file__).resolve().parents[1]
 def main() -> int:
     broken: list[str] = []
     markdown = [
-        p for p in ROOT.rglob("*.md") if "template-reference" not in p.parts
+        p for p in ROOT.rglob("*.md")
+        if not any(part in {"template-reference", "_site", ".venv", ".git"} for part in p.parts)
     ]
     for doc in markdown:
         text = doc.read_text(encoding="utf-8")
