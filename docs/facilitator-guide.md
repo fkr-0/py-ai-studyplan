@@ -4,7 +4,7 @@
 
 The [21-day schedule](21-day-mac-track.md) translates the eight topic groups into daily blocks. Use [macOS setup](macos-setup.md) for Mac walkthroughs and adapt commands for other platforms. Choose model size according to available resources; examples use `gemma3:4b`.
 
-Before any coding, run the [macOS editor + Terminal workbench](01b-macos-workbench.md) with the learner at the keyboard: VS Code, Terminal.app, **Command-C/V vs Control-C**, **Control-A/E/P/N/R**. zsh4humans is an optional bonus, not a prerequisite.
+Before any coding, run the [macOS editor + Terminal workbench](01b-macos-workbench.md) with the learner at the keyboard: VS Code, Terminal.app, **Command-C/V vs Control-C**, **Control-A/E/P/N/R**. Decode symbol spelling aloud first: **^C, ⌃C and Ctrl+C all mean hold Control and press C; ⌘C means Command+C (copy)**. Don't assume the keyboard glyphs are self-explanatory. zsh4humans is an optional bonus, not a prerequisite.
 
 ## Before session 1
 

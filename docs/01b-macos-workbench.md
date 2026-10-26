@@ -1,10 +1,25 @@
 # macOS workbench — Terminal + editor + practical keyboard fluency
 
-**Course position:** Do this **before writing the first Python function** (Day 2), then revisit history shortcuts on Day 3 and environment/Git on Day 7. **Estimated time:** 60–100 minutes including a hands-on change.
+**Course position:** Do this **before writing the first Python function** (Day 2), then revisit history shortcuts on Day 3 and project tools on Day 7. **Estimated time:** 60–100 minutes including a hands-on change.
 
 ## Learning outcomes
 
 By the end, the learner can tell *Terminal.app*, *zsh*, *VS Code* and *Python* apart; open a project folder in the editor; use the terminal to run a Python file; find, fix, and re-run a mistake; navigate a command line and command history without retyping; and copy/paste safely on macOS.
+
+## First: keyboard symbols are not letters to type
+
+A Mac has two important modifier keys: **Command (⌘)** and **Control (⌃)**. You **hold** the named key, then **tap** the letter. The symbols in instructions are not text to type into the terminal.
+
+| You might see | What you physically press | What it does here |
+| --- | --- | --- |
+| **`Ctrl+C`**, **`Control-C`**, **`⌃C`**, **`^C`** | Hold **Control**, tap **C** | Interrupts a running terminal program |
+| **`⌘C`** | Hold **Command**, tap **C** | Copies selected text |
+| **`⌘V`** | Hold **Command**, tap **V** | Pastes copied text |
+| **`⌘⇧P`** | Hold **Command + Shift**, tap **P** | Opens VS Code's command search |
+
+**`^C` does not mean typing the characters `^` and `C`.** The caret `^` is older shorthand for the Control key. If the terminal prints `^C` after you stop `sleep 30`, it is reporting your interruption. **Control+C and Command+C are not interchangeable.**
+
+Find the **Control**, **Command (⌘)**, and **Shift (⇧)** keys on the Mac keyboard before proceeding. For more, see the [plain-English glossary](beginner-glossary.md).
 
 ## 1. The four components
 
@@ -66,7 +81,7 @@ Try the integrated terminal via **Terminal → New Terminal** in VS Code. It sho
 
 ### Shortcuts depend on what has focus
 
-**Command (⌘)** shortcuts belong to macOS/applications: copy, paste, save, new tab. **Control (⌃)** shortcuts at a shell prompt generally edit the shell command line or send signals to a running process. `Control + A` in a shell is **not** `Command + A` (Select All).
+**Command (⌘)** means the Mac Command key; **Control (⌃)** means the separate Control key. At a shell prompt, Control shortcuts generally edit the line or send a signal to a running process. `Control + A` in a shell is **not** `Command + A` (Select All).
 
 ## 4. Essential zsh command-line shortcuts
 
@@ -94,7 +109,7 @@ With *standard* zsh Emacs-style bindings, Control-P/N navigate history and Contr
 3. Press **Control + R**, type `APPLES`, press Enter (if a matching command is found).
 4. Type `echo good morning` **without Enter**; press **Control + A**, then **Control + E**, then Enter.
 5. Type a long command, move the cursor left a few positions, try **Control + K** and **Control + U**.
-6. Run `sleep 30`, stop it with **Control + C**.
+6. Run `sleep 30`, stop it with **Control + C** (also written **`^C`**). If the terminal displays `^C`, it means your keypress was recognized.
 
 **Exit ticket:** Demonstrate Control-A, E, P, N and R without consulting the table.
 
@@ -109,7 +124,7 @@ With *standard* zsh Emacs-style bindings, Control-P/N navigate history and Contr
 | Select all text in VS Code editor | **Command + A** |
 | Open a new Terminal.app tab | **Command + T** |
 
-The distinction matters: **Control-C does not copy the terminal output**; it interrupts a process. **Command-C does not send SIGINT**.
+The distinction matters: **Control-C (`⌃C` or `^C`) does not copy the terminal output**; it interrupts a process. **Command-C (`⌘C`) copies selected text**. In more advanced documentation you may see the word *SIGINT*, which means the interrupt signal sent by Control-C; you do not need that term today.
 
 ### Copy/paste drill (and safety rule)
 

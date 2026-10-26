@@ -1,5 +1,7 @@
 # Course map and prerequisites
 
+This is the instructor-facing map, so it names tools not yet taught. Learners can use the [beginner's plain-English glossary](beginner-glossary.md) and start with [Day 1's definitions](01-ai-intuition.md); they do **not** need to know these words before beginning.
+
 **Audience:** beginner with little or no programming. **Estimated effort:** eight facilitated sessions of about 2–3 hours, 25–35 hours total with exercises. A new learner may need additional Python practice. **Primary aim:** explain, build, debug and package a local LLM-powered app.
 
 ## Learning goals

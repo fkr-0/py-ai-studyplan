@@ -1,10 +1,10 @@
 # Python + AI — local-first study plan
 
-An eight-session, project-first introduction to Python, neural networks, LLM inference, web UI development, and a little Docker.
+An eight-session, project-first introduction to Python and AI: start with a Mac editor and terminal, learn how programs work, understand how AI learns and answers questions, and build a simple web chatbot. Advanced tools are introduced gradually.
 
 **Version:** 0.0.2 · [Changelog](CHANGELOG.md)
 
-**Target:** An independent beginner can explain training vs inference, write and debug basic Python, launch a local model, and build a small browser-based chatbot. A classical Tetris solver is an optional alternative exercise.
+**Target:** A beginner can explain the difference between *teaching an AI model* (training) and *using a model to answer* (inference), write and debug basic Python, and build a small browser-based chatbot. A classical Tetris solver is an optional alternative exercise.
 
 **Budget:** About 16–23 contact hours plus 8–12 hours of exercises; budget 25–35 hours total, and more if programming is completely new. Milestones, not deadlines, determine pace.
 
@@ -13,6 +13,8 @@ The eight sessions are topic groups that can span several daily blocks. The 21-d
 ## Suggested study track
 
 The course is written in English and offers a suggested sequence of **21 daily study blocks**, each 1–2 hours. Adapt the pace to your experience and leave room for catch-up.
+
+**Unfamiliar word?** Start with the [plain-English glossary](docs/beginner-glossary.md); terms are also explained in the lessons where they first appear.
 
 **Start with [the 21-day daily plan](docs/21-day-mac-track.md), [Mac editor + terminal workbench](docs/01b-macos-workbench.md), and [macOS setup](docs/macos-setup.md).** The [didactic review and rationale](docs/didactic-review-2026-10-26.md) explains the teaching sequence. Choose a local model using the [hardware guidance](docs/hardware.md); the examples use `gemma3:4b`, with smaller models available as fallbacks.
 

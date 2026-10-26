@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Remove unexplained **Git**, **inference** and other advanced vocabulary from opening slides, defining each concept at its first practical appearance.
+- Add a plain-English course glossary and a macOS key-symbol slide: **^C = ⌃C = Ctrl+C = Control-C**, not Command+C.
+- Add explanations for **training, model, JSON, Git, venv, pip, API, HTTP** and basic folder commands before students use them.
+- Update beginner lesson notes, instructor prompts and automated tests to catch future vocabulary regressions.
 - Render every published Markdown lesson as a readable HTML page, while preserving the raw `.md` version and pointing code references to GitHub source instead of broken site paths.
 - Route links from the published Reveal.js presentation and welcome page to HTML lessons; add navigation, original Markdown and ZIP links to every lesson.
 - Teach a safe `curl --output lesson.md` → `code lesson.md` exercise after introducing the terminal.

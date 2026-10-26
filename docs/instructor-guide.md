@@ -6,7 +6,8 @@ Work from the [21-day study plan](21-day-mac-track.md), adapting the pace and se
 
 ## Principles
 
-- Demonstrate a **purpose**, then explain terms, then let the student change code on their own.
+- Demonstrate a **purpose**, then define a new term in everyday words **before it first appears** in an instruction or quiz, then let the student change code on their own.
+- Decode keyboard notation explicitly: **^C = ⌃C = Ctrl+C = Control-C** (hold Control, tap C); **⌘C** is different (Command+C copies). Do not assume symbol familiarity.
 - **Essential early dependency:** [Mac editor + terminal workbench](01b-macos-workbench.md) before the first Python function. Do not assume understanding of Save vs Run, editor vs shell, or Command vs Control.
 - Observe a learner using **Control-A/E/P/N/R**, copying terminal output with **Command-C/V**, and interrupting `sleep` with **Control-C**. z4h is an optional extension after native zsh.
 - Lead with the distinction *deterministic computation / learned parameters / generative inference*.
@@ -19,7 +20,7 @@ Work from the [21-day study plan](21-day-mac-track.md), adapting the pace and se
 
 | Session | 10–25 min explanation | 45–65 min guided lab | Independent extension | Exit question |
 | --- | --- | --- | --- | --- |
-| 01 | What is AI? NN video | Compare rule vs LLM | Draw architecture | Training vs inference? |
+| 01 | AI, model, training (=learning), inference (=answering) | Order three chat cards | Explain who types, generates and displays | What is different between learning and answering? |
 | 02 | VS Code + Terminal.app, shortcuts; then functions | `hello.py` save/run, then rule chatbot | Recall with Control-P and explain Command-C/V vs Control-C | Which program handles each key? |
 | 03 | zsh history/search, venv, files, Git | JSON prompt library | Recover from traceback; optional z4h discussion | What is in a venv? |
 | 04 | Gradients, backprop, tokens | Neural Playground | Tune rate / layers | Why need held-out tests? |

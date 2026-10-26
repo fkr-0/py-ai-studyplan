@@ -1,5 +1,7 @@
 # 03 — Python as a development tool
 
+**New words before we use them:** A *project* is a folder containing the files for your program. A *package* is reusable Python code you install. A *virtual environment* (`venv`) is a separate place for one project's packages. **JSON** is a text format for data such as settings. **Git** is a tool for saving and comparing versions of your files, and **GitHub** is a website where Git projects can be shared. You do not need a GitHub account just to practise Git locally.
+
 **Time:** 2–4 h. **Milestone:** create a fresh environment, run a script, read/write JSON, and commit a change.
 
 ## Sources
@@ -45,13 +47,17 @@ Explain `curl` (fetch), `--output` (save), and `code` (open in an editor). Compa
 
 ## JSON exercise
 
+**JSON** (JavaScript Object Notation) is plain text arranged in lists and name/value pairs. You do not need to know JavaScript to use it with Python. For example, `{"name": "Pat"}` stores one piece of data under the name `name`.
+
 Save a file such as:
 
     {"prompts": [{"name": "friendly", "text": "Explain this simply."}]}
 
 Write Python to load, list, and append prompts using `json.load` / `json.dump`. Handle missing files with a friendly error.
 
-## Git basics
+## Git basics: save versions of your work
+
+**Git** remembers named snapshots of files. The word **commit** means one saved snapshot. `git init` starts tracking a folder, `git status` shows what changed, and `git diff` displays the differences. Think of it as *undo history for a whole project*, not a replacement for saving in the editor.
 
 From `~/Projects/prompt-library` (your exercise project, separate from the course download), create `.gitignore` in the editor **before staging**:
 

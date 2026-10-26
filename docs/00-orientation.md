@@ -1,5 +1,7 @@
 # Orientation: plan for the learner, not the machine
 
+If you see a word you don't know, use the [plain-English glossary](beginner-glossary.md). The course explains technical terms when you first need them; no prior computer vocabulary is expected.
+
 ## Suggested starting route
 
 - **Platform:** macOS walkthroughs are provided; adapt commands for other operating systems.
@@ -32,9 +34,9 @@ The eight sessions are *milestones*; split or merge as needed. A conceptual vide
 
 ## Prior knowledge / success rubric
 
-Before: Can they find a terminal? Make a directory? Write `print("hello")`? Explain the difference between a website and a program running on their PC?
+Before: Can they open the Mac Terminal (a window for typing commands)? Create a folder? Type a line into an editor? No programming knowledge is required.
 
-After: Can they (1) explain inference vs training, (2) implement and debug simple Python functions, (3) isolate dependencies with `venv`, (4) run a local model if hardware permits, (5) connect Python → Ollama → browser UI, (6) check output and handle an offline model? Docker packaging is an optional extension.
+After: Can they (1) explain **training (teaching a model from examples) versus inference (asking it for an answer)**, (2) implement and debug simple Python functions, (3) isolate dependencies with `venv`, (4) run a local model if hardware permits, (5) connect Python → Ollama → browser UI, (6) check output and handle an offline model? Docker packaging is an optional extension.
 
 ## Minimum setup
 

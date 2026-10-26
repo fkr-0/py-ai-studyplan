@@ -33,7 +33,7 @@
 <p class="materials-download"><a href="py-ai-studyplan-materials.zip" download>⬇ Download the complete study materials (.zip)</a></p>
 
 <ul>
-<li>Local inference starts in session 5; choose a model that fits your machine.</li>
+<li>In session 5, you'll run a downloaded AI program on your own Mac.</li>
 </ul>
 <aside class="notes">Opening prompt: what could the learner build that they would actually use? Make clear this is an application course rather than neural-network research.</aside>
 <p class="project-page-link">Looking for the study plan overview? <a href="../studyplan.html">Open the project page ↗</a></p>
@@ -43,7 +43,7 @@
 <section id="roadmap" class="title-slide slide level1">
 <h1>Roadmap</h1>
 <div class="study-roadmap">
-<span>AI intuition</span><b>→</b><span>Python</span><b>→</b><span>Dev workflow</span><b>→</b><span>Neural networks</span><b>→</b><span>Ollama</span><b>→</b><span>Streamlit</span><b>→</b><span>Quality</span><b>→</b><span>Docker</span>
+<span>AI ideas</span><b>→</b><span>Python</span><b>→</b><span>Working with files</span><b>→</b><span>How AI learns</span><b>→</b><span>Run a model</span><b>→</b><span>Chat website</span><b>→</b><span>Check results</span><b>→</b><span>Package it (optional)</span>
 </div>
 
 <ul>
@@ -51,6 +51,8 @@
 <li>Vertical slides contain demos/resources (↓)</li>
 <li>Skip longer videos in class; use them as homework</li>
 <li>Course notes: <code class="verbatim">docs/</code> · example programs: <code class="verbatim">examples/</code></li>
+<li>Every unfamiliar term is explained when you reach it.</li>
+<li><a href="../docs/beginner-glossary.md">Plain-English word list: open whenever you need it ↗</a></li>
 </ul>
 <p class="materials-download materials-download-small"><a href="py-ai-studyplan-materials.zip" download>Download all notes, exercises &amp; slide sources ↗</a></p>
 
@@ -62,14 +64,14 @@
 <caption>21 days · 1–2 hours/day · roughly 25–35 hours of core work</caption>
 <thead><tr><th scope="col">Days</th><th scope="col">Course focus</th><th scope="col">What you can demonstrate</th></tr></thead>
 <tbody>
-<tr><th scope="row">1</th><td>AI intuition</td><td>Explain training vs inference</td></tr>
+<tr><th scope="row">1</th><td>What is AI?</td><td>Explain how an AI learns and how it answers questions</td></tr>
 <tr><th scope="row">2–6</th><td>Mac workbench + Python</td><td>Use Terminal + VS Code; build a rule-based chatbot</td></tr>
-<tr><th scope="row">7–9</th><td>Developer workflow</td><td>Use a virtual environment, JSON files and Git</td></tr>
-<tr><th scope="row">10–12</th><td>Neural networks + Transformers</td><td>Explain weights, loss and next-token generation</td></tr>
-<tr><th scope="row">13–15</th><td>Local LLMs with Ollama</td><td>Call a local model from a Python chat client</td></tr>
-<tr><th scope="row">16–17</th><td>Web interface with Streamlit</td><td>Build browser chat with history and model selection</td></tr>
+<tr><th scope="row">7–9</th><td>Organize project files</td><td>Install tools separately, save simple data, record changes</td></tr>
+<tr><th scope="row">10–12</th><td>How AI learns</td><td>Try a visual experiment and observe improvement</td></tr>
+<tr><th scope="row">13–15</th><td>Run an AI program on your Mac</td><td>Send a question from Python and see its reply</td></tr>
+<tr><th scope="row">16–17</th><td>Build a chat page</td><td>Show messages in a browser</td></tr>
 <tr><th scope="row">18–19</th><td>Product quality</td><td>Add controls, run tests and handle offline errors</td></tr>
-<tr><th scope="row">20–21</th><td>Catch-up + graduation; Docker optional</td><td>Repeat the demo, change the app and explain it</td></tr>
+<tr><th scope="row">20–21</th><td>Review and independent demo</td><td>Run, change and explain your app</td></tr>
 </tbody>
 </table>
 <p class="reference-line">At 1 hour/day, allow 25–35 study days. Move on when you can explain and modify the exercise. <a href="../docs/21-day-mac-track.md">Full day-by-day plan ↗</a></p>
@@ -83,7 +85,7 @@
 <li><strong>Setup:</strong> macOS walkthroughs; adapt commands for other platforms.</li>
 <li><strong>Time:</strong> 1–2 hours per study day; 21 days is a suggested sequence, not a deadline.</li>
 <li><strong>Language:</strong> English for sessions, code and exercises.</li>
-<li><strong>Model:</strong> start with <code class="verbatim">gemma3:4b</code>; later compare to <code class="verbatim">qwen3:8b</code> if useful.</li>
+<li><strong>Later on:</strong> downloading the AI program is explained in session 5; nothing to install for it today.</li>
 </ul>
 </section>
 <section id="each-days-learning-loop" class="slide level2">
@@ -101,29 +103,36 @@
 <ul>
 <li><a href="../docs/21-day-mac-track.md">Open the full 21-day day-by-day plan ↗</a></li>
 <li><a href="../docs/macos-setup.md">Open the macOS setup instructions ↗</a></li>
-<li>Terminal.app · Python 3.11+ · editor · Git · Ollama later.</li>
-<li>Check <code class="verbatim">uname -m</code> gives <code class="verbatim">arm64</code>; create virtual environments with <code class="verbatim">python3 -m venv .venv</code>.</li>
+<li>Start with Terminal.app (a command window) and VS Code (a text editor).</li>
+<li>Install Python for the first coding exercise; we'll explain other tools later.</li>
 </ul>
 </section></section>
 <section>
 <section id="what-is-ai-doing" class="title-slide slide level1">
 <h1>01 · What is AI doing?</h1>
-<p>Rule-based computation vs search/planning vs trained models.</p>
+<p><strong>AI</strong> (artificial intelligence) is a broad name for programs that perform tasks we often associate with human thinking.</p>
 <ul>
-<li>A Tetris advisor can use a <strong>search algorithm</strong></li>
-<li>A neural network is a learned function</li>
-<li>An LLM predicts text tokens using trained parameters</li>
-<li>A fluent answer is not a correctness guarantee</li>
+<li><strong>Rule-based program:</strong> follows instructions written by a person, like “if this, do that.”</li>
+<li><strong>AI model:</strong> a program whose behavior is shaped by examples it learned from.</li>
+<li><strong>Language model:</strong> an AI model that produces words in response to text.</li>
+<li><strong>Neural network:</strong> one common way to build a model, using connected numerical steps.</li>
+<li><strong>LLM</strong> means “large language model.” We'll build an app that talks to one.</li>
 </ul>
+<p><strong>Example:</strong> A calculator uses fixed rules; a chat assistant uses a language model.</p>
 </section>
-<section id="inference-is-not-training" class="slide level2">
-<h2>Inference is not training</h2>
+<section id="two-actions-learning-and-answering" class="slide level2">
+<h2>Two actions: learning and answering</h2>
+<ul>
+<li><strong>Training</strong> means <strong><strong>teaching a model</strong></strong> using many examples. The model's learned settings are changed.</li>
+<li><strong>Inference</strong> means <strong><strong>using a trained model</strong></strong> to answer a new question. Its learned settings are not changed by that request.</li>
+<li>We will explain exactly how training works later. No formulas today.</li>
+</ul>
 <div class="study-flow">
-<div><b>Training</b><small>examples → loss → gradients → updated weights</small></div>
-<div><b>Inference</b><small>prompt → fixed weights → output tokens</small></div>
+<div><b>TRAINING = learning</b><small>examples → model's learned settings change</small></div>
+<div><b>INFERENCE = answering</b><small>your question → model uses what it learned → answer</small></div>
 </div>
 
-<p>Discuss: Does changing temperature re-train the network? <strong>No.</strong></p>
+<p><strong>Quick check:</strong> Does simply asking another question retrain the model's settings? <strong>No.</strong></p>
 </section>
 <section id="blue1brown-what-is-a-neural-network" class="slide level2">
 <h2>3Blue1Brown · What is a neural network?</h2>
@@ -196,12 +205,50 @@
 <p class="reference-line"><a href="../docs/01b-macos-workbench.md" target="_blank" rel="noopener noreferrer">Follow the hands-on Mac workbench lesson ↗</a></p>
 
 </section>
+<section id="how-to-read-mac-keyboard-shortcuts" class="slide level2">
+<h2>How to read Mac keyboard shortcuts</h2>
+<p><strong>Hold the first key while pressing the letter. Do not type the symbols.</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th>Written in a guide</th>
+<th>What your fingers do</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code class="verbatim">Ctrl+C</code> or <code class="verbatim">Control-C</code></td>
+<td>Hold <strong>Control</strong>, press <strong>C</strong></td>
+</tr>
+<tr class="even">
+<td><code class="verbatim">⌃C</code> or <code class="verbatim">^C</code></td>
+<td><strong>Exactly the same:</strong> Control + C</td>
+</tr>
+<tr class="odd">
+<td><code class="verbatim">⌘C</code></td>
+<td>Hold <strong>Command (⌘)</strong>, press <strong>C</strong>: copy selected text</td>
+</tr>
+<tr class="even">
+<td><code class="verbatim">⌘⇧P</code></td>
+<td>Hold <strong>Command + Shift (⇧)</strong>, press <strong>P</strong></td>
+</tr>
+<tr class="odd">
+<td><code class="verbatim">⌥</code></td>
+<td><strong>Option</strong> key on a Mac (not used in today's drills)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>IMPORTANT:</strong> <code class="verbatim">^C</code> is <strong><strong>not</strong></strong> the two characters <code class="verbatim">^</code> and <code class="verbatim">C</code> to type. It is shorthand for pressing <strong>Control + C</strong>; you may also see <code class="verbatim">^C</code> printed after interrupting a program.</p>
+<div class="NOTES">
+<p>Ask the student to find Control, Command, Shift and Option on the physical Mac keyboard. Physically demonstrate Ctrl+C vs Command+C before any instructions show the symbols. The caret is just notation for Control, not a literal character to type.</p>
+</div>
+</section>
 <section id="day-2-install-editor-and-prepare-terminal" class="slide level2">
 <h2>Day 2 — Install editor and prepare Terminal</h2>
 <ul>
 <li>Install <a href="https://www.python.org/downloads/macos/">Python for macOS</a> and <a href="https://code.visualstudio.com/docs/setup/mac">VS Code for Apple Silicon</a>.</li>
 <li>Open <strong>Terminal.app</strong> using Spotlight (⌘ Space).</li>
-<li>Open VS Code → <strong>⌘⇧P</strong> → “Shell Command: Install 'code' command in PATH”.</li>
+<li>Open VS Code → <strong>⌘⇧P</strong> → “Shell Command: Install 'code' command in PATH”. Here <strong>PATH</strong> means the places Terminal searches for commands.</li>
 <li>Restart Terminal, then try these <strong>read-only</strong> commands:</li>
 </ul>
 <div class="sourceCode" id="cb2" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">uname</span> <span class="at">-m</span>            <span class="co"># native Apple Silicon: arm64</span></span>
@@ -214,6 +261,11 @@
 </section>
 <section id="open-the-same-folder-in-both-apps" class="slide level2">
 <h2>Open the same folder in both apps</h2>
+<ul>
+<li><code class="verbatim">mkdir -p</code> makes a folder (and parent folders if needed).</li>
+<li><code class="verbatim">cd</code> changes which folder Terminal is working in.</li>
+<li><code class="verbatim">code .</code> opens <strong>this folder</strong> in VS Code. The dot <code class="verbatim">.</code> means “here.”</li>
+</ul>
 <div class="sourceCode" id="cb3" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/Projects/python-ai-playground</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/python-ai-playground</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div>
@@ -227,6 +279,7 @@
 </section>
 <section id="two-key-families-do-not-mix-them" class="slide level2">
 <h2>Two key families (do not mix them)</h2>
+<p>Remember: <code class="verbatim">^C</code> = <code class="verbatim">⌃C</code> = <code class="verbatim">Control-C</code>; <strong>not</strong> <code class="verbatim">⌘C</code> (Command-C).</p>
 <div class="study-shortcut-twins">
 <div><h4>⌘ Command — Mac application</h4>
 <p><kbd>⌘C</kbd> copy selected terminal output</p>
@@ -296,7 +349,8 @@
 <h2>Copy + paste is NOT Control-C</h2>
 <ul>
 <li><strong>⌘C</strong> copies selected terminal output; <strong>⌘V</strong> pastes it.</li>
-<li><strong>⌃C</strong> interrupts a program. Test: <code class="verbatim">sleep 30</code> → ⌃C.</li>
+<li><strong>⌃C</strong> = <strong><sup>C</sup></strong> = <strong>Ctrl+C</strong> interrupts a running program. Hold Control, tap C.</li>
+<li>Try <code class="verbatim">sleep 30</code> → press Control+C. Seeing <code class="verbatim">^C</code> printed is normal.</li>
 <li><strong>⌃L</strong> clears the terminal; <strong>Tab</strong> attempts completion.</li>
 <li>Select text with trackpad; copy into VS Code with ⌘C/⌘V.</li>
 <li>Copy the command below into Terminal, <strong>inspect it</strong>, then press Enter.</li>
@@ -321,6 +375,11 @@
 </section>
 <section id="python-first-steps" class="slide level2">
 <h2>Python first steps</h2>
+<ul>
+<li><strong>Function:</strong> a named piece of instructions you can reuse.</li>
+<li><code class="verbatim">def</code> starts a function, <code class="verbatim">if</code> asks a yes/no question, <code class="verbatim">return</code> gives back a result.</li>
+<li>Don't worry about memorizing every character. Predict one result, then change the message.</li>
+</ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> respond(message: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    text <span class="op">=</span> message.lower().strip()</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">&quot;hello&quot;</span> <span class="kw">in</span> text:</span>
@@ -353,11 +412,14 @@
 <h1>03 · Developer workflow (on macOS)</h1>
 <p>Now that you can edit, save and run, learn to manage a project:</p>
 <ul>
-<li>Terminal: paths, directories, running programs</li>
-<li>Editor: read a traceback before searching for solutions</li>
-<li><code class="verbatim">python -m venv</code>: isolate project packages</li>
-<li>JSON: load and save structured data</li>
-<li>Git: record what changed</li>
+<li><strong>Project:</strong> a folder containing the files for one program.</li>
+<li><strong>Shell:</strong> the command line inside Terminal. <strong>Path:</strong> a file or folder address.</li>
+<li><strong>Traceback:</strong> the error report Python prints when a program fails.</li>
+<li><strong>Package:</strong> reusable Python code written by somebody else.</li>
+<li><strong>Virtual environment</strong> (<code class="verbatim">venv</code>): a separate area for the packages needed by one project.</li>
+<li><strong>JSON:</strong> a readable text-file format for storing settings and lists.</li>
+<li><strong>Git:</strong> a tool to save versions of code and see exactly what changed.</li>
+<li><strong>pip:</strong> Python's tool for installing packages. It comes with the Python installation.</li>
 </ul>
 </section>
 <section id="day-7-isolated-python-environment" class="slide level2">
@@ -370,6 +432,7 @@
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip <span class="at">--version</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> .</span></code></pre></div>
 <ul>
+<li><code class="verbatim">source .venv/bin/activate</code> makes that environment active in this Terminal tab.</li>
 <li>VS Code edits; the terminal runs. <code class="verbatim">.venv/</code> stays out of Git.</li>
 <li>Leave this shell configured until finished with this little project.</li>
 </ul>
@@ -420,8 +483,9 @@
 
 </section></section>
 <section>
-<section id="neural-networks" class="title-slide slide level1">
-<h1>04 · Neural networks</h1>
+<section id="how-models-learn-neural-networks" class="title-slide slide level1">
+<h1>04 · How models learn: neural networks</h1>
+<p>A neural network has numerical settings called <strong>weights</strong>. During <strong>training</strong>, these settings are adjusted to improve predictions.</p>
 <p>The intuitive chain:</p>
 <ul>
 <li><strong>Loss</strong>: how wrong were the predictions?</li>
@@ -454,7 +518,7 @@
 </section>
 <section id="transformers-3blue1brown" class="slide level2">
 <h2>Transformers · 3Blue1Brown</h2>
-<p>~27 min · Tokens, embeddings, attention and next-token prediction.</p>
+<p>~27 min · A <strong>token</strong> is a piece of text (a word or part of one). The model predicts which token may come next. The video introduces more advanced ideas—attention and embeddings—visually.</p>
 <div class="media-box"><iframe src="https://www.youtube-nocookie.com/embed/wjZofJX0v4M" title="Educational video" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>
 <p class="media-fallback"><a href="https://www.youtube.com/watch?v=wjZofJX0v4M" target="_blank" rel="noopener noreferrer">Open original video ↗</a> · If the player fails, open the link.</p>
 <aside class="notes">Bridge intuition from feedforward networks to transformer blocks. Avoid equating next-token prediction with correctness.</aside>
@@ -462,21 +526,29 @@
 </section>
 <section id="transformer-explainer" class="slide level2">
 <h2>Transformer Explainer</h2>
-<p>Interact with a small GPT-2 model in-browser and inspect probable next tokens and attention.</p>
+<p>Try an older, small language model called GPT-2 in your browser. Type some text and watch which <strong>token</strong> (piece of text) it suggests next. You do not need to understand every internal diagram.</p>
 <p class="resource-link"><a href="https://poloclub.github.io/transformer-explainer/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
 
 </section></section>
 <section>
-<section id="local-inference-with-ollama" class="title-slide slide level1">
-<h1>05 · Local inference with Ollama</h1>
-<p>You need a <strong>model</strong>, a <strong>runtime/server</strong>, and a <strong>Python client</strong>.</p>
-<pre class="example"><code>Python (ollama client)
-   │ HTTP /api/chat
+<section id="use-a-local-language-model" class="title-slide slide level1">
+<h1>05 · Use a local language model</h1>
+<p>You already learned that <strong>inference</strong> means using an AI model to answer, not training it.</p>
+<ul>
+<li><strong>Ollama:</strong> the app that runs the downloaded model on your computer.</li>
+<li><strong>Server:</strong> a program that waits for requests from another program.</li>
+<li><strong>Client:</strong> a program that sends a request and reads the reply.</li>
+<li><strong>API</strong> (application programming interface): a way for two programs to communicate.</li>
+<li><strong>HTTP:</strong> a common format used to send these requests and replies.</li>
+</ul>
+<p>Next, watch Python (the client) talk to Ollama (the server).</p>
+<pre class="example"><code>PYTHON SCRIPT  (client that sends the question)
+   │ HTTP message
    ▼
-Ollama (inference runtime)
-   │ loads quantized model weights
+OLLAMA APP     (server that runs the model)
+   │ uses the model&#39;s learned settings
    ▼
-Local model (CPU or GPU)
+LANGUAGE MODEL (generates a possible answer)
 </code></pre>
 </section>
 <section id="first-ollama-call" class="slide level2">

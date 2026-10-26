@@ -4,6 +4,8 @@
 **Setup:** macOS examples are provided; adapt commands for your operating system and choose models to fit available resources.
 **Study time:** 1–2 hours/day. A realistic target is **three weeks of daily practice**, with optional catch-up days. Estimated core effort: 25–35 hours; experience and debugging can extend it.
 
+**New word?** The [plain-English glossary](beginner-glossary.md) explains words such as *training*, *inference*, *Git*, and all keyboard symbols. Each lesson introduces them again when needed.
+
 This is a *recommended sequence*, not a hard deadline. A day is complete only when the student can explain and modify the exercise unaided. If a day runs long, finish it before proceeding.
 
 ## How to use the timetable
@@ -26,15 +28,15 @@ Keep two folders distinct: `~/Projects/prompt-library` for the Days 7–9 exerci
 
 | Day | Focus | Concrete deliverable | Reference |
 |---:|---|---|---|
-| 01 | What are algorithms, ML and LLMs? | Draw the AI stack and distinguish training from inference | [Session 01](01-ai-intuition.md) |
+| 01 | What is AI? | Put three chatbot cards in order; explain learning versus answering | [Session 01](01-ai-intuition.md) |
 | 02 | macOS workbench: Terminal + VS Code | Install tools; open same folder in both; save/run `hello.py` | [Mac workbench](01b-macos-workbench.md) |
-| 03 | Keyboard fluency + first Python functions | Drill **Ctrl-A/E/P/N/R**, Cmd-C/V vs Ctrl-C; then formatter | [Mac workbench](01b-macos-workbench.md) + [Python](02-python-foundations.md) |
+| 03 | Keyboard fluency + first Python functions | Learn what Ctrl, ⌃, `^C` and ⌘ mean; practise shortcuts and first functions | [Mac workbench](01b-macos-workbench.md) + [Python](02-python-foundations.md) |
 | 04 | Conditions and loops | Rule-based terminal chatbot | [Session 02](02-python-foundations.md) |
 | 05 | Lists, dictionaries and modules | Refactor chatbot rules into data | [Session 02](02-python-foundations.md) |
 | 06 | Errors and debugging | Reproduce and fix a deliberate exception | [Session 02](02-python-foundations.md) |
-| 07 | Shell history, `venv`, `pip` | Repeat shortcuts, create a clean environment; **optional** z4h discussion | [Developer workflow](03-dev-workflow.md) |
-| 08 | Files and JSON | Persist prompt templates in JSON | [Session 03](03-dev-workflow.md) |
-| 09 | Git, reproducibility and debugging | Commit, diff, restore; inspect an intentional error in VS Code/Terminal | [Developer workflow](03-dev-workflow.md) |
+| 07 | Organize Python tools for one project | Repeat shortcuts and create a separate package environment | [Developer workflow](03-dev-workflow.md) |
+| 08 | Save data in files | Read and write JSON (a simple structured-text file format) | [Session 03](03-dev-workflow.md) |
+| 09 | Track changes with Git | Save and compare versions of code; repair a deliberate error | [Developer workflow](03-dev-workflow.md) |
 | 10 | Neural-network intuition | Sketch neurons, weights and a loss | [Session 04](04-neural-networks.md) |
 | 11 | Gradient descent / backprop | Run three TensorFlow Playground variations | [Session 04](04-neural-networks.md) |
 | 12 | Tokens and Transformers | Explain next-token generation using an interactive demo | [Session 04](04-neural-networks.md) |
