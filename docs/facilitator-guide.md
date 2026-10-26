@@ -2,13 +2,13 @@
 
 ## Current teaching setup
 
-The learner uses a **2024 M4 MacBook Pro with 24 GB unified memory** and studies **1–2 hours daily**. Keep all teaching and exercises in **English**. The [21-day schedule](21-day-mac-track.md) translates the eight sessions into daily blocks, and [macOS setup](mac-m4-setup.md) replaces generic Linux examples when needed. Start model demonstrations with `gemma3:4b`.
+The [21-day schedule](21-day-mac-track.md) translates the eight topic groups into daily blocks. Use [macOS setup](macos-setup.md) for Mac walkthroughs and adapt commands for other platforms. Choose model size according to available resources; examples use `gemma3:4b`.
 
 Before any coding, run the [macOS editor + Terminal workbench](01b-macos-workbench.md) with the learner at the keyboard: VS Code, Terminal.app, **Command-C/V vs Control-C**, **Control-A/E/P/N/R**. zsh4humans is an optional bonus, not a prerequisite.
 
 ## Before session 1
 
-Confirm whether the recorded Mac and daily availability have changed; ask about prior coding experience and the learner's goal. For a different learner, establish OS, RAM and study time. **Do not delay the first theory/Python lesson while waiting for a GPU.**
+Ask about the learner's goal, prior coding experience, operating system and study time. Check available resources before local inference. **Do not delay the first theory/Python lesson while waiting for a GPU.**
 
 Prepare Python 3.11+, a code editor, a terminal, browser, and (later) Ollama. Use an ordinary user account. Never require root for teaching exercises.
 

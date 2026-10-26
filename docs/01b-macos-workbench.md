@@ -1,6 +1,6 @@
 # macOS workbench — Terminal + editor + practical keyboard fluency
 
-**Course position:** Do this **before writing the first Python function** (Day 2), then revisit history shortcuts on Day 3 and environment/Git on Day 7. **Machine:** 2024 MacBook Pro, M4-family chip, 24 GB unified memory. **Estimated time:** 60–100 minutes including a hands-on change.
+**Course position:** Do this **before writing the first Python function** (Day 2), then revisit history shortcuts on Day 3 and environment/Git on Day 7. **Estimated time:** 60–100 minutes including a hands-on change.
 
 ## Learning outcomes
 
@@ -142,7 +142,7 @@ python3 examples/rule_bot.py
 
 If Finder already unpacked it, **do not unzip again**. Use Finder's “Copy as Pathname” or drag the extracted folder onto the Terminal window after typing `cd ` to avoid mistyping the path.
 
-This is the actual course root: `examples/`, `docs/`, `build-revealjs/`. The instructor's Linux path `/home/user/writing/...` is **not** a student macOS command.
+This is the actual course root: `examples/`, `docs/`, `build-revealjs/`. Use your own extracted folder path when running commands.
 
 ## 7. Zsh for Humans (z4h): macOS-compatible, *optional*
 

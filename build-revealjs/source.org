@@ -21,7 +21,7 @@ From a first Python function to a private local chatbot.
 #+begin_export html
 <p class="materials-download"><a href="py-ai-studyplan-materials.zip" download>⬇ Download the complete study materials (.zip)</a></p>
 #+end_export
-- Hardware ready: M4 MacBook Pro with 24 GB unified memory; local inference starts in session 5
+- Local inference starts in session 5; choose a model that fits your machine.
 
 #+begin_export html
 <aside class="notes">Opening prompt: what could the learner build that they would actually use? Make clear this is an application course rather than neural-network research.</aside>
@@ -65,9 +65,9 @@ From a first Python function to a private local chatbot.
 <p class="reference-line">At 1 hour/day, allow 25–35 study days. Move on when you can explain and modify the exercise. <a href="../docs/21-day-mac-track.md">Full day-by-day plan ↗</a></p>
 #+end_export
 
-* Your learning track: 21 days on a MacBook Pro M4
+* Your learning track: 21 study days
 
-- *Machine:* 2024 MacBook Pro, M4-family, 24 GB unified memory.
+- *Setup:* macOS walkthroughs; adapt commands for other platforms.
 - *Time:* 1–2 hours per study day; 21 days is a suggested sequence, not a deadline.
 - *Language:* English for sessions, code and exercises.
 - *Model:* start with =gemma3:4b=; later compare to =qwen3:8b= if useful.
@@ -84,7 +84,7 @@ For a one-hour day, split a topic rather than skipping practice.
 ** macOS setup and daily checklist
 
 - [[../docs/21-day-mac-track.md][Open the full 21-day day-by-day plan ↗]]
-- [[../docs/mac-m4-setup.md][Open the MacBook M4 setup instructions ↗]]
+- [[../docs/macos-setup.md][Open the macOS setup instructions ↗]]
 - Terminal.app · Python 3.11+ · editor · Git · Ollama later.
 - Check =uname -m= gives =arm64=; create virtual environments with =python3 -m venv .venv=.
 
@@ -449,9 +449,9 @@ python -m pip install -r examples/requirements.txt
 python examples/cli_chat.py --model gemma3:4b
 #+end_src
 
-** Your Mac M4 · 24 GB unified memory
+** Choose a model for your machine
 
-- Start with *=gemma3:4b=*, adequate for a practical first local chatbot.
+- Examples use =gemma3:4b=; check available memory and disk first.
 - Compare with =qwen3:8b= later (optional).
 - Use =gemma3:1b= only if the larger model is too slow or unavailable.
 - Unified RAM is shared with macOS: file size ≠ runtime memory use.

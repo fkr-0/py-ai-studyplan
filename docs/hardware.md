@@ -1,12 +1,12 @@
 # Environment, model choice and fallbacks
 
-## Known learner: MacBook Pro M4 (2024), 24 GB unified memory
+## Choose a setup for your machine
 
-**Primary recommendation:** follow the [step-by-step M4 macOS guide](mac-m4-setup.md) and [21-day plan](21-day-mac-track.md). This computer is well-suited to locally run small and medium quantized LLMs; external GPU/cloud setup is unnecessary for the planned exercises.
+For Mac walkthroughs, follow the [macOS guide](macos-setup.md) and [21-day plan](21-day-mac-track.md). Begin Python and UI exercises before deciding whether local inference fits your machine.
 
-Use **`gemma3:4b` (~3.4 GB download)** for the default chatbot, try **`qwen3:8b` (~5.2 GB download)** as a comparative second model, and fall back to **`gemma3:1b`** if troubleshooting startup or memory use. Published download sizes are not RAM footprints; active context, backend and other applications consume memory. Apple Silicon uses unified memory, not a separately allocated 24 GB VRAM pool. See [Ollama Gemma 3](https://ollama.com/library/gemma3), [Ollama Qwen 3](https://ollama.com/library/qwen3).
+Use **`gemma3:4b` (~3.4 GB download)** for the default chatbot, try **`qwen3:8b` (~5.2 GB download)** as a comparative second model, and fall back to **`gemma3:1b`** if troubleshooting startup or memory use. Published download sizes are not RAM footprints; active context, backend and other applications consume memory. On Apple Silicon, the CPU and GPU share system memory. See [Ollama Gemma 3](https://ollama.com/library/gemma3), [Ollama Qwen 3](https://ollama.com/library/qwen3).
 
-First setup commands on **the student's Mac**:
+Example setup commands on macOS, from your chosen workspace:
 
 ```sh
 uname -m     # expect arm64 with native Apple Silicon Terminal
@@ -39,7 +39,7 @@ Model tags, availability and size change: check the official [Ollama library](ht
 3. Activate it: POSIX `. .venv/bin/activate`, Windows PowerShell `.venv\Scripts\Activate.ps1`.
 4. From the extracted course root, use `python -m pip install -r examples/requirements.txt` inside the venv.
 5. Use Git for source. Ignore `.venv`, secrets and generated files.
-6. Install [Ollama](https://ollama.com/download), then `ollama pull gemma3:4b` on the learner's 24 GB Mac; use `gemma3:1b` as a smaller fallback.
+6. Install [Ollama](https://ollama.com/download), then `ollama pull gemma3:4b` if resources permit; use `gemma3:1b` as a smaller fallback.
 
 ## Fallback routes
 

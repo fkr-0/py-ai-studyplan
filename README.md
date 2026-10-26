@@ -10,11 +10,11 @@ An eight-session, project-first introduction to Python, neural networks, LLM inf
 
 The eight sessions are topic groups that can span several daily blocks. The 21-day track includes practice; it is not extra work on top of eight workshops. At one hour per day, allow 25–35 study days. Docker is optional and can follow the core final demo.
 
-## This learner's track — Apple Silicon / English / 1–2 hours per day
+## Suggested study track
 
-The current learner has a **2024 MacBook Pro with an M4-family chip and 24 GB of unified memory**. All instruction, course material and code commentary are in **English**. Plan for **~21 daily study blocks**, each 1–2 hours, with catch-up days if Python concepts need more practice.
+The course is written in English and offers a suggested sequence of **21 daily study blocks**, each 1–2 hours. Adapt the pace to your experience and leave room for catch-up.
 
-**Start with [the 21-day daily plan](docs/21-day-mac-track.md), [Mac editor + terminal workbench](docs/01b-macos-workbench.md), and [M4 macOS setup](docs/mac-m4-setup.md).** The [didactic review and rationale](docs/didactic-review-2026-10-26.md) explains why the hands-on workbench now precedes the first Python function. Use `gemma3:4b` as the first local model and optionally compare with `qwen3:8b`; small 1B models remain troubleshooting fallbacks. The learner uses their own macOS home directory, not the instructor's `/home/user` tree.
+**Start with [the 21-day daily plan](docs/21-day-mac-track.md), [Mac editor + terminal workbench](docs/01b-macos-workbench.md), and [macOS setup](docs/macos-setup.md).** The [didactic review and rationale](docs/didactic-review-2026-10-26.md) explains the teaching sequence. Choose a local model using the [hardware guidance](docs/hardware.md); the examples use `gemma3:4b`, with smaller models available as fallbacks.
 
 ## Where to start
 

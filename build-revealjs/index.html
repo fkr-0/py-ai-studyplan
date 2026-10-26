@@ -33,7 +33,7 @@
 <p class="materials-download"><a href="py-ai-studyplan-materials.zip" download>⬇ Download the complete study materials (.zip)</a></p>
 
 <ul>
-<li>Hardware ready: M4 MacBook Pro with 24 GB unified memory; local inference starts in session 5</li>
+<li>Local inference starts in session 5; choose a model that fits your machine.</li>
 </ul>
 <aside class="notes">Opening prompt: what could the learner build that they would actually use? Make clear this is an application course rather than neural-network research.</aside>
 <p class="project-page-link">Looking for the study plan overview? <a href="../studyplan.html">Open the project page ↗</a></p>
@@ -77,10 +77,10 @@
 </section>
 
 <section>
-<section id="your-learning-track-21-days-on-a-macbook-pro-m4" class="title-slide slide level1">
-<h1>Your learning track: 21 days on a MacBook Pro M4</h1>
+<section id="your-learning-track-21-study-days" class="title-slide slide level1">
+<h1>Your learning track: 21 study days</h1>
 <ul>
-<li><strong>Machine:</strong> 2024 MacBook Pro, M4-family, 24 GB unified memory.</li>
+<li><strong>Setup:</strong> macOS walkthroughs; adapt commands for other platforms.</li>
 <li><strong>Time:</strong> 1–2 hours per study day; 21 days is a suggested sequence, not a deadline.</li>
 <li><strong>Language:</strong> English for sessions, code and exercises.</li>
 <li><strong>Model:</strong> start with <code class="verbatim">gemma3:4b</code>; later compare to <code class="verbatim">qwen3:8b</code> if useful.</li>
@@ -100,7 +100,7 @@
 <h2>macOS setup and daily checklist</h2>
 <ul>
 <li><a href="../docs/21-day-mac-track.md">Open the full 21-day day-by-day plan ↗</a></li>
-<li><a href="../docs/mac-m4-setup.md">Open the MacBook M4 setup instructions ↗</a></li>
+<li><a href="../docs/macos-setup.md">Open the macOS setup instructions ↗</a></li>
 <li>Terminal.app · Python 3.11+ · editor · Git · Ollama later.</li>
 <li>Check <code class="verbatim">uname -m</code> gives <code class="verbatim">arm64</code>; create virtual environments with <code class="verbatim">python3 -m venv .venv</code>.</li>
 </ul>
@@ -454,10 +454,10 @@ Local model (CPU or GPU)
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:4b</span></code></pre></div>
 </section>
-<section id="your-mac-m4-24-gb-unified-memory" class="slide level2">
-<h2>Your Mac M4 · 24 GB unified memory</h2>
+<section id="choose-a-model-for-your-machine" class="slide level2">
+<h2>Choose a model for your machine</h2>
 <ul>
-<li>Start with <strong><code class="verbatim">gemma3:4b</code></strong>, adequate for a practical first local chatbot.</li>
+<li>Examples use <code class="verbatim">gemma3:4b</code>; check available memory and disk first.</li>
 <li>Compare with <code class="verbatim">qwen3:8b</code> later (optional).</li>
 <li>Use <code class="verbatim">gemma3:1b</code> only if the larger model is too slow or unavailable.</li>
 <li>Unified RAM is shared with macOS: file size ≠ runtime memory use.</li>

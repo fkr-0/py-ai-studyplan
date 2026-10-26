@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Remove personal learner context and machine specifications from public materials; generalize setup guidance and rebuild the downloadable course archive.
 - Open slide 1 directly from the site root, with a small link back to the preserved welcome page at `studyplan.html`.
 - Add a GitHub repository icon in the top-right corner throughout the presentation.
 

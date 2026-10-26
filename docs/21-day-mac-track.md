@@ -1,7 +1,7 @@
-# 21-day guided track — MacBook Pro M4 / 24 GB
+# 21-day guided study track
 
 **Language:** English for the entire course (discussion, code, slides, assignment notes).
-**Hardware:** 2024 MacBook Pro with Apple M4-family chip, 24 GB unified memory.
+**Setup:** macOS examples are provided; adapt commands for your operating system and choose models to fit available resources.
 **Study time:** 1–2 hours/day. A realistic target is **three weeks of daily practice**, with optional catch-up days. Estimated core effort: 25–35 hours; experience and debugging can extend it.
 
 This is a *recommended sequence*, not a hard deadline. A day is complete only when the student can explain and modify the exercise unaided. If a day runs long, finish it before proceeding.
@@ -58,7 +58,7 @@ Before Day 4, the learner must independently open a folder from Terminal in VS C
 - **Two hours most days:** use leftover time for debugging, better documentation, and a feature of the learner’s choosing. Do not rush through the fundamentals.
 - **Already comfortable with programming:** compress Days 03–09; spend longer on evaluating model responses.
 - **Docker becomes distracting:** stop at Day 19, demo the app, and leave Docker as a bonus workshop.
-- **A 2024 Mac with 24 GB unified memory** is capable of running meaningful small/mid-size quantized LLMs locally; it does not require renting cloud GPUs. See [hardware notes](hardware.md) for caveats.
+- **Model choice:** check available memory and disk before downloading. Use a smaller model or deterministic exercises when needed; see [hardware notes](hardware.md).
 
 ## Completion checklist
 

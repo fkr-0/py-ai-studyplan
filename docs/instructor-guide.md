@@ -1,8 +1,8 @@
 # Instructor guide
 
-## This learner
+## Planning the course
 
-English throughout. 2024 MacBook Pro M4-family chip with 24 GB unified memory, studying 1–2 hours daily. Work from the [21-day Mac study plan](21-day-mac-track.md). The local model default is `gemma3:4b`, with `qwen3:8b` for optional comparison. Reserve more days for Python syntax if needed.
+Work from the [21-day study plan](21-day-mac-track.md), adapting the pace and setup to the group. The examples use `gemma3:4b`; choose a smaller model when resources are limited. Reserve more days for Python practice if needed.
 
 ## Principles
 
@@ -38,7 +38,7 @@ Sessions 1–4 can run on a modest computer. Run session 6 initially against a d
 
 ### When learning time is limited
 
-For this learner studying **1–2 hours/day**, use the [21-day schedule](21-day-mac-track.md), leaving extra time for terminal/editor fluency on Days 2–3. If lessons run long, split them instead of skipping independent practice. For experienced programmers, omit beginner Python labs but retain local inference, safety and architecture lessons.
+Use the [21-day schedule](21-day-mac-track.md) as a sequence, leaving extra time for terminal/editor fluency on Days 2–3. If lessons run long, split them instead of skipping independent practice. For experienced programmers, omit beginner Python labs but retain local inference, safety and architecture lessons.
 
 ### Ethical/software boundaries
 

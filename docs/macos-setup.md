@@ -1,13 +1,13 @@
-# macOS setup — 2024 MacBook Pro (M4 family, 24 GB)
+# macOS setup for Python and local AI
 
-**Audience:** student learning Python and local AI on a Mac. This is the primary platform for this cohort. **All instructions and work remain in English.**
+**Audience:** beginners learning Python and local AI on macOS. The commands below use native zsh and Apple Silicon checks; adapt architecture checks for Intel Macs.
 
 ## Hardware assumptions
 
-- MacBook Pro (2024), reported M4 chip, **24 GB unified memory**; exact base M4 vs M4 Pro variant is not yet specified and does not need to be for this course.
-- Apple Silicon's CPU and GPU share unified memory. Do not treat 24 GB as discrete GPU VRAM. Model weights and the active KV cache compete with macOS and other running apps.
-- This is sufficient to try 4B and 8B quantized model variants. Actual speed depends on selected model, quantization, context length, RAM pressure and Ollama backend.
-- Avoid large models at first; a 30B/32B download is not a sensible entry exercise on 24 GB.
+- Check your Mac architecture, available memory and free disk before selecting a local model.
+- Apple Silicon's CPU and GPU share unified memory. Model weights and the active KV cache compete with macOS and other running apps.
+- Model fit and speed depend on quantization, context length, available memory and runtime backend. Start small and measure.
+- Avoid large downloads at first. Complete one small-model request before comparing larger variants.
 
 ## Day 2: Python, editor and terminal setup
 
@@ -19,7 +19,7 @@ For VS Code on Apple Silicon, use **Command + Shift + P → Shell Command: Insta
 1. Install a recent supported Python from [python.org](https://www.python.org/downloads/macos/) or Homebrew. For beginners who dislike package managers, the official signed Python installer is fine. Never replace/remove the Python owned by macOS.
 2. Install VS Code (or another editor). Open **Terminal.app**.
 3. Use `uname -m` to verify native `arm64` (if you see `x86_64`, check Rosetta/terminal settings). Use `python3 --version` and `which python3` to find the interpreter. The Python virtual environment comes **later on Day 7**, after the learner can edit and run files.
-4. Create a workspace in your home directory. Do not attempt to create files in someone else’s `/home/user` directory on macOS; that path belongs to the instructor’s machine.
+4. Create a workspace in your own home directory. The sample paths below are suggested folder names; adjust them to your setup.
 
 ```sh
 uname -m
@@ -41,7 +41,7 @@ For learners who want it later, [Homebrew](https://brew.sh/) is an optional, use
 ## Day 13: Install Ollama (desktop app)
 
 1. Download the macOS application from [ollama.com/download](https://ollama.com/download). Launch it so its local service is running.
-2. In Terminal, pull the balanced starter model `gemma3:4b`. This is the course default for a 24 GB Mac; `gemma3:1b` is a faster/lightweight troubleshooting fallback.
+2. In Terminal, pull the balanced starter model `gemma3:4b`. The examples use this tag; choose `gemma3:1b` if memory or performance is limited.
 3. Optionally compare answers against `qwen3:8b`; do not pre-download multiple models before they have understood the first one.
 
 ```sh
@@ -89,4 +89,4 @@ Docker Desktop supports Apple Silicon. Install only after the Python program and
 - A model may run out of memory at high context lengths even when the model file fits on disk.
 - The background Ollama service may already be running after launching the app; don't spawn a second conflicting server.
 - Some third-party video/PDF sites prevent iframe embedding. The Reveal.js presentation includes a separate `Open original` link.
-- Paths under `/home/user/writing/py-ai-studyplan` are instructor-side; the student should work under their own macOS home directory.
+- Use your own workspace path when running commands; check `pwd` before working with files.

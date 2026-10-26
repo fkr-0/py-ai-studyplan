@@ -1,12 +1,12 @@
 # Orientation: plan for the learner, not the machine
 
-## Known learner configuration (2026-10-26)
+## Suggested starting route
 
-- **Platform:** 2024 MacBook Pro, Apple M4-family chip, 24 GB unified memory.
-- **Availability:** 1–2 hours **per day**, not per week.
-- **Instruction language:** English throughout.
-- **Suggested route:** [21-day Mac study track](21-day-mac-track.md), [editor + terminal first](01b-macos-workbench.md), then [Mac setup](mac-m4-setup.md); approximately 3 weeks at 1–2 hours daily, plus catch-up if completely new to programming.
-- **One important unknown:** prior coding experience. Adjust Python days based on observed performance, without delaying the first meeting.
+- **Platform:** macOS walkthroughs are provided; adapt commands for other operating systems.
+- **Study blocks:** allow 1–2 hours, with breaks and catch-up days.
+- **Course language:** English.
+- **Suggested route:** [21-day Mac study track](21-day-mac-track.md), [editor + terminal first](01b-macos-workbench.md), then [Mac setup](macos-setup.md); approximately 3 weeks at 1–2 hours daily, plus catch-up if completely new to programming.
+- Adjust Python practice to prior coding experience and observed progress.
 
 ## First conversation (10 minutes)
 
@@ -14,7 +14,7 @@ Ask only what changes the plan:
 
 - **Goal**: general understanding, build an app, automate daily tasks, or career exploration?
 - **Background**: no code, spreadsheets, scripting, or another programming language?
-- **Daily practice**: is the planned 1–2 hours still realistic, and which days need a shorter block or a break? For other learners, ask about weekly availability.
+- **Study time**: what daily or weekly practice budget is realistic, and which days need a shorter block or a break?
 - **Computer**: OS, RAM, free disk, CPU/GPU (VRAM if known); may software be installed?
 - **Constraints**: internet availability, accessibility needs, willingness to use cloud resources.
 

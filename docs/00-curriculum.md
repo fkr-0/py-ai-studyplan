@@ -32,9 +32,9 @@ AI motivation ──────────────────────
 | 07 Quality | Read example tests | Model choice, output validation, tests | Automated test passing |
 | 08 Docker (optional) | Docker Python guide | Containerize UI; inspect the host-model boundary | Build/run/stop documented; offline handling explained |
 
-## Learner-specific recommendation
+## Suggested daily route
 
-The student's **M4 MacBook Pro (24 GB unified memory)** is sufficient to follow the local Ollama path, so skip the cloud/GPU contingency unless an unexpected issue occurs. Sessions stay in **English**. At **1–2 hours per day**, distribute the eight workshops across a [21-day learning schedule](21-day-mac-track.md) rather than scheduling one 2-hour meeting per week.
+Distribute the eight topic groups across the [21-day learning schedule](21-day-mac-track.md), adjusting study blocks and catch-up time to your availability. Check available memory and disk before the local-model phase; use the deterministic exercises while resolving setup problems.
 
 - Day 1: motivation and mental model.
 - Days 2–9: Python and development workflow.
@@ -43,7 +43,7 @@ The student's **M4 MacBook Pro (24 GB unified memory)** is sufficient to follow 
 - Days 16–19: Streamlit plus quality and testing.
 - Days 20–21: optional Docker and independent final demo.
 
-See [macOS installation guide](mac-m4-setup.md). Use `gemma3:4b` as the default first model and `qwen3:8b` only as an optional comparison. Favor mastery over the exact end date.
+See [macOS installation guide](macos-setup.md). Use `gemma3:4b` as the default first model and `qwen3:8b` only as an optional comparison. Favor mastery over the exact end date.
 
 ## Pace options
 

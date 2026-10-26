@@ -1,6 +1,6 @@
 # Didactic review — 2026-10-26
 
-**Scope:** 21-day English study track for a beginner using a 2024 M4 MacBook Pro with 24 GB unified memory, 1–2 hours of study per day. Sources inspected: Reveal.js Org source and generated HTML, learner schedule, macOS setup, instructor notes, Python/Ollama/Streamlit examples and project tests. The review targets **learning progression and concrete student actions**, not aesthetics alone.
+**Scope:** Beginner study track with macOS walkthroughs and suggested 1–2 hour study blocks. Sources inspected: Reveal.js Org source and generated HTML, learner schedule, macOS setup, instructor notes, Python/Ollama/Streamlit examples and project tests. The review targets **learning progression and concrete student actions**, not aesthetics alone.
 
 ## Findings and implemented changes
 
@@ -23,7 +23,7 @@
 4. **Python ownership (Days 04–06):** rule bot, branches, loops, debugging and observable tests.
 5. **Project habits (Days 07–09):** venv, JSON, Git, repeat shell drills, optional z4h discussion only after fundamentals.
 6. **ML intuition (Days 10–12):** neural-network visuals, gradients/backprop, Transformer; differentiate model training vs inference.
-7. **Local inference (Days 13–15):** Ollama on Apple M4, `gemma3:4b`, HTTP boundary, resilient client.
+7. **Local inference (Days 13–15):** local Ollama inference, `gemma3:4b`, HTTP boundary, resilient client.
 8. **Product and packaging (Days 16–21):** Streamlit, history/settings, validation, optional Docker, final independent demo.
 
 ## Interactive teaching rules
@@ -38,7 +38,7 @@
 ## Boundaries and remaining limitations
 
 - The curriculum cannot guarantee fluency in 21 days for someone entirely new to computing. Keep milestone-based pacing.
-- A MacBook Pro M4 with 24 GB can handle common quantized 4B and 8B LLMs, but not all model/context combinations; timings are not guaranteed.
+- Local model choice depends on available memory, disk and context size; timings are not guaranteed.
 - Shell configurations/plugins can change shortcut bindings; the keyboard drill assumes **stock zsh with Emacs-style editing keys**.
 - Zsh for Humans is macOS-compatible according to upstream documentation, but upstream warns: very limited maintenance/support, no planned features, and most bugs unfixed (checked 2026-10-26). Installing it modifies shell startup files.
 - Video/PDF iframes depend on external providers; every embed has a direct-link fallback. An HTML static check cannot prove every provider allows playback.

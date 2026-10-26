@@ -8,9 +8,9 @@
 - [Ollama Python client](https://github.com/ollama/ollama-python)
 - [Model library](https://ollama.com/library)
 
-## For this learner — Apple M4 with 24 GB unified memory
+## Choose a starter model
 
-Use **`gemma3:4b`** first. Once the API integration works, optionally compare with **`qwen3:8b`**; both listed quantized downloads fit comfortably on disk if there is adequate free space, although live memory and performance still vary. The 1B model is a lighter fallback, not the main experience on a 24 GB Mac. The full instructions are in [Mac M4 setup](mac-m4-setup.md).
+The examples use **`gemma3:4b`**. Start with **`gemma3:1b`** when resources are limited; compare with **`qwen3:8b`** only after checking available memory and disk. Download size does not predict peak runtime memory. See [macOS setup](macos-setup.md).
 
 ## Hardware decision (approximate starting points, not guarantees)
 
