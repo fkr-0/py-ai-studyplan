@@ -1,49 +1,80 @@
-# Publishing the course at study.fkr.dev
+# Publishing at study.fkr.dev using GitHub Actions
 
-This site uses **GitHub Pages, deploy from the `main` branch's root directory**. No Actions or Node build is required on GitHub. The committed generated HTML is served as static files.
+This project deploys to **GitHub Pages via a dedicated GitHub Actions workflow**:
+[.github/workflows/pages.yml](.github/workflows/pages.yml).
 
-## Layout and links
-
-- `index.html`: simple public entry point that redirects to `build-revealjs/`. It also has visible fallback links.
-- `build-revealjs/index.html`: full Reveal.js slide deck.
-- `build-revealjs/py-ai-studyplan-materials.zip`: complete course ZIP with a link on the first two slides.
-- `docs/*.md`: Markdown study materials usable directly in a text editor.
-- `CNAME`: contains exactly `study.fkr.dev`.
-- `.nojekyll`: instructs Pages to serve the files as-is.
-
-The ZIP is rebuilt deterministically from an explicit allowlist by `scripts/build_slides.py`. In particular, it excludes virtual environments, caches, the ZIP itself, and common secrets. External media is referenced by the presentation rather than redistributed.
-
-## Updating
-
-```sh
-make check   # build deck + ZIP, run tests and link checks
-git add -A
-git commit -m "Update Python and AI course"
-git push origin main
-```
-
-GitHub Pages deploys the published branch as soon as GitHub finishes processing the push. Media elements require online access to YouTube/CDNs; the presentation has external fallback links.
-
-## DNS
-
-GitHub Pages repo owner: `fkr-0`. Custom domain: `study.fkr.dev`.
-
-Expected DNS at GoDaddy:
+## Architecture
 
 ```text
-Type    Name    Value
-CNAME   study   fkr-0.github.io.
+git push main / workflow_dispatch
+                |
+                v
+      checkout + Python + Pandoc
+                |
+          make check
+    (build slides + course ZIP,
+     run tests, validate links)
+                |
+   python scripts/stage_pages.py
+                |
+        _site/ (allowlisted)
+                |
+  actions/upload-pages-artifact@v4
+                |
+   actions/deploy-pages@v4
+                |
+       https://study.fkr.dev/
 ```
 
-Per GitHub guidance, assign the custom domain in Pages **before** adding the DNS record, and target the account Pages host rather than the repository name. DNS propagation and certificate issuance may take time. Never replace wildcard, apex, MX, or other unrelated domain records.
+The workflow follows the [official GitHub Pages custom-workflow pattern](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages). The build job uses `actions/checkout@v6`, `actions/setup-python@v6`, `actions/configure-pages@v5` and `actions/upload-pages-artifact@v4`. The deploy job uses `actions/deploy-pages@v4` with `pages: write`, `id-token: write`, environment `github-pages` and a dependency on the build job.
+
+## Published artifact, not the repository checkout
+
+The source checkout is **not** uploaded wholesale. `scripts/stage_pages.py` stages only:
+
+- `index.html`: landing page redirecting to the Reveal.js presentation.
+- `CNAME`: `study.fkr.dev`.
+- `.nojekyll`.
+- `docs/*.md`: readable course chapters.
+- `build-revealjs/index.html` and styles.
+- `build-revealjs/py-ai-studyplan-materials.zip`: full course, with link on the first two slides.
+
+The ZIP itself is rebuilt by `scripts/build_slides.py`, with an explicit allowlist that excludes common secrets, virtual environments and cache files. The uploaded site artifact does not contain Git metadata or the full source tree. Third-party videos/PDFs are loaded from their publishers or opened via source links; they are not redistributed.
+
+## Update/publish
+
+```sh
+make check
+python3 scripts/stage_pages.py
+git add <the files intentionally changed>
+git commit -m "Update Python and AI curriculum"
+git push origin main
+gh run list --workflow pages.yml
+```
+
+You can also manually start the workflow from the Actions tab (or with `gh workflow run pages.yml`). Keep the auto-build and deployment in the same workflow so `deploy-pages` uses the artifact from its own build job.
+
+### DNS and custom domain
+
+GitHub Pages is configured with custom domain `study.fkr.dev`. GoDaddy record:
+
+```text
+CNAME  study  fkr-0.github.io.  TTL 600
+```
+
+Changing Pages' publishing source to **GitHub Actions** must not change the custom domain or this DNS record. GitHub may need time to issue or renew the HTTPS certificate. Do not disable validation or work around it by exposing the site insecurely.
 
 ## Verification
 
 ```sh
+make check
+python3 scripts/stage_pages.py
+gh run list --workflow pages.yml --limit 5
+gh api repos/fkr-0/py-ai-studyplan/pages \
+  --jq '{build_type,cname,https_enforced,status}'
 dig +short CNAME study.fkr.dev
-curl -I https://study.fkr.dev/
-curl -I https://study.fkr.dev/build-revealjs/
-curl -I https://study.fkr.dev/build-revealjs/py-ai-studyplan-materials.zip
+curl -IL https://study.fkr.dev/build-revealjs/
+curl -IL https://study.fkr.dev/build-revealjs/py-ai-studyplan-materials.zip
 ```
 
-Actual end-to-end verification includes visiting the deck in a browser, checking navigation and media fallbacks, and downloading/inspecting the ZIP. If HTTPS is not yet ready, inspect GitHub Pages certificate state and DNS rather than falling back to serving the site over plaintext HTTP permanently.
+A successful deployment includes green jobs for both build and deploy, and HTTP 200 for the public slide deck and ZIP. For Pages configuration, use `gh api -X PUT repos/fkr-0/py-ai-studyplan/pages -f build_type=workflow` once, then verify via the API.

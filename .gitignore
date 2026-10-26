@@ -9,6 +9,9 @@ __pycache__/
 .env.*
 !.env.example
 *.log
+# Generated GitHub Pages deployment staging directory
+_site/
+
 # App artifacts and learner exports
 examples/chat-history.json
 examples/.streamlit/secrets.toml
