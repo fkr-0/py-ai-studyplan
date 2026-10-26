@@ -36,7 +36,8 @@ The source checkout is **not** uploaded wholesale. `scripts/stage_pages.py` stag
 - `studyplan.html`: welcome page with course overview, slide entry and ZIP download; linked from the bottom of slide 1.
 - `CNAME`: `study.fkr.dev`.
 - `.nojekyll`.
-- `docs/*.md`: readable course chapters.
+- `docs/*.md`: original editable Markdown sources.
+- `docs/*.html`: browser-friendly lesson pages generated from Markdown by Pandoc; default destinations for slide links. Each page links to its `.md` source and to the ZIP.
 - `build-revealjs/index.html` and styles.
 - `build-revealjs/py-ai-studyplan-materials.zip`: full course, with link on the first two slides.
 
@@ -45,8 +46,8 @@ The ZIP itself is rebuilt by `scripts/build_slides.py`, with an explicit allowli
 ## Update/publish
 
 ```sh
-make check
-python3 scripts/stage_pages.py
+make check  # includes HTML lesson rendering + staged-site link checks
+# optional local preview: make serve
 git add <the files intentionally changed>
 git commit -m "Update Python and AI curriculum"
 git push origin main
@@ -78,4 +79,4 @@ curl -IL https://study.fkr.dev/build-revealjs/
 curl -IL https://study.fkr.dev/build-revealjs/py-ai-studyplan-materials.zip
 ```
 
-A successful deployment includes green jobs for both build and deploy, and HTTP 200 for the public slide deck and ZIP. For Pages configuration, use `gh api -X PUT repos/fkr-0/py-ai-studyplan/pages -f build_type=workflow` once, then verify via the API.
+A successful deployment includes green jobs for both build and deploy, and HTTP 200 for the public slide deck, HTML lessons and ZIP. Slide links should open `.html` lessons by default; the `.md` sources remain separately accessible for the terminal exercise. For Pages configuration, use `gh api -X PUT repos/fkr-0/py-ai-studyplan/pages -f build_type=workflow` once, then verify via the API.

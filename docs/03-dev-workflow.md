@@ -28,6 +28,21 @@ macOS uses `python3` before activating a virtual environment and generally `pyth
 
 [zsh4humans](https://github.com/romkatv/zsh4humans) works on macOS and adds completion, autosuggestions and fuzzy history; its [upstream tips](https://github.com/romkatv/zsh4humans/blob/master/tips.md) include macOS key variations. **But its maintainer warns of very limited support, with most bugs unfixed.** The installer changes zsh startup files after offering backups. Teach **built-in macOS zsh first**, then discuss whether an optional shell modification is worthwhile. It is never required to graduate, and remote install scripts should not run automatically. See [workbench tradeoffs](01b-macos-workbench.md#7-zsh-for-humans-z4h-macos-compatible-optional).
 
+## Exercise: fetch Markdown and edit it
+
+The course's web links now open **rendered HTML** for comfortable reading. The raw `.md` sources stay downloadable for editing in VS Code. After learning shell paths, try:
+
+```sh
+cd ~/Projects/python-ai-playground
+curl --fail --location --show-error \
+  --output lesson.md \
+  https://study.fkr.dev/docs/01-ai-intuition.md
+head -n 12 lesson.md
+code lesson.md
+```
+
+Explain `curl` (fetch), `--output` (save), and `code` (open in an editor). Compare with the [formatted lesson in the browser](https://study.fkr.dev/docs/01-ai-intuition.html). Do not execute downloaded scripts.
+
 ## JSON exercise
 
 Save a file such as:

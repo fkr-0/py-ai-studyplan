@@ -128,15 +128,39 @@ Start with minutes 00:00–18:00; security section is useful in session 7.
 <aside class="notes">This is an optional 2023 overview, not a statement about present-day model rankings.</aside>
 #+end_export
 
-** Checkpoint: draw the boxes
+** Mini-exercise: where does my question go?
+
+*Imagine asking a chatbot:* /“Why is the sky blue?”/
+
+Put these three cards in order. You can point or say the answer — **no drawing or coding necessary**:
+
+- *You* — type the question.
+- *Chat app* — shows messages on screen and sends the question onward.
+- *Language model* — generates a possible answer.
+
+**Try:** Which card is first? Which card makes the words? Which card displays them?
+
+#+BEGIN_NOTES
+Pause and let the beginner order the three cards orally. Do not require knowledge of Python or Ollama yet. Say that this is a simplified view. Show the answer on the next slide and briefly introduce the model server there.
+#+END_NOTES
+
+** Example answer: follow one message
 
 #+begin_example
-USER ──▶ PYTHON APP ──▶ OLLAMA ──▶ MODEL
-             ▲                        │
-             └──────── response ◀─────┘
+YOU          CHAT APP             LANGUAGE MODEL
+  |  question   |                      |
+  +-----------> | --- question ------> |
+                | <-- answer --------- |
+  <------------ +                      |
+     see reply
 #+end_example
 
-Explain the responsibility of each box. What would be different for a rule-based program?
+- *Your action:* type “Why is the sky blue?”
+- *Chat app:* sends it and displays the returned text.
+- *Model:* produces a plausible explanation, which may need checking.
+- *Later:* we will learn about **Ollama**, the program that runs the model on your Mac.
+
+**Bonus question:** A simple rule-based chatbot could replace the model with =if= statements. How would its answers differ?
 
 * 02 · Mac workbench → Python foundations
 
@@ -353,6 +377,22 @@ Choose only: shell, debugging, Git. No need for every lecture.
 #+begin_export html
 <p class="resource-link"><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
 #+end_export
+
+** Read HTML in browser, Markdown in your editor
+
+- Click a lesson in these slides to open the *formatted HTML reading view*.
+- Each HTML lesson offers **Original Markdown (.md)** to download or view.
+- On Day 7, use the terminal to download a *data file*, then open in VS Code:
+
+#+begin_src sh
+cd ~/Projects/python-ai-playground
+curl --fail --location --show-error \
+  --output lesson.md \
+  https://study.fkr.dev/docs/01-ai-intuition.md
+code lesson.md
+#+end_src
+
+*Safety:* =curl= saves the lesson; never pipe unknown downloads into =sh=.
 
 ** Days 8–9 — one reproducible project
 

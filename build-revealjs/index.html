@@ -141,13 +141,36 @@
 <aside class="notes">This is an optional 2023 overview, not a statement about present-day model rankings.</aside>
 
 </section>
-<section id="checkpoint-draw-the-boxes" class="slide level2">
-<h2>Checkpoint: draw the boxes</h2>
-<pre><code>USER ──▶ PYTHON APP ──▶ OLLAMA ──▶ MODEL
-             ▲                        │
-             └──────── response ◀─────┘
+<section id="mini-exercise-where-does-my-question-go" class="slide level2">
+<h2>Mini-exercise: where does my question go?</h2>
+<p><strong>Imagine asking a chatbot:</strong> <em>“Why is the sky blue?”</em></p>
+<p>Put these three cards in order. You can point or say the answer — <strong><strong>no drawing or coding necessary</strong></strong>:</p>
+<ul>
+<li><strong>You</strong> — type the question.</li>
+<li><strong>Chat app</strong> — shows messages on screen and sends the question onward.</li>
+<li><strong>Language model</strong> — generates a possible answer.</li>
+</ul>
+<p><strong><strong>Try:</strong></strong> Which card is first? Which card makes the words? Which card displays them?</p>
+<div class="NOTES">
+<p>Pause and let the beginner order the three cards orally. Do not require knowledge of Python or Ollama yet. Say that this is a simplified view. Show the answer on the next slide and briefly introduce the model server there.</p>
+</div>
+</section>
+<section id="example-answer-follow-one-message" class="slide level2">
+<h2>Example answer: follow one message</h2>
+<pre class="example"><code>YOU          CHAT APP             LANGUAGE MODEL
+  |  question   |                      |
+  +-----------&gt; | --- question ------&gt; |
+                | &lt;-- answer --------- |
+  &lt;------------ +                      |
+     see reply
 </code></pre>
-<p>Explain the responsibility of each box. What would be different for a rule-based program?</p>
+<ul>
+<li><strong>Your action:</strong> type “Why is the sky blue?”</li>
+<li><strong>Chat app:</strong> sends it and displays the returned text.</li>
+<li><strong>Model:</strong> produces a plausible explanation, which may need checking.</li>
+<li><strong>Later:</strong> we will learn about <strong><strong>Ollama</strong></strong>, the program that runs the model on your Mac.</li>
+</ul>
+<p><strong><strong>Bonus question:</strong></strong> A simple rule-based chatbot could replace the model with <code class="verbatim">if</code> statements. How would its answers differ?</p>
 </section></section>
 <section>
 <section id="mac-workbench-python-foundations" class="title-slide slide level1">
@@ -224,29 +247,29 @@
 <h2>Learn ⌃A · ⌃E · ⌃P · ⌃N · ⌃R</h2>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>In the zsh prompt</th>
 <th>Action</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td><strong>Control-A</strong></td>
 <td>move cursor to start (A)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Control-E</strong></td>
 <td>move cursor to end (E)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Control-P</strong></td>
 <td>previous command (P)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><strong>Control-N</strong></td>
 <td>next command (N)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><strong>Control-R</strong></td>
 <td>reverse search in command history (R)</td>
 </tr>
@@ -370,6 +393,20 @@
 <p class="resource-link"><a href="https://missing.csail.mit.edu/" target="_blank" rel="noopener noreferrer">Open interactive resource ↗</a></p>
 
 </section>
+<section id="read-html-in-browser-markdown-in-your-editor" class="slide level2">
+<h2>Read HTML in browser, Markdown in your editor</h2>
+<ul>
+<li>Click a lesson in these slides to open the <strong>formatted HTML reading view</strong>.</li>
+<li>Each HTML lesson offers <strong><strong>Original Markdown (.md)</strong></strong> to download or view.</li>
+<li>On Day 7, use the terminal to download a <strong>data file</strong>, then open in VS Code:</li>
+</ul>
+<div class="sourceCode" id="cb8" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/python-ai-playground</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">--fail</span> <span class="at">--location</span> <span class="at">--show-error</span> <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--output</span> lesson.md <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  https://study.fkr.dev/docs/01-ai-intuition.md</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="ex">code</span> lesson.md</span></code></pre></div>
+<p><strong>Safety:</strong> <code class="verbatim">curl</code> saves the lesson; never pipe unknown downloads into <code class="verbatim">sh</code>.</p>
+</section>
 <section id="days-89-one-reproducible-project" class="slide level2">
 <h2>Days 8–9 — one reproducible project</h2>
 <ol>
@@ -433,7 +470,7 @@
 <section id="local-inference-with-ollama" class="title-slide slide level1">
 <h1>05 · Local inference with Ollama</h1>
 <p>You need a <strong>model</strong>, a <strong>runtime/server</strong>, and a <strong>Python client</strong>.</p>
-<pre><code>Python (ollama client)
+<pre class="example"><code>Python (ollama client)
    │ HTTP /api/chat
    ▼
 Ollama (inference runtime)
@@ -444,15 +481,15 @@ Local model (CPU or GPU)
 </section>
 <section id="first-ollama-call" class="slide level2">
 <h2>First Ollama call</h2>
-<div class="sourceCode" id="cb9" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate  <span class="co"># create .venv first if absent</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:4b</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run gemma3:4b</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># In another Terminal tab (⌘T):</span></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:4b</span></code></pre></div>
+<div class="sourceCode" id="cb10" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate  <span class="co"># create .venv first if absent</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> pull gemma3:4b</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">ollama</span> run gemma3:4b</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># In another Terminal tab (⌘T):</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> examples/cli_chat.py <span class="at">--model</span> gemma3:4b</span></code></pre></div>
 </section>
 <section id="choose-a-model-for-your-machine" class="slide level2">
 <h2>Choose a model for your machine</h2>
@@ -487,7 +524,7 @@ Local model (CPU or GPU)
 </section>
 <section id="architecture" class="slide level2">
 <h2>Architecture</h2>
-<pre><code>Browser → Streamlit server → Ollama HTTP API
+<pre class="example"><code>Browser → Streamlit server → Ollama HTTP API
                │                  │
          chat history          model weights
                │                  │
@@ -496,11 +533,11 @@ Local model (CPU or GPU)
 </section>
 <section id="run-your-chatbot" class="slide level2">
 <h2>Run your chatbot</h2>
-<div class="sourceCode" id="cb11" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ollama desktop app is already running and model pulled.</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> streamlit run examples/chat_app.py <span class="at">--server.address</span> 127.0.0.1</span></code></pre></div>
+<div class="sourceCode" id="cb12" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/Projects/py-ai-studyplan</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> pip install <span class="at">-r</span> examples/requirements.txt</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Ollama desktop app is already running and model pulled.</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="ex">python</span> <span class="at">-m</span> streamlit run examples/chat_app.py <span class="at">--server.address</span> 127.0.0.1</span></code></pre></div>
 <p>Observe: when you stop Ollama, Python can still display the web UI but cannot serve model completions.</p>
 </section>
 <section id="official-streamlit-tutorial" class="slide level2">
@@ -534,29 +571,29 @@ Local model (CPU or GPU)
 <h2>Evaluation exercise</h2>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Input type</th>
 <th>Test</th>
 </tr>
 </thead>
 <tbody>
-<tr>
+<tr class="odd">
 <td>Exact format</td>
 <td>Is JSON parseable and schema-valid?</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Arithmetic</td>
 <td>Verify with ordinary Python</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Summarization</td>
 <td>Check facts against original</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Failures</td>
 <td>Stop Ollama and observe feedback</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Compare models</td>
 <td>Record model, settings, latency</td>
 </tr>
@@ -585,9 +622,9 @@ Local model (CPU or GPU)
 </section>
 <section id="build-and-launch-optional" class="slide level2">
 <h2>Build and launch (optional)</h2>
-<div class="sourceCode" id="cb12" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> py-ai-studyplan-ui ./examples</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml up <span class="at">--build</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml down</span></code></pre></div>
+<div class="sourceCode" id="cb13" data-org-language="sh"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> build <span class="at">-t</span> py-ai-studyplan-ui ./examples</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml up <span class="at">--build</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">docker</span> compose <span class="at">-f</span> examples/compose.yaml down</span></code></pre></div>
 <p>Docker-internal <code class="verbatim">127.0.0.1</code> is <strong>not</strong> host-localhost. Keep Ollama private; the UI can demonstrate its offline fallback in a container.</p>
 </section>
 <section id="docker-official-guides" class="slide level2">

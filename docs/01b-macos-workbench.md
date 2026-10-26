@@ -156,4 +156,28 @@ However, the maintainer currently says the project has **very limited support, n
 
 From Terminal.app, start in `~/Projects`; navigate into the course folder with `cd`; open it in VS Code; edit/save a Python file; run it; recall the same command with Control-P; search old history with Control-R; copy its output with Command-C; interrupt a deliberate `sleep` with Control-C. Explain **which program** handled each key.
 
+## 8. Bonus after Day 7: Markdown as a file, HTML as a reading page
+
+The course provides **two views of the same lesson**:
+
+- **Read in a browser:** [formatted HTML lesson](https://study.fkr.dev/docs/01-ai-intuition.html) — headings, links, code blocks and navigation.
+- **Edit as source:** [original Markdown lesson](01-ai-intuition.md) — plain text with simple formatting markers.
+
+Once you know `cd`, `code .`, filenames and `curl`, practise bringing a real lesson into your editor. This is an **optional** exercise for Day 7, not a prerequisite for the Day 1 theory discussion.
+
+```sh
+cd ~/Projects/python-ai-playground
+curl --fail --location --show-error \
+  --output lesson.md \
+  https://study.fkr.dev/docs/01-ai-intuition.md
+head -n 12 lesson.md
+code lesson.md
+```
+
+*What happened?* `curl` fetched **data** from a URL and saved it as `lesson.md`; `head` showed its first lines; VS Code opened it as editable text. `curl` does not execute the Markdown. Compare VS Code's built-in Markdown preview (Command+Shift+V) with the ordinary text editor, and compare both with the HTML reading page.
+
+If the custom domain is temporarily unavailable, the repository also serves the [original file](https://raw.githubusercontent.com/fkr-0/py-ai-studyplan/main/docs/01-ai-intuition.md).
+
+**Safety:** Downloading a document into a file is very different from running a downloaded shell script. Never pipe unknown network content into a shell interpreter.
+
 [Next: Python foundations](02-python-foundations.md) · [Daily learning schedule](21-day-mac-track.md)

@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Render every published Markdown lesson as a readable HTML page, while preserving the raw `.md` version and pointing code references to GitHub source instead of broken site paths.
+- Route links from the published Reveal.js presentation and welcome page to HTML lessons; add navigation, original Markdown and ZIP links to every lesson.
+- Teach a safe `curl --output lesson.md` → `code lesson.md` exercise after introducing the terminal.
+- Replace the unclear first drawing checkpoint with a three-card chatbot question exercise and a separate worked answer slide.
+- Validate generated HTML lessons and internal site navigation before GitHub Pages deployment.
+
 - Remove personal learner context and machine specifications from public materials; generalize setup guidance and rebuild the downloadable course archive.
 - Open slide 1 directly from the site root, with a small link back to the preserved welcome page at `studyplan.html`.
 - Add a GitHub repository icon in the top-right corner throughout the presentation.

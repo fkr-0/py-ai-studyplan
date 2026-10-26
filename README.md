@@ -44,10 +44,10 @@ The public course is hosted at **[study.fkr.dev](https://study.fkr.dev/)**. Open
 
 Edit `build-revealjs/source.org`, then rebuild:
 
-    python3 scripts/build_slides.py  # also creates the downloadable ZIP
-    python3 -m http.server 8765 --directory .
+    make check  # builds the deck, ZIP and formatted HTML lesson pages
+    make serve  # serves the exact staged Pages site from _site/
 
-Open http://127.0.0.1:8765/build-revealjs/ (avoid `file://`: YouTube embeds may need a proper origin).
+Open http://127.0.0.1:8765/build-revealjs/ (avoid `file://`: YouTube embeds may need a proper origin). **Lessons linked from slides open styled HTML pages by default**, with an explicit download/view link for the source `.md` Markdown, and an optional `curl`/VS Code exercise after the terminal introduction.
 The opening slides link to `build-revealjs/py-ai-studyplan-materials.zip`.
 The normal build creates the ZIP next to `index.html`, so publishing the **entire `build-revealjs/` directory** makes the download work.
 It contains all local study materials: Markdown lessons, exercises, runnable examples, tests, original Reveal.js template, slide sources, generated slides and build tools.

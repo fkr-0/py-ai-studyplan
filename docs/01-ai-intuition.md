@@ -27,6 +27,6 @@ Open [rule_bot.py](../examples/rule_bot.py) after learning the minimal Python sy
 - Can a Tetris solver use search instead of a trained network?
 - If the LLM says 17 × 19 = 324, is that sufficient evidence?
 
-**Exit ticket:** draw boxes labelled user, application, model runtime, trained model. Explain each in one sentence.
+**Exit ticket (2 minutes):** Imagine asking a chatbot, **“Why is the sky blue?”** Put these three cards into the order in which they participate: **You**, **chat app**, **language model**. Say who types the question, who generates the response, and who displays it. No drawing and no Python knowledge are needed. **Example answer:** You type → chat app sends the question → language model produces words → chat app displays the words to you. **For later:** Ollama is the program that runs the language model on the Mac. A rule-based chatbot can use `if`/`else` instead of a model.
 
 [Next: Mac editor + terminal workbench](01b-macos-workbench.md), then [Python foundations](02-python-foundations.md).

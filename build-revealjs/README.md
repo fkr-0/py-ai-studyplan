@@ -23,9 +23,9 @@ Requires `pandoc` (Org-mode → Reveal.js sections). The build script copies the
 
 ## View
 
-    python3 -m http.server 8765 --directory .
+    make serve
 
-Open http://127.0.0.1:8765/build-revealjs/. **Use localhost HTTP**, not `file://`, for better YouTube compatibility. Internet is needed for JS/CSS and embedded external media.
+Open http://127.0.0.1:8765/build-revealjs/. This serves the **staged public site** (including rendered HTML lesson pages) rather than raw source files. **Use localhost HTTP**, not `file://`, for better YouTube compatibility. Internet is needed for JS/CSS and embedded external media.
 
 Resources display as embedded videos or PDF viewer when allowed by the provider. Each embed includes a direct link if blocked. External interactive tools open in a new tab.
 
@@ -33,4 +33,4 @@ Resources display as embedded videos or PDF viewer when allowed by the provider.
 
 Arrow keys: navigate; `S`: speaker notes; `F`: fullscreen; `B`: whiteboard; `C`: annotation canvas; `DEL`: clear; `/`: search.
 
-All course notes and exercise instructions are also ordinary Markdown under [../docs/](../docs/). No third-party media is stored in this repository.
+Lesson links in the public deck open Pandoc-rendered HTML reading pages. Each includes a link to its original Markdown text for downloading and editing in VS Code. The source notes remain under [../docs/](../docs/). No third-party media is stored in this repository.
